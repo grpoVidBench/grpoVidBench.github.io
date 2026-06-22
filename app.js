@@ -118,6 +118,40 @@
     return m[code] || TASK_LABELS[code] || code;
   }
 
+  // Build the "Context" block: a clear instruction + the per-task L1/L2/L3 template.
+  // Shown inline in the QA flow (just before the rating questions). Returns null if
+  // the study defines no level guide for this item's task.
+  function buildContext(item) {
+    const guide = (study.level_guides && item.task) ? study.level_guides[item.task] : null;
+    if (!guide) return null;
+    const wrap = el("div", { class: "qa-block qa-context" });
+    wrap.appendChild(el("div", { class: "qa-label", text: "Context — how to rate this reasoning" }));
+
+    const taskName = taskLabel(item.task);
+    const instr = el("p", { class: "ctx-instr" });
+    instr.appendChild(document.createTextNode("Read the model's reasoning "));
+    instr.appendChild(el("code", { text: "<think>" }));
+    instr.appendChild(document.createTextNode(
+      " above. For this " + taskName + " item" + (guide.q ? " — " + guide.q + " —" : " —") +
+      " a good trace must carry the three levels below. Check each level is present and correct, then answer the rating questions."
+    ));
+    wrap.appendChild(instr);
+
+    const g = el("div", { class: "level-guide" });
+    g.appendChild(el("div", { class: "lg-task", text: taskName + (guide.q ? " — " + guide.q : "") }));
+    (guide.levels || []).forEach((L) => {
+      g.appendChild(el("div", { class: "lg-row" }, [
+        el("span", { class: "lg-k", text: L.k }),
+        el("span", { class: "lg-d" }, [
+          el("strong", { text: L.label }),
+          document.createTextNode(L.desc ? " — " + L.desc : ""),
+        ]),
+      ]));
+    });
+    wrap.appendChild(g);
+    return wrap;
+  }
+
   function dimType(dim) {
     if (dim.type) return dim.type;
     if (dim.scale) return "likert";
@@ -448,6 +482,8 @@
       const playerCol = el("div", { class: "player-col" });
       const contentCol = el("div", {});
       renderMediaBody(playerCol, contentCol, item);
+      const ctx = buildContext(item);   // instruction + per-task L1/L2/L3 template
+      if (ctx) contentCol.appendChild(ctx);
       contentCol.appendChild(dimsHost);
       layout.appendChild(playerCol);
       layout.appendChild(contentCol);
@@ -483,26 +519,6 @@
       });
     } else {
       playerCol.appendChild(el("div", { class: "no-media", text: "No video associated with this item." }));
-    }
-
-    // pinned per-task reasoning-level guide, shown under the video on every item
-    const guide = (study.level_guides && item.task) ? study.level_guides[item.task] : null;
-    if (guide) {
-      const g = el("div", { class: "level-guide" });
-      g.appendChild(el("div", { class: "level-guide-head" }, [
-        el("span", { class: "eyebrow", text: "Reasoning levels for this task" }),
-        el("div", { class: "lg-task", text: taskLabel(item.task) + (guide.q ? " — " + guide.q : "") }),
-      ]));
-      (guide.levels || []).forEach((L) => {
-        g.appendChild(el("div", { class: "lg-row" }, [
-          el("span", { class: "lg-k", text: L.k }),
-          el("span", { class: "lg-d" }, [
-            el("strong", { text: L.label }),
-            document.createTextNode(L.desc ? " — " + L.desc : ""),
-          ]),
-        ]));
-      });
-      playerCol.appendChild(g);
     }
 
     if (item.question) {
