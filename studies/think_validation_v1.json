@@ -109,46 +109,13 @@
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
                       "start":  0,
-                      "end":  72,
-                      "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Possible phases in this video include: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. What is the time span of cleaning-and-coagulation?",
-                      "answer":  "0.0-72.0 seconds.",
-                      "think":  null
-                  },
-                  {
-                      "item_id":  "ITEM-03",
-                      "task":  "TAL",
-                      "dataset":  "CholecT50",
-                      "video_id":  "VID01",
-                      "start":  0,
                       "end":  97,
                       "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?",
                       "answer":  "0.0-97.0 seconds.",
                       "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is identified by graspers unfolding a translucent specimen_bag, placing the detached gallbladder into it, and cinching the bag closed; this is visible from the start of the clip at 0.0 seconds.\n\nL2 (boundary contrast): There is no preceding operative phase visible before the bag handling begins, while the activity changes after 97.0 seconds to liver retraction, exposure of the cauterized gallbladder fossa, and cleaning/coagulation of the liver bed rather than packing the gallbladder.\n\nL3 (phase-order bound \u0026 conclusion): In the fixed sequence, gallbladder-packaging follows gallbladder-dissection and precedes cleaning-and-coagulation, matching the transition from bagging the detached gallbladder to treating the liver bed; therefore gallbladder-packaging spans 0.0–97.0 seconds."
                   },
                   {
-                      "item_id":  "ITEM-04",
-                      "task":  "TAL",
-                      "dataset":  "CholecT50",
-                      "video_id":  "VID01",
-                      "start":  0,
-                      "end":  96,
-                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?",
-                      "answer":  "0.0-96.0 seconds.",
-                      "think":  null
-                  },
-                  {
-                      "item_id":  "ITEM-05",
-                      "task":  "TAL",
-                      "dataset":  "CholecT50",
-                      "video_id":  "VID01",
-                      "start":  0,
-                      "end":  72,
-                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. The procedure may involve: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. Find the segment(s) where cleaning-and-coagulation happens.",
-                      "answer":  "0.0-72.0 seconds.",
-                      "think":  null
-                  },
-                  {
-                      "item_id":  "ITEM-06",
+                      "item_id":  "ITEM-03",
                       "task":  "NAP",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -157,7 +124,7 @@
                       "think":  "L1: At the clip’s end, the current phase is cleaning-and-coagulation: graspers retract/elevate the liver while the instrument tip works along the cauterized gallbladder fossa and adjacent clipped tissue to clear/coagulate the liver bed.\n\nL2: The gallbladder is already detached and packed/cinched inside the specimen_bag, and the exposed liver bed has been repeatedly inspected and treated, with the instruments shifting from the fossa back toward the bag.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once cleaning-and-coagulation has essentially cleared the fossa after the gallbladder is bagged, the next procedural action is removal of the bagged specimen; therefore the next step is gallbladder-extraction."
                   },
                   {
-                      "item_id":  "ITEM-07",
+                      "item_id":  "ITEM-04",
                       "task":  "NAP",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -166,7 +133,7 @@
                       "think":  "L1: At the clip’s end, the grasper retracts/elevates the liver and works along the moist, bloody, cauterized gallbladder fossa, contacting the liver bed and clipped tissue for cleaning-and-coagulation.\n\nL2: The gallbladder is already detached and packed in the cinched specimen_bag, and the liver bed has been exposed and treated; the instrument then moves away from the fossa toward the specimen_bag, indicating the cleaning-and-coagulation objective is essentially complete.\n\nL3: In laparoscopic cholecystectomy, after cleaning-and-coagulation follows removal of the bagged specimen through the trocar site, so the next step is gallbladder-extraction."
                   },
                   {
-                      "item_id":  "ITEM-08",
+                      "item_id":  "ITEM-05",
                       "task":  "NAP",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -175,7 +142,7 @@
                       "think":  "L1: At the end of the clip, the procedure is in Calot/hepatocystic triangle dissection: graspers retract the gallbladder neck/infundibulum while a hook/white-tipped dissector, bipolar, and irrigator work around the cystic duct region and gallbladder–liver interface.\n\nL2: The dissection plane has been widened, bleeding points have been controlled with bipolar coagulation, bloody fluid has been cleared, and the cystic duct region/gray tubular structure is exposed under sustained traction, indicating the Calot dissection objective is essentially achieved.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once Calot triangle dissection has exposed the ductal structures sufficiently, the next phase is clipping-and-cutting of the cystic duct/artery structures; therefore the next step is clipping-and-cutting."
                   },
                   {
-                      "item_id":  "ITEM-09",
+                      "item_id":  "ITEM-06",
                       "task":  "NAP",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -184,7 +151,7 @@
                       "think":  "L1 (current step at the clip\u0027s END): The final activity is gallbladder-packaging: graspers spread the specimen_bag on the liver surface, place the detached gallbladder into the translucent pouch, and cinch/draw the bag toward the trocar while retracting the liver near the liver bed/fossa.\n\nL2 (completion cue): The gallbladder is already freed from the liver bed and packed inside the partially collapsed specimen_bag, with the adjacent dissected fossa exposed rather than undergoing further hook dissection or Calot triangle work.\n\nL3 (procedural logic \u0026 conclusion): After gallbladder-packaging, the operative sequence proceeds to inspection, suction/irrigation, and hemostasis of the exposed liver bed; therefore the next step is cleaning-and-coagulation."
                   },
                   {
-                      "item_id":  "ITEM-10",
+                      "item_id":  "ITEM-07",
                       "task":  "NAP",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -193,7 +160,7 @@
                       "think":  "L1: At the clip’s end, the grasper maintains traction on the gallbladder infundibulum while the hook/white-tipped dissector, bipolar, and irrigator are used in the Calot hepatocystic triangle to clear fibrofatty tissue around the cystic duct region and gallbladder–liver interface.\n\nL2: The dissection has exposed a gray tubular cystic-duct-region structure, widened the plane around the gallbladder neck, and controlled minor bleeding with bipolar coagulation and irrigation, indicating the Calot triangle dissection objective is essentially achieved.\n\nL3: In the standard laparoscopic cholecystectomy sequence, once Calot triangle dissection has prepared the cystic duct/artery region, the next phase is application of clips and division of these structures; therefore the next step is clipping-and-cutting."
                   },
                   {
-                      "item_id":  "ITEM-11",
+                      "item_id":  "ITEM-08",
                       "task":  "DVC",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -212,7 +179,7 @@
                       "think":  "L1 (scan \u0026 enumerate): The clip shows Gallbladder Packaging first: graspers unfold a specimen_bag on the liver, load the detached gallbladder, and cinch the bag. It then moves into Cleaning/Coagulation: graspers retract the liver and instruments contact the bloody cauterized gallbladder fossa/liver bed for cleaning or hemostasis.\n\nL2 (boundaries): The boundary at 97.0–98.0s is fixed when the action changes from closing and drawing the specimen_bag toward the trocar to deliberate liver elevation and exposure of the raw gallbladder fossa. This makes the packaging segment end before fossa-focused cleaning/coagulation begins, keeping the two segments contiguous and non-overlapping.\n\nL3 (per-segment content \u0026 conclusion): [0.0, 97.0] Gallbladder Packaging — graspers open/cinch specimen_bag around detached gallbladder; [98.0, 170.0] Cleaning/Coagulation — graspers retract liver while instrument cleans/coagulates gallbladder fossa."
                   },
                   {
-                      "item_id":  "ITEM-12",
+                      "item_id":  "ITEM-09",
                       "task":  "DVC",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -231,7 +198,7 @@
                       "think":  "L1 (scan \u0026 enumerate): The clip first shows **Gallbladder Packaging**: graspers open a specimen_bag, place the detached gallbladder inside, and cinch it closed. It then shows **Cleaning/Coagulation**: graspers retract the liver while an instrument works along the bloody cauterized liver bed/fossa.\n\nL2 (boundaries): The transition occurs at the change from bag handling and closure near the trocar to liver retraction with exposure of the gallbladder fossa and instrument contact for hemostasis/cleaning. This fixes two non-overlapping segments: packaging through 97.0s, then cleaning/coagulation from the next visible interval at 99.0s.\n\nL3 (per-segment content \u0026 conclusion):  \n[0.0, 97.0] — **Gallbladder Packaging: specimen_bag opened, gallbladder packed, bag cinched**  \n[99.0, 170.0] — **Cleaning/Coagulation: liver bed/fossa exposed and treated**"
                   },
                   {
-                      "item_id":  "ITEM-13",
+                      "item_id":  "ITEM-10",
                       "task":  "DVC",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -250,7 +217,7 @@
                       "think":  "L1: From 0.0–20.0 s the visible phase is Preparation: graspers secure the gallbladder fundus and infundibulum for superior/lateral retraction without dissection. From 24.0–673.0 s the visible phase is Calot/hepatocystic triangle dissection: traction exposes the infundibulum/cystic duct region while hook dissection, bipolar coagulation, and irrigation address fibrofatty tissue and bleeding.\n\nL2: The transition is fixed by the change from positioning-only gallbladder retraction to active hook opening of peritoneal/fibrofatty tissue around the cystic duct and gallbladder–liver interface. Thus the preparation interval ends at 20.0 s and the Calot dissection interval starts at 24.0 s, with no overlapping phase actions and no observed clipping, cutting, gallbladder detachment, packaging, or cleaning boundary.\n\nL3: [0.0, 20.0]: Preparation — fundus and infundibulum grasped for gallbladder retraction. [24.0, 673.0]: Calot triangle dissection — hook/bipolar/irrigator work exposes cystic duct region and liver-bed interface."
                   },
                   {
-                      "item_id":  "ITEM-14",
+                      "item_id":  "ITEM-11",
                       "task":  "DVC",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
@@ -269,7 +236,7 @@
                       "think":  "L1: From 0.0–579.0s, the visible phase is gallbladder dissection: graspers retract the gallbladder/liver while a hook separates fibrous attachments from the liver bed/fossa with irrigation/aspiration. From 583.0–680.0s, the phase is gallbladder packaging: graspers open a specimen_bag, place the detached gallbladder inside, cinch it, and draw it toward the trocar.\n\nL2: The transition is fixed after the brief dark/occluded interval by the change from hook-based cautery dissection and irrigator clearing of the liver bed to grasper manipulation of a translucent specimen_bag on the liver surface. Thus gallbladder dissection ends at 579.0s and gallbladder packaging begins at 583.0s, with no overlapping active phase.\n\nL3: [0.0, 579.0]: Gallbladder dissection from liver bed/fossa. [583.0, 680.0]: Gallbladder packaging in specimen_bag."
                   },
                   {
-                      "item_id":  "ITEM-15",
+                      "item_id":  "ITEM-12",
                       "task":  "DVC",
                       "dataset":  "CholecT50",
                       "video_id":  "VID01",
