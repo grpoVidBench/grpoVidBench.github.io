@@ -753,36 +753,51 @@
 
   function safeName(s) { return String(s || "").replace(/[^A-Za-z0-9._-]+/g, "_"); }
 
+  // central collection endpoint: per-study override, else the site-wide default in config.js
+  function collectEndpoint() {
+    return study.collect_endpoint || (typeof window !== "undefined" && window.GRPOVIDBENCH_COLLECT_ENDPOINT) || null;
+  }
+
   async function doSubmit() {
     persistTime(); commit();
     const data = buildResponse();
+    const csvText = buildCsv();
     const stamp = data.submitted_at.replace(/[:]/g, "-");
     const base = "responses_" + safeName(study.study_id) + "_" + safeName(state.reviewer_id) + "_" + stamp;
+    // always download a local backup
     download(base + ".json", JSON.stringify(data, null, 2), "application/json");
-    download(base + ".csv", buildCsv(), "text/csv");
+    download(base + ".csv", csvText, "text/csv");
 
     let postMsg = "";
-    if (study.collect_endpoint) {
+    const endpoint = collectEndpoint();
+    if (endpoint) {
+      // Fire-and-forget POST. Apps Script web apps don't return CORS headers, so we use
+      // no-cors (opaque response, can't be read) — the request still reaches the server.
+      // The local download above is the backup if the network call fails.
       try {
-        await fetch(study.collect_endpoint, {
-          method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data),
+        await fetch(endpoint, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ filename: base, json: data, csv: csvText }),
         });
-        postMsg = "Your responses were also sent to the study server.";
+        postMsg = "Your responses were submitted to the study automatically. The downloaded files are just a backup.";
       } catch (e) {
-        postMsg = "(Could not reach the study server — please email the downloaded file.)";
+        postMsg = "(Automatic submission could not be sent — please email the downloaded files.)";
       }
     }
-    renderDone(base, postMsg);
+    renderDone(base, postMsg, !!endpoint);
   }
 
-  function renderDone(base, postMsg) {
+  function renderDone(base, postMsg, autoSent) {
     clear(root);
     window.scrollTo({ top: 0 });
     const card = el("div", { class: "card narrow" });
     card.appendChild(el("div", { class: "done-icon", text: "✓" }));
     card.appendChild(el("h1", { text: "Thank you — review complete" }));
-    card.appendChild(el("p", { class: "lead", text: "Your responses have been downloaded as a JSON and a CSV file. Please send us the file (whichever your coordinator requested)." }));
+    card.appendChild(el("p", { class: "lead", text: autoSent
+      ? "Your responses were submitted automatically. A JSON and CSV copy was also downloaded to your computer as a backup — no need to email anything unless asked."
+      : "Your responses have been downloaded as a JSON and a CSV file. Please send us the file (whichever your coordinator requested)." }));
     if (postMsg) card.appendChild(el("div", { class: "banner info", text: postMsg }));
     card.appendChild(el("p", { class: "muted", text: "Files: " + base + ".json  ·  " + base + ".csv" }));
 
