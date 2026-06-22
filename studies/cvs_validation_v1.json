@@ -4,6 +4,31 @@
     "title":  "Endoscapes CVS - clinician review",
     "intro_md":  "Each clip is a short, time-ordered set of keyframes from a laparoscopic cholecystectomy dissection toward the **Critical View of Safety (CVS)**.\n\nFor each clip, scrub the keyframes (timeline runs **0.00 to 1.00**, normalized over the clip), then rate the model\u0027s **answer** (when each criterion is first met and the final verdict) and its **reasoning**.",
     "context_md":  "The three CVS criteria, judged **independently**, each from its own evidence region:\n\n- **C1 - Two structures:** exactly two tubular structures (cystic duct and cystic artery) seen entering the gallbladder. Judged only from the structures at the **gallbladder neck**.\n- **C2 - Hepatocystic triangle cleared:** the Calot (hepatocystic) triangle is free of fat and fibrous tissue. Judged only from the **triangle window**.\n- **C3 - Cystic plate exposed:** the lower third of the gallbladder is dissected off the cystic plate. Judged only from the **gallbladder-liver-bed interface**.\n\nCVS is achieved only when **C1 and C2 and C3** are all met simultaneously.",
+    "task_labels":  {
+                        "CVS":  "Critical View of Safety (CVS)"
+                    },
+    "level_guides":  {
+                         "CVS":  {
+                                     "q":  "how does the Critical View of Safety develop across the clip, and what is its final status?",
+                                     "levels":  [
+                                                    {
+                                                        "k":  "L1",
+                                                        "label":  "trajectory survey",
+                                                        "desc":  "States the CVS state at the START of the clip, the state at the END, and the overall direction of the dissection (progressing toward CVS, stalling, or regressing)."
+                                                    },
+                                                    {
+                                                        "k":  "L2",
+                                                        "label":  "per-criterion progression",
+                                                        "desc":  "Tracks C1, then C2, then C3 SEPARATELY - saying when each is first met (or never) - with each tied only to its own evidence region: C1 = two structures (cystic duct + cystic artery) at the gallbladder neck; C2 = the hepatocystic (Calot) triangle window cleared of fat/fibrous tissue; C3 = the lower third of the gallbladder dissected off the cystic plate (liver-bed interface). One criterion\u0027s change must not be used to explain another\u0027s."
+                                                    },
+                                                    {
+                                                        "k":  "L3",
+                                                        "label":  "CVS synthesis",
+                                                        "desc":  "Determines when (if ever) all three criteria are met simultaneously and the status on the final frame; if CVS is never achieved, names the limiting criteria."
+                                                    }
+                                                ]
+                                 }
+                     },
     "require_reviewer_id":  true,
     "randomize_items":  true,
     "collect_endpoint":  null,
