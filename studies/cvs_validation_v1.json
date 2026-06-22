@@ -30,7 +30,7 @@
                                  }
                      },
     "require_reviewer_id":  true,
-    "randomize_items":  true,
+    "randomize_items":  false,
     "collect_endpoint":  null,
     "scales":  {
                    "likert5_correct":  {
