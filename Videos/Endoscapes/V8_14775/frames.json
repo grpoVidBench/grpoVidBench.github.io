@@ -1,0 +1,15 @@
+{
+    "video_id":  "V8_14775",
+    "dataset":  "Endoscapes",
+    "timeline":  "normalized",
+    "native_fps":  null,
+    "default_playback_fps":  1,
+    "dir":  "./Videos/Endoscapes/V8_14775/",
+    "frames":  [
+                   "8_14775.jpg",
+                   "8_15525.jpg",
+                   "8_16275.jpg",
+                   "8_17025.jpg",
+                   "8_17775.jpg"
+               ]
+}

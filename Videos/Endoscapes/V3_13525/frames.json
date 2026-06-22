@@ -1,0 +1,15 @@
+{
+    "video_id":  "V3_13525",
+    "dataset":  "Endoscapes",
+    "timeline":  "normalized",
+    "native_fps":  null,
+    "default_playback_fps":  1,
+    "dir":  "./Videos/Endoscapes/V3_13525/",
+    "frames":  [
+                   "3_13525.jpg",
+                   "3_14275.jpg",
+                   "3_15025.jpg",
+                   "3_15775.jpg",
+                   "3_16525.jpg"
+               ]
+}

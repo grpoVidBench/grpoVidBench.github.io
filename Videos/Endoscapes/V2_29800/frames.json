@@ -1,0 +1,13 @@
+{
+    "video_id":  "V2_29800",
+    "dataset":  "Endoscapes",
+    "timeline":  "normalized",
+    "native_fps":  null,
+    "default_playback_fps":  1,
+    "dir":  "./Videos/Endoscapes/V2_29800/",
+    "frames":  [
+                   "2_29800.jpg",
+                   "2_30550.jpg",
+                   "2_31300.jpg"
+               ]
+}

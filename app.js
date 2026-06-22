@@ -133,7 +133,7 @@
   function FramePlayer(container, opts) {
     // opts: dataset, videoId, start, end, segments
     const LOOKAHEAD = 25;
-    let manifest = null, frames = [], dir = "", nativeFps = 1, playFps = 5;
+    let manifest = null, frames = [], dir = "", nativeFps = 1, playFps = 5, timeline = "seconds";
     let index = 0, playing = false, speed = 1, rafTimer = null, lastTick = 0;
     let destroyed = false;
     const requested = new Set();
@@ -164,6 +164,18 @@
     container.appendChild(wrap);
 
     function frameUrl(i) { return dir + frames[i]; }
+    // timeline label: source-seconds (default), normalized t in [0,1], or raw frame index
+    function tlabel(i) {
+      if (timeline === "normalized") return (frames.length > 1 ? (i / (frames.length - 1)).toFixed(2) : "0.00") + " · t";
+      if (timeline === "index") return "frame " + (i + 1) + " / " + frames.length;
+      return (i / nativeFps).toFixed(1) + " s";
+    }
+    // convert a window value (seconds | normalized fraction | index) to a frame index
+    function toIndex(v) {
+      if (timeline === "normalized") return v * (frames.length - 1);
+      if (timeline === "index") return v;
+      return v * nativeFps;
+    }
     function preload(from) {
       for (let i = from; i < Math.min(frames.length, from + LOOKAHEAD); i++) {
         if (!requested.has(i)) { requested.add(i); const im = new Image(); im.src = frameUrl(i); }
@@ -175,7 +187,7 @@
     function render() {
       if (destroyed) return;
       slider.value = String(index);
-      timeLabel.textContent = (index / nativeFps).toFixed(1) + " s";
+      timeLabel.textContent = tlabel(index);
       const url = frameUrl(index);
       if (img.getAttribute("src") !== url) {
         setBuffering(true);
@@ -231,15 +243,20 @@
         segs.push([opts.start, opts.end]);
       }
       segs.forEach(([a, b]) => {
-        const ia = Math.max(0, Math.min(total, a * nativeFps));
-        const ib = Math.max(0, Math.min(total, b * nativeFps));
+        const ia = Math.max(0, Math.min(total, toIndex(a)));
+        const ib = Math.max(0, Math.min(total, toIndex(b)));
         const left = (ia / total) * 100;
         const width = Math.max(1.2, ((ib - ia) / total) * 100);
         markers.appendChild(el("div", { class: "seg", style: "left:" + left + "%;width:" + width + "%" }));
       });
+      const unit = timeline === "normalized" ? " t" : (timeline === "index" ? "" : " s");
       if (segs.length) {
         note.textContent = "Highlighted window" + (segs.length > 1 ? "s" : "") + ": " +
-          segs.map(([a, b]) => a.toFixed(1) + "–" + b.toFixed(1) + " s").join(", ");
+          segs.map(([a, b]) => a.toFixed(timeline === "normalized" ? 2 : 1) + "–" + b.toFixed(timeline === "normalized" ? 2 : 1) + unit).join(", ");
+      } else if (timeline === "normalized") {
+        note.textContent = frames.length + " keyframes · timeline normalized 0.00–1.00";
+      } else if (timeline === "index") {
+        note.textContent = frames.length + " frames";
       } else {
         note.textContent = "Source: " + nativeFps + " fps · " + frames.length + " frames";
       }
@@ -253,12 +270,13 @@
         dir = manifest.dir || ("./Videos/" + opts.dataset + "/" + opts.videoId + "/");
         nativeFps = manifest.native_fps || 1;
         playFps = manifest.default_playback_fps || 5;
+        timeline = manifest.timeline || "seconds";
         if (!frames.length) { showError("No frames in manifest."); return; }
         slider.max = String(frames.length - 1);
         setSpeed(1);
         drawMarkers();
-        const startIdx = (opts.start != null) ? Math.round(opts.start * nativeFps)
-          : (opts.segments && opts.segments.length ? Math.round(opts.segments[0][0] * nativeFps) : 0);
+        const startIdx = (opts.start != null) ? Math.round(toIndex(opts.start))
+          : (opts.segments && opts.segments.length ? Math.round(toIndex(opts.segments[0][0])) : 0);
         setIndex(startIdx);
         preload(index);
       } catch (e) {
