@@ -485,6 +485,26 @@
       playerCol.appendChild(el("div", { class: "no-media", text: "No video associated with this item." }));
     }
 
+    // pinned per-task reasoning-level guide, shown under the video on every item
+    const guide = (study.level_guides && item.task) ? study.level_guides[item.task] : null;
+    if (guide) {
+      const g = el("div", { class: "level-guide" });
+      g.appendChild(el("div", { class: "level-guide-head" }, [
+        el("span", { class: "eyebrow", text: "Reasoning levels for this task" }),
+        el("div", { class: "lg-task", text: taskLabel(item.task) + (guide.q ? " — " + guide.q : "") }),
+      ]));
+      (guide.levels || []).forEach((L) => {
+        g.appendChild(el("div", { class: "lg-row" }, [
+          el("span", { class: "lg-k", text: L.k }),
+          el("span", { class: "lg-d" }, [
+            el("strong", { text: L.label }),
+            document.createTextNode(L.desc ? " — " + L.desc : ""),
+          ]),
+        ]));
+      });
+      playerCol.appendChild(g);
+    }
+
     if (item.question) {
       contentCol.appendChild(el("div", { class: "qa-block" }, [
         el("div", { class: "qa-label", text: "Question shown to the model" }),
