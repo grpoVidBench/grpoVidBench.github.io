@@ -104,6 +104,20 @@
   }
 
   // ---------- scale / dimension model ----------
+  // task code -> human label (study.task_labels overrides these defaults)
+  const TASK_LABELS = {
+    TAL: "Temporal Action Localization (TAL)",
+    NAP: "Next Action Prediction (NAP)",
+    DVC: "Dense Video Captioning (DVC)",
+    VS: "Video Summarization (VS)",
+    CVS: "Critical View of Safety (CVS)",
+  };
+  function taskLabel(code) {
+    if (code == null) return "";
+    const m = (study && study.task_labels) || {};
+    return m[code] || TASK_LABELS[code] || code;
+  }
+
   function dimType(dim) {
     if (dim.type) return dim.type;
     if (dim.scale) return "likert";
@@ -415,7 +429,7 @@
     const card = el("div", { class: "card" });
     const head = el("div", { class: "row", style: "display:flex;align-items:center;gap:10px;margin-bottom:4px" });
     head.appendChild(el("span", { class: "tag", text: "Item " + (pos + 1) + " of " + order.length }));
-    if (item.task) head.appendChild(el("span", { class: "tag task", text: item.task }));
+    if (item.task) head.appendChild(el("span", { class: "tag task", text: taskLabel(item.task) }));
     else if (item.group) head.appendChild(el("span", { class: "tag task", text: item.group }));
     card.appendChild(head);
 

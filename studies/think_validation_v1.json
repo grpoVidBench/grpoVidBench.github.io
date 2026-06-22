@@ -2,8 +2,13 @@
     "study_id":  "think_validation_v1",
     "study_type":  "think",
     "title":  "CholecT50 reasoning - clinician review",
-    "intro_md":  "Watch each clip, then rate the model\u0027s **answer** and its **reasoning**.\n\nFor items that have no reasoning trace, rate only the answer (the reasoning questions are hidden automatically). Use the frame-player to scrub to the relevant moment; the timeline is shown in **source seconds**.",
-    "context_md":  null,
+    "intro_md":  "Watch each clip, then rate the model\u0027s **answer** and its three-level **reasoning** `\u003cthink\u003e`.\n\nFor items that have no reasoning trace, the reasoning questions are hidden automatically. Use the frame-player to scrub to the relevant moment; the timeline is shown in **source seconds**.",
+    "context_md":  "Each reasoning trace `\u003cthink\u003e` is written in **three labelled levels (L1 -\u003e L2 -\u003e L3)**. What each level should contain depends on the task:\n\n**Temporal Action Localization (TAL)** - *when does a phase happen?*\n- **L1** - phase signature \u0026 onset cue: the visual hallmark of the phase and when it first appears.\n- **L2** - boundary contrast: distinguish the phase from what comes just before/after to fix where it ends.\n- **L3** - phase-order bound \u0026 conclusion: place it in the fixed phase order and conclude the time span.\n\n**Next Action Prediction (NAP)** - *what phase comes next?*\n- **L1** - the current step at the clip\u0027s end.\n- **L2** - completion cue: evidence the current phase\u0027s objective is essentially achieved.\n- **L3** - procedural logic \u0026 conclusion: apply the fixed order to name the next phase.\n\n**Dense Video Captioning (DVC)** - *list the segments.*\n- **L1** - scan \u0026 enumerate: which phases appear, and in what order.\n- **L2** - boundaries: the transition cue that fixes each segment boundary.\n- **L3** - per-segment content \u0026 conclusion: the [start, end] list with headline captions.",
+    "task_labels":  {
+                        "TAL":  "Temporal Action Localization (TAL)",
+                        "NAP":  "Next Action Prediction (NAP)",
+                        "DVC":  "Dense Video Captioning (DVC)"
+                    },
     "require_reviewer_id":  true,
     "randomize_items":  true,
     "collect_endpoint":  null,
@@ -22,7 +27,7 @@
     "dimensions":  [
                        {
                            "id":  "faithful",
-                           "label":  "Reasoning is faithful to the video (no invented detail)",
+                           "label":  "Reasoning \u003cthink\u003e is faithful to the video (no invented detail)",
                            "scale":  "likert5_correct",
                            "requires_field":  "think"
                        },
@@ -33,9 +38,22 @@
                            "requires_field":  "think"
                        },
                        {
-                           "id":  "answer_correct",
-                           "label":  "Final answer is correct for this video",
-                           "scale":  "likert5_correct"
+                           "id":  "l1_correct",
+                           "label":  "L1 (identify the phase / current state) is correct",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "l2_correct",
+                           "label":  "L2 (justify the boundaries / transition) is correct",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "l3_correct",
+                           "label":  "L3 (phase-order logic \u0026 final conclusion) is correct",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
                        },
                        {
                            "id":  "acceptability",
