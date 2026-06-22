@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>grpoVidBench · Study</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html" style="text-decoration:none;color:inherit">grpoVidBench<span class="dot">.</span></a>
+      <span class="meta" id="study-title-bar"></span>
+      <span class="spacer"></span>
+      <span id="save-status"></span>
+    </div>
+    <div class="topbar-inner" id="progress-bar-wrap" style="display:none;padding-top:0">
+      <div class="progress-track" style="flex:1"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="meta" id="progress-text" style="min-width:84px;text-align:right"></span>
+    </div>
+  </header>
+
+  <main class="wrap" id="root">
+    <div class="center-load"><div class="spinner"></div><span>Loading study…</span></div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

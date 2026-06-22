@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>grpoVidBench · Clinician Studies</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">grpoVidBench<span class="dot">.</span> <span class="muted" style="font-weight:500">clinician review</span></span>
+      <span class="spacer"></span>
+      <span class="meta">CholecT50 · surgical video reasoning</span>
+    </div>
+  </header>
+
+  <main class="wrap narrow">
+    <p class="eyebrow">Reviewer studies</p>
+    <h1>Choose a study to review</h1>
+    <p class="lead">Each study is self-contained: read the short intro, then rate items one at a time.
+      Your progress is saved in this browser automatically, and you export your responses at the end.</p>
+
+    <div id="study-list" class="study-grid">
+      <div class="center-load"><div class="spinner"></div><span>Loading studies…</span></div>
+    </div>
+    <div id="error" class="banner warn" style="display:none"></div>
+  </main>
+
+  <script>
+    (async function () {
+      const list = document.getElementById('study-list');
+      const err = document.getElementById('error');
+      try {
+        const res = await fetch('./studies/index.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('index.json HTTP ' + res.status);
+        const studies = await res.json();
+        list.innerHTML = '';
+        studies.forEach((s, i) => {
+          const a = document.createElement('a');
+          a.className = 'study-link';
+          a.href = './study.html?study=' + encodeURIComponent(s.study_id);
+          a.innerHTML =
+            '<span class="study-num">' + (i + 1) + '</span>' +
+            '<span><span class="t"></span><span class="s"></span></span>' +
+            '<span class="arrow">→</span>';
+          a.querySelector('.t').textContent = s.title || s.study_id;
+          a.querySelector('.s').textContent = s.study_id;
+          list.appendChild(a);
+        });
+        if (!studies.length) list.innerHTML = '<p class="muted">No studies configured.</p>';
+      } catch (e) {
+        list.innerHTML = '';
+        err.style.display = 'block';
+        err.textContent = 'Could not load ./studies/index.json — ' + e.message;
+      }
+    })();
+  </script>
+</body>
+</html>

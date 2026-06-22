@@ -1,0 +1,273 @@
+{
+    "study_id":  "think_validation_v1",
+    "study_type":  "think",
+    "title":  "CholecT50 reasoning - clinician review",
+    "intro_md":  "Watch each clip, then rate the model\u0027s **answer** and its **reasoning**.\n\nFor items that have no reasoning trace, rate only the answer (the reasoning questions are hidden automatically). Use the frame-player to scrub to the relevant moment; the timeline is shown in **source seconds**.",
+    "context_md":  null,
+    "require_reviewer_id":  true,
+    "randomize_items":  true,
+    "collect_endpoint":  null,
+    "scales":  {
+                   "likert5_correct":  {
+                                           "type":  "likert",
+                                           "min":  1,
+                                           "max":  5,
+                                           "labels":  {
+                                                          "1":  "Incorrect",
+                                                          "3":  "Partially correct",
+                                                          "5":  "Fully correct"
+                                                      }
+                                       }
+               },
+    "dimensions":  [
+                       {
+                           "id":  "faithful",
+                           "label":  "Reasoning is faithful to the video (no invented detail)",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "sound",
+                           "label":  "Clinical / phase-order logic is valid",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "answer_correct",
+                           "label":  "Final answer is correct for this video",
+                           "scale":  "likert5_correct"
+                       },
+                       {
+                           "id":  "acceptability",
+                           "type":  "select",
+                           "label":  "Overall",
+                           "options":  [
+                                           "Accept",
+                                           "Minor edits",
+                                           "Reject"
+                                       ]
+                       },
+                       {
+                           "id":  "error_type",
+                           "type":  "select",
+                           "label":  "Main error (if any)",
+                           "options":  [
+                                           "None",
+                                           "Wrong phase",
+                                           "Wrong time-boundary",
+                                           "Hallucinated detail",
+                                           "Terminology",
+                                           "Other"
+                                       ]
+                       },
+                       {
+                           "id":  "comments",
+                           "type":  "text",
+                           "label":  "Comments",
+                           "optional":  true
+                       }
+                   ],
+    "wrapup":  [
+                   {
+                       "id":  "missing",
+                       "label":  "Anything important the criteria/items missed?"
+                   }
+               ],
+    "items":  [
+                  {
+                      "item_id":  "ITEM-01",
+                      "task":  "TAL",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "start":  0,
+                      "end":  97,
+                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?",
+                      "answer":  "0.0-97.0 seconds.",
+                      "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is identified by graspers unfolding an endoscopic specimen_bag on the liver surface, opening the translucent pouch, placing the detached gallbladder inside, and cinching the drawstring; this becomes visible at the start of the clip around 0.0 seconds.\n\nL2 (boundary contrast): No preceding operative phase is visible before this packaging activity, while the endpoint is fixed by the shift after the bag is closed and drawn toward the trocar: at about 98.0 seconds the graspers instead retract the liver and work on the cauterized gallbladder fossa with cleaning/coagulation contact.\n\nL3 (phase-order bound \u0026 conclusion): In the sequence preparation -\u003e Calot-triangle-dissection -\u003e clipping-and-cutting -\u003e gallbladder-dissection -\u003e gallbladder-packaging -\u003e cleaning-and-coagulation -\u003e gallbladder-extraction, the bagging of the detached gallbladder immediately before liver-bed cleaning confirms gallbladder-packaging spans 0.0-97.0 seconds."
+                  },
+                  {
+                      "item_id":  "ITEM-02",
+                      "task":  "TAL",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "start":  0,
+                      "end":  72,
+                      "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Possible phases in this video include: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. What is the time span of cleaning-and-coagulation?",
+                      "answer":  "0.0-72.0 seconds.",
+                      "think":  null
+                  },
+                  {
+                      "item_id":  "ITEM-03",
+                      "task":  "TAL",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "start":  0,
+                      "end":  97,
+                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?",
+                      "answer":  "0.0-97.0 seconds.",
+                      "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is identified by graspers unfolding a translucent specimen_bag, placing the detached gallbladder into it, and cinching the bag closed; this is visible from the start of the clip at 0.0 seconds.\n\nL2 (boundary contrast): There is no preceding operative phase visible before the bag handling begins, while the activity changes after 97.0 seconds to liver retraction, exposure of the cauterized gallbladder fossa, and cleaning/coagulation of the liver bed rather than packing the gallbladder.\n\nL3 (phase-order bound \u0026 conclusion): In the fixed sequence, gallbladder-packaging follows gallbladder-dissection and precedes cleaning-and-coagulation, matching the transition from bagging the detached gallbladder to treating the liver bed; therefore gallbladder-packaging spans 0.0–97.0 seconds."
+                  },
+                  {
+                      "item_id":  "ITEM-04",
+                      "task":  "TAL",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "start":  0,
+                      "end":  96,
+                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?",
+                      "answer":  "0.0-96.0 seconds.",
+                      "think":  null
+                  },
+                  {
+                      "item_id":  "ITEM-05",
+                      "task":  "TAL",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "start":  0,
+                      "end":  72,
+                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. The procedure may involve: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. Find the segment(s) where cleaning-and-coagulation happens.",
+                      "answer":  "0.0-72.0 seconds.",
+                      "think":  null
+                  },
+                  {
+                      "item_id":  "ITEM-06",
+                      "task":  "NAP",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Considering these surgical phases: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027], what is the most likely next phase?",
+                      "answer":  "gallbladder-extraction",
+                      "think":  "L1: At the clip’s end, the current phase is cleaning-and-coagulation: graspers retract/elevate the liver while the instrument tip works along the cauterized gallbladder fossa and adjacent clipped tissue to clear/coagulate the liver bed.\n\nL2: The gallbladder is already detached and packed/cinched inside the specimen_bag, and the exposed liver bed has been repeatedly inspected and treated, with the instruments shifting from the fossa back toward the bag.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once cleaning-and-coagulation has essentially cleared the fossa after the gallbladder is bagged, the next procedural action is removal of the bagged specimen; therefore the next step is gallbladder-extraction."
+                  },
+                  {
+                      "item_id":  "ITEM-07",
+                      "task":  "NAP",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. From the list of possible phases: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027], which one should follow the current segment?",
+                      "answer":  "gallbladder-extraction",
+                      "think":  "L1: At the clip’s end, the grasper retracts/elevates the liver and works along the moist, bloody, cauterized gallbladder fossa, contacting the liver bed and clipped tissue for cleaning-and-coagulation.\n\nL2: The gallbladder is already detached and packed in the cinched specimen_bag, and the liver bed has been exposed and treated; the instrument then moves away from the fossa toward the specimen_bag, indicating the cleaning-and-coagulation objective is essentially complete.\n\nL3: In laparoscopic cholecystectomy, after cleaning-and-coagulation follows removal of the bagged specimen through the trocar site, so the next step is gallbladder-extraction."
+                  },
+                  {
+                      "item_id":  "ITEM-08",
+                      "task":  "NAP",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. The procedure includes the following phases: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]. What comes next after the current video?",
+                      "answer":  "clipping-and-cutting",
+                      "think":  "L1: At the end of the clip, the procedure is in Calot/hepatocystic triangle dissection: graspers retract the gallbladder neck/infundibulum while a hook/white-tipped dissector, bipolar, and irrigator work around the cystic duct region and gallbladder–liver interface.\n\nL2: The dissection plane has been widened, bleeding points have been controlled with bipolar coagulation, bloody fluid has been cleared, and the cystic duct region/gray tubular structure is exposed under sustained traction, indicating the Calot dissection objective is essentially achieved.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once Calot triangle dissection has exposed the ductal structures sufficiently, the next phase is clipping-and-cutting of the cystic duct/artery structures; therefore the next step is clipping-and-cutting."
+                  },
+                  {
+                      "item_id":  "ITEM-09",
+                      "task":  "NAP",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Considering these surgical phases: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027], what is the most likely next phase?",
+                      "answer":  "cleaning-and-coagulation",
+                      "think":  "L1 (current step at the clip\u0027s END): The final activity is gallbladder-packaging: graspers spread the specimen_bag on the liver surface, place the detached gallbladder into the translucent pouch, and cinch/draw the bag toward the trocar while retracting the liver near the liver bed/fossa.\n\nL2 (completion cue): The gallbladder is already freed from the liver bed and packed inside the partially collapsed specimen_bag, with the adjacent dissected fossa exposed rather than undergoing further hook dissection or Calot triangle work.\n\nL3 (procedural logic \u0026 conclusion): After gallbladder-packaging, the operative sequence proceeds to inspection, suction/irrigation, and hemostasis of the exposed liver bed; therefore the next step is cleaning-and-coagulation."
+                  },
+                  {
+                      "item_id":  "ITEM-10",
+                      "task":  "NAP",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Considering these surgical phases: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027], what is the most likely next phase?",
+                      "answer":  "clipping-and-cutting",
+                      "think":  "L1: At the clip’s end, the grasper maintains traction on the gallbladder infundibulum while the hook/white-tipped dissector, bipolar, and irrigator are used in the Calot hepatocystic triangle to clear fibrofatty tissue around the cystic duct region and gallbladder–liver interface.\n\nL2: The dissection has exposed a gray tubular cystic-duct-region structure, widened the plane around the gallbladder neck, and controlled minor bleeding with bipolar coagulation and irrigation, indicating the Calot triangle dissection objective is essentially achieved.\n\nL3: In the standard laparoscopic cholecystectomy sequence, once Calot triangle dissection has prepared the cystic duct/artery region, the next phase is application of clips and division of these structures; therefore the next step is clipping-and-cutting."
+                  },
+                  {
+                      "item_id":  "ITEM-11",
+                      "task":  "DVC",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "segments":  [
+                                       [
+                                           0,
+                                           97
+                                       ],
+                                       [
+                                           98,
+                                           170
+                                       ]
+                                   ],
+                      "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Create an event list restricted to actions in [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]. For each event: (1) start_time, (2) end_time, (3) description of this event.",
+                      "answer":  "0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.\n98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.",
+                      "think":  "L1 (scan \u0026 enumerate): The clip shows Gallbladder Packaging first: graspers unfold a specimen_bag on the liver, load the detached gallbladder, and cinch the bag. It then moves into Cleaning/Coagulation: graspers retract the liver and instruments contact the bloody cauterized gallbladder fossa/liver bed for cleaning or hemostasis.\n\nL2 (boundaries): The boundary at 97.0–98.0s is fixed when the action changes from closing and drawing the specimen_bag toward the trocar to deliberate liver elevation and exposure of the raw gallbladder fossa. This makes the packaging segment end before fossa-focused cleaning/coagulation begins, keeping the two segments contiguous and non-overlapping.\n\nL3 (per-segment content \u0026 conclusion): [0.0, 97.0] Gallbladder Packaging — graspers open/cinch specimen_bag around detached gallbladder; [98.0, 170.0] Cleaning/Coagulation — graspers retract liver while instrument cleans/coagulates gallbladder fossa."
+                  },
+                  {
+                      "item_id":  "ITEM-12",
+                      "task":  "DVC",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "segments":  [
+                                       [
+                                           0,
+                                           97
+                                       ],
+                                       [
+                                           99,
+                                           170
+                                       ]
+                                   ],
+                      "question":  "You are an expert in operative video analysis. The following video contains endoscopic footage of a laparoscopic cholecystectomy, where the gallbladder is removed using small incisions and specialized instruments. Identify and describe ONLY segments where the video shows actions from this list: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]. Skip all other content. For each qualifying segment, give [start, end] and a concise description that explicitly names the action from the list.",
+                      "answer":  "0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.\n99.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.",
+                      "think":  "L1 (scan \u0026 enumerate): The clip first shows **Gallbladder Packaging**: graspers open a specimen_bag, place the detached gallbladder inside, and cinch it closed. It then shows **Cleaning/Coagulation**: graspers retract the liver while an instrument works along the bloody cauterized liver bed/fossa.\n\nL2 (boundaries): The transition occurs at the change from bag handling and closure near the trocar to liver retraction with exposure of the gallbladder fossa and instrument contact for hemostasis/cleaning. This fixes two non-overlapping segments: packaging through 97.0s, then cleaning/coagulation from the next visible interval at 99.0s.\n\nL3 (per-segment content \u0026 conclusion):  \n[0.0, 97.0] — **Gallbladder Packaging: specimen_bag opened, gallbladder packed, bag cinched**  \n[99.0, 170.0] — **Cleaning/Coagulation: liver bed/fossa exposed and treated**"
+                  },
+                  {
+                      "item_id":  "ITEM-13",
+                      "task":  "DVC",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "segments":  [
+                                       [
+                                           0,
+                                           20
+                                       ],
+                                       [
+                                           24,
+                                           673
+                                       ]
+                                   ],
+                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Identify and describe ONLY segments where the video shows actions from this list: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]. Skip all other content. For each qualifying segment, give [start, end] and a concise description that explicitly names the action from the list.",
+                      "answer":  "0.0-20.0 seconds: During the preparation phase, a grasper first secures the gallbladder near the fundus and retracts it superiorly against the liver, after which a second grasper enters from the left to grasp the lower gallbladder/infundibular region and maintain lateral traction while a white-tipped instrument briefly approaches the liver surface without visible dissection.\n24.0-673.0 seconds: During the Calot/hepatocystic triangle dissection, the gallbladder neck/infundibulum was repeatedly grasped and retracted superiorly, laterally, and away from the liver to maintain tension while a hook/white-tipped dissector opened the fibrofatty peritoneal tissue around the cystic duct and gallbladder–liver interface, progressively widening a pale-to-bloody dissection plane with minor bleeding, after which bipolar coagulation controlled visible vessels and bleeding points, irrigation/aspiration cleared bloody fluid, and continued traction exposed the cystic duct region, gray tubular structure, and inflamed liver-bed attachment for further separation.",
+                      "think":  "L1: From 0.0–20.0 s the visible phase is Preparation: graspers secure the gallbladder fundus and infundibulum for superior/lateral retraction without dissection. From 24.0–673.0 s the visible phase is Calot/hepatocystic triangle dissection: traction exposes the infundibulum/cystic duct region while hook dissection, bipolar coagulation, and irrigation address fibrofatty tissue and bleeding.\n\nL2: The transition is fixed by the change from positioning-only gallbladder retraction to active hook opening of peritoneal/fibrofatty tissue around the cystic duct and gallbladder–liver interface. Thus the preparation interval ends at 20.0 s and the Calot dissection interval starts at 24.0 s, with no overlapping phase actions and no observed clipping, cutting, gallbladder detachment, packaging, or cleaning boundary.\n\nL3: [0.0, 20.0]: Preparation — fundus and infundibulum grasped for gallbladder retraction. [24.0, 673.0]: Calot triangle dissection — hook/bipolar/irrigator work exposes cystic duct region and liver-bed interface."
+                  },
+                  {
+                      "item_id":  "ITEM-14",
+                      "task":  "DVC",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "segments":  [
+                                       [
+                                           0,
+                                           579
+                                       ],
+                                       [
+                                           583,
+                                           680
+                                       ]
+                                   ],
+                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Create an event list restricted to actions in [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]. For each event: (1) start_time, (2) end_time, (3) description of this event.",
+                      "answer":  "0.0-579.0 seconds: During gallbladder dissection, graspers repeatedly retract and reposition the gallbladder and liver edge to tension the fibrous gallbladder–liver attachments, while a hook/white-tipped dissecting instrument progressively separates the gallbladder from the liver bed along the fossa—working around clipped structures from the lower exposed interface toward the upper/right attachments—thereby widening a pale fibrotic to raw blood-stained cauterized plane with intermittent char, smoke, and small bleeding, as the irrigator intermittently aspirates and irrigates pooled fluid and blood to keep the exposed dissection bed clear.\n583.0-680.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.",
+                      "think":  "L1: From 0.0–579.0s, the visible phase is gallbladder dissection: graspers retract the gallbladder/liver while a hook separates fibrous attachments from the liver bed/fossa with irrigation/aspiration. From 583.0–680.0s, the phase is gallbladder packaging: graspers open a specimen_bag, place the detached gallbladder inside, cinch it, and draw it toward the trocar.\n\nL2: The transition is fixed after the brief dark/occluded interval by the change from hook-based cautery dissection and irrigator clearing of the liver bed to grasper manipulation of a translucent specimen_bag on the liver surface. Thus gallbladder dissection ends at 579.0s and gallbladder packaging begins at 583.0s, with no overlapping active phase.\n\nL3: [0.0, 579.0]: Gallbladder dissection from liver bed/fossa. [583.0, 680.0]: Gallbladder packaging in specimen_bag."
+                  },
+                  {
+                      "item_id":  "ITEM-15",
+                      "task":  "DVC",
+                      "dataset":  "CholecT50",
+                      "video_id":  "VID01",
+                      "segments":  [
+                                       [
+                                           0,
+                                           20
+                                       ],
+                                       [
+                                           25,
+                                           673
+                                       ]
+                                   ],
+                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Create an event list restricted to actions in [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]. For each event: (1) start_time, (2) end_time, (3) description of this event.",
+                      "answer":  "0.0-20.0 seconds: During the preparation phase, a grasper first secures the gallbladder near the fundus and retracts it superiorly against the liver, after which a second grasper enters from the left to grasp the lower gallbladder/infundibular region and maintain lateral traction while a white-tipped instrument briefly approaches the liver surface without visible dissection.\n25.0-673.0 seconds: During the Calot/hepatocystic triangle dissection, the gallbladder neck/infundibulum was repeatedly grasped and retracted superiorly, laterally, and away from the liver to maintain tension while a hook/white-tipped dissector opened the fibrofatty peritoneal tissue around the cystic duct and gallbladder–liver interface, progressively widening a pale-to-bloody dissection plane with minor bleeding, after which bipolar coagulation controlled visible vessels and bleeding points, irrigation/aspiration cleared bloody fluid, and continued traction exposed the cystic duct region, gray tubular structure, and inflamed liver-bed attachment for further separation.",
+                      "think":  "L1 (scan \u0026 enumerate): Preparation appears first, with graspers retracting the gallbladder fundus and infundibulum without tissue division; Calot/hepatocystic triangle dissection follows, with hook/white-tipped dissection, bipolar coagulation, and irrigation around the cystic duct and gallbladder–liver interface.\n\nL2 (boundaries): The transition is fixed between 20.0s and 25.0s by the change from traction/positioning only to active fibrofatty peritoneal dissection in the Calot triangle, making the two observed phase segments sequential and non-overlapping.\n\nL3 (per-segment content \u0026 conclusion): [0.0, 20.0] Preparation — gallbladder grasping and retraction. [25.0, 673.0] Calot/hepatocystic triangle dissection — hook dissection with bipolar hemostasis and irrigation."
+                  }
+              ]
+}
