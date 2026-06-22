@@ -42,19 +42,33 @@
                                                           "3":  "Partially correct",
                                                           "5":  "Fully correct"
                                                       }
-                                       },
-                   "likert5_agree":  {
-                                         "type":  "likert",
-                                         "min":  1,
-                                         "max":  5,
-                                         "labels":  {
-                                                        "1":  "Strongly disagree",
-                                                        "3":  "Neutral",
-                                                        "5":  "Strongly agree"
-                                                    }
-                                     }
+                                       }
                },
     "dimensions":  [
+                       {
+                           "id":  "faithful",
+                           "label":  "Reasoning \u003cthink\u003e is faithful to the frames (no invented detail)",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "l1_correct",
+                           "label":  "L1 is correct (see the pinned levels for this task)",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "l2_correct",
+                           "label":  "L2 is correct",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
+                       {
+                           "id":  "l3_correct",
+                           "label":  "L3 is correct, and the final conclusion follows from it",
+                           "scale":  "likert5_correct",
+                           "requires_field":  "think"
+                       },
                        {
                            "id":  "timeline_correct",
                            "label":  "The per-criterion timeline (when C1/C2/C3 are first met, or never) is correct",
@@ -64,18 +78,6 @@
                            "id":  "verdict_correct",
                            "label":  "The final CVS verdict is correct",
                            "scale":  "likert5_correct"
-                       },
-                       {
-                           "id":  "faithful",
-                           "label":  "Reasoning is faithful to the frames (no invented detail)",
-                           "scale":  "likert5_correct",
-                           "requires_field":  "think"
-                       },
-                       {
-                           "id":  "criteria_separated",
-                           "label":  "Each criterion is judged from its own evidence region (criteria not confused)",
-                           "scale":  "likert5_agree",
-                           "requires_field":  "think"
                        },
                        {
                            "id":  "acceptability",
