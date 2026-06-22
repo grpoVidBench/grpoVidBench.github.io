@@ -4,7 +4,7 @@
     "timeline":  "normalized",
     "native_fps":  null,
     "default_playback_fps":  1,
-    "dir":  "./Videos/Endoscapes/V7_36175/",
+    "dir":  "./Videos/Endoscapes/Videos/",
     "frames":  [
                    "7_36175.jpg",
                    "7_36925.jpg",
