@@ -1,0 +1,5 @@
+[
+  {"study_id":"think_criteria_v1","title":"1 · Validate the reasoning criteria"},
+  {"study_id":"think_validation_v1","title":"2 · Validate per-video reasoning"},
+  {"study_id":"vs_caption_v1","title":"3 · Validate video summaries"}
+]

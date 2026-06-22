@@ -1,0 +1,41 @@
+{
+  "study_id": "think_criteria_v1",
+  "study_type": "criteria",
+  "title": "CholecT50 reasoning criteria — clinician review",
+  "intro_md": "We are designing a prompt that asks a model to **reason** about surgical-video questions before answering. The reasoning must follow a fixed set of **criteria** (L1 / L2 / L3). Your job here is to judge whether each criterion is the *right thing to require* of the reasoning.\n\nFor each criterion, tell us whether it is **appropriate** to require and whether it is **clearly stated**. Add comments where a criterion is redundant, ambiguous, or missing something.",
+  "context_md": "The reasoning levels are:\n\n- **L1 — phase signature & onset cue:** name the phase and the *visible evidence* that it begins.\n- **L2 — boundary contrast:** justify the start/end against the neighbouring phases.\n- **L3 — phase-order bound:** confirm the window using the known order of surgical phases.",
+  "require_reviewer_id": true,
+  "randomize_items": true,
+  "collect_endpoint": null,
+  "scales": {
+    "likert5_agree": { "type": "likert", "min": 1, "max": 5,
+      "labels": { "1": "Strongly disagree", "3": "Neutral", "5": "Strongly agree" } }
+  },
+  "dimensions": [
+    { "id": "appropriate", "label": "This criterion is appropriate to require of the reasoning", "scale": "likert5_agree" },
+    { "id": "clear", "label": "This criterion is clearly and unambiguously stated", "scale": "likert5_agree" },
+    { "id": "verdict", "type": "select", "label": "Keep this criterion?", "options": ["Keep as-is", "Keep with edits", "Drop"] },
+    { "id": "comments", "type": "text", "label": "Comments (edits, ambiguities, anything missing)", "optional": true }
+  ],
+  "wrapup": [
+    { "id": "missing", "label": "Is there any reasoning requirement these criteria miss entirely?" },
+    { "id": "overall", "label": "Overall, do these three criteria capture what good surgical-video reasoning should show?" }
+  ],
+  "items": [
+    { "item_id": "C-TAL-L1", "group": "TAL",
+      "criterion": "L1 — name the phase signature and its onset cue (the visible evidence that the phase begins).",
+      "rationale": "Anchors the reasoning in an observable trigger rather than a guess." },
+    { "item_id": "C-TAL-L2", "group": "TAL",
+      "criterion": "L2 — justify the start and end boundaries by contrast with the neighbouring phases that come before and after.",
+      "rationale": "Forces the model to defend the window edges, not just point at the middle of the phase." },
+    { "item_id": "C-TAL-L3", "group": "TAL",
+      "criterion": "L3 — confirm the window is consistent with the known fixed order of cholecystectomy phases.",
+      "rationale": "Catches answers that are locally plausible but violate the surgical workflow order." },
+    { "item_id": "C-GEN-EVID", "group": "general",
+      "criterion": "Every claim about what happens in the video must cite a visible instrument or tissue action (e.g. 'graspers cinch the specimen bag'), not an inference about intent.",
+      "rationale": "Distinguishes grounded observation from narrative invention." },
+    { "item_id": "C-GEN-TIME", "group": "general",
+      "criterion": "All time references must be given in source seconds and tied to a specific frame or short span, never a vague 'early/late'.",
+      "rationale": "Makes the reasoning checkable against the clip." }
+  ]
+}

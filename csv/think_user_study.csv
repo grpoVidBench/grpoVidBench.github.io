@@ -1,0 +1,861 @@
+"video_path","task","question","answer","think","prompt"
+"/root/data/CAMMA_data/CholecT50/videos/VID01","TAL","You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?","0.0-97.0 seconds.","L1 (phase signature & onset): Gallbladder-packaging is identified by graspers unfolding an endoscopic specimen_bag on the liver surface, opening the translucent pouch, placing the detached gallbladder inside, and cinching the drawstring; this becomes visible at the start of the clip around 0.0 seconds.
+
+L2 (boundary contrast): No preceding operative phase is visible before this packaging activity, while the endpoint is fixed by the shift after the bag is closed and drawn toward the trocar: at about 98.0 seconds the graspers instead retract the liver and work on the cauterized gallbladder fossa with cleaning/coagulation contact.
+
+L3 (phase-order bound & conclusion): In the sequence preparation -> Calot-triangle-dissection -> clipping-and-cutting -> gallbladder-dissection -> gallbladder-packaging -> cleaning-and-coagulation -> gallbladder-extraction, the bagging of the detached gallbladder immediately before liver-bed cleaning confirms gallbladder-packaging spans 0.0-97.0 seconds.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Queried phase: gallbladder-packaging. It occurs during 0.0-97.0 seconds. Preceding activity: none; following activity: cleaning-and-coagulation.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the time span(s) of gallbladder-packaging is the natural conclusion:
+  L1 (phase signature & onset): state the visual hallmark of gallbladder-packaging (its defining
+     instruments, actions, structures) and when it first becomes visible.
+  L2 (boundary contrast): distinguish gallbladder-packaging from the activity just before and after it; use
+     the change in instruments/actions to fix where it ends.
+  L3 (phase-order bound & conclusion): place gallbladder-packaging in the fixed order preparation ->
+     calot-triangle-dissection -> clipping-and-cutting -> gallbladder-dissection ->
+     gallbladder-packaging -> cleaning-and-coagulation -> gallbladder-extraction to confirm the
+     interval, then conclude the span(s). If gallbladder-packaging never appears, say so at L1 and conclude it
+     does not occur.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Justify the span from the onset/offset activity; do NOT merely restate the time.
+- Timestamps ARE allowed (the span is the answer).
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not invent a span for an absent phase — conclude it does not occur.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","TAL","You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Possible phases in this video include: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. What is the time span of cleaning-and-coagulation?","0.0-72.0 seconds.","","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Queried phase: gallbladder-packaging. It occurs during 0.0-97.0 seconds. Preceding activity: none; following activity: cleaning-and-coagulation.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the time span(s) of gallbladder-packaging is the natural conclusion:
+  L1 (phase signature & onset): state the visual hallmark of gallbladder-packaging (its defining
+     instruments, actions, structures) and when it first becomes visible.
+  L2 (boundary contrast): distinguish gallbladder-packaging from the activity just before and after it; use
+     the change in instruments/actions to fix where it ends.
+  L3 (phase-order bound & conclusion): place gallbladder-packaging in the fixed order preparation ->
+     calot-triangle-dissection -> clipping-and-cutting -> gallbladder-dissection ->
+     gallbladder-packaging -> cleaning-and-coagulation -> gallbladder-extraction to confirm the
+     interval, then conclude the span(s). If gallbladder-packaging never appears, say so at L1 and conclude it
+     does not occur.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Justify the span from the onset/offset activity; do NOT merely restate the time.
+- Timestamps ARE allowed (the span is the answer).
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not invent a span for an absent phase — conclude it does not occur.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","TAL","You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?","0.0-97.0 seconds.","L1 (phase signature & onset): Gallbladder-packaging is identified by graspers unfolding a translucent specimen_bag, placing the detached gallbladder into it, and cinching the bag closed; this is visible from the start of the clip at 0.0 seconds.
+
+L2 (boundary contrast): There is no preceding operative phase visible before the bag handling begins, while the activity changes after 97.0 seconds to liver retraction, exposure of the cauterized gallbladder fossa, and cleaning/coagulation of the liver bed rather than packing the gallbladder.
+
+L3 (phase-order bound & conclusion): In the fixed sequence, gallbladder-packaging follows gallbladder-dissection and precedes cleaning-and-coagulation, matching the transition from bagging the detached gallbladder to treating the liver bed; therefore gallbladder-packaging spans 0.0–97.0 seconds.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Queried phase: gallbladder-packaging. It occurs during 0.0-97.0 seconds. Preceding activity: none; following activity: cleaning-and-coagulation.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the time span(s) of gallbladder-packaging is the natural conclusion:
+  L1 (phase signature & onset): state the visual hallmark of gallbladder-packaging (its defining
+     instruments, actions, structures) and when it first becomes visible.
+  L2 (boundary contrast): distinguish gallbladder-packaging from the activity just before and after it; use
+     the change in instruments/actions to fix where it ends.
+  L3 (phase-order bound & conclusion): place gallbladder-packaging in the fixed order preparation ->
+     calot-triangle-dissection -> clipping-and-cutting -> gallbladder-dissection ->
+     gallbladder-packaging -> cleaning-and-coagulation -> gallbladder-extraction to confirm the
+     interval, then conclude the span(s). If gallbladder-packaging never appears, say so at L1 and conclude it
+     does not occur.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Justify the span from the onset/offset activity; do NOT merely restate the time.
+- Timestamps ARE allowed (the span is the answer).
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not invent a span for an absent phase — conclude it does not occur.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","TAL","You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. The video may contain the following phases: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. When does gallbladder-packaging happen?","0.0-96.0 seconds.","","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Queried phase: gallbladder-packaging. It occurs during 0.0-97.0 seconds. Preceding activity: none; following activity: cleaning-and-coagulation.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the time span(s) of gallbladder-packaging is the natural conclusion:
+  L1 (phase signature & onset): state the visual hallmark of gallbladder-packaging (its defining
+     instruments, actions, structures) and when it first becomes visible.
+  L2 (boundary contrast): distinguish gallbladder-packaging from the activity just before and after it; use
+     the change in instruments/actions to fix where it ends.
+  L3 (phase-order bound & conclusion): place gallbladder-packaging in the fixed order preparation ->
+     calot-triangle-dissection -> clipping-and-cutting -> gallbladder-dissection ->
+     gallbladder-packaging -> cleaning-and-coagulation -> gallbladder-extraction to confirm the
+     interval, then conclude the span(s). If gallbladder-packaging never appears, say so at L1 and conclude it
+     does not occur.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Justify the span from the onset/offset activity; do NOT merely restate the time.
+- Timestamps ARE allowed (the span is the answer).
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not invent a span for an absent phase — conclude it does not occur.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","TAL","You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. The procedure may involve: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. Find the segment(s) where cleaning-and-coagulation happens.","0.0-72.0 seconds.","","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Queried phase: gallbladder-packaging. It occurs during 0.0-97.0 seconds. Preceding activity: none; following activity: cleaning-and-coagulation.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the time span(s) of gallbladder-packaging is the natural conclusion:
+  L1 (phase signature & onset): state the visual hallmark of gallbladder-packaging (its defining
+     instruments, actions, structures) and when it first becomes visible.
+  L2 (boundary contrast): distinguish gallbladder-packaging from the activity just before and after it; use
+     the change in instruments/actions to fix where it ends.
+  L3 (phase-order bound & conclusion): place gallbladder-packaging in the fixed order preparation ->
+     calot-triangle-dissection -> clipping-and-cutting -> gallbladder-dissection ->
+     gallbladder-packaging -> cleaning-and-coagulation -> gallbladder-extraction to confirm the
+     interval, then conclude the span(s). If gallbladder-packaging never appears, say so at L1 and conclude it
+     does not occur.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Justify the span from the onset/offset activity; do NOT merely restate the time.
+- Timestamps ARE allowed (the span is the answer).
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not invent a span for an absent phase — conclude it does not occur.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","NAP","You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Considering these surgical phases: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction'], what is the most likely next phase?","gallbladder-extraction","L1: At the clip’s end, the current phase is cleaning-and-coagulation: graspers retract/elevate the liver while the instrument tip works along the cauterized gallbladder fossa and adjacent clipped tissue to clear/coagulate the liver bed.
+
+L2: The gallbladder is already detached and packed/cinched inside the specimen_bag, and the exposed liver bed has been repeatedly inspected and treated, with the instruments shifting from the fossa back toward the bag.
+
+L3: In the fixed laparoscopic cholecystectomy sequence, once cleaning-and-coagulation has essentially cleared the fossa after the gallbladder is bagged, the next procedural action is removal of the bagged specimen; therefore the next step is gallbladder-extraction.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+The clip ends during cleaning-and-coagulation. The next step after the clip is gallbladder-extraction.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the next step, gallbladder-extraction is the natural conclusion:
+  L1 (current step at the clip's END): from the activity in the FINAL part of the clip,
+     identify the phase in progress (instruments, action, structures).
+  L2 (completion cue): give the observed evidence that this phase's objective is essentially
+     achieved (target divided / freed / packed / fossa cleared), so a transition is due.
+  L3 (procedural logic & conclusion): apply the fixed phase order; the step following the
+     current one is the next action -> conclude gallbladder-extraction. If the next step is NOT the
+     textbook successor, justify it from the observed state (e.g. residual bleeding ->
+     coagulation is revisited) rather than forcing the order.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Read the END of the clip to set the current phase.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not base the current phase on early-clip activity.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","NAP","You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. From the list of possible phases: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction'], which one should follow the current segment?","gallbladder-extraction","L1: At the clip’s end, the grasper retracts/elevates the liver and works along the moist, bloody, cauterized gallbladder fossa, contacting the liver bed and clipped tissue for cleaning-and-coagulation.
+
+L2: The gallbladder is already detached and packed in the cinched specimen_bag, and the liver bed has been exposed and treated; the instrument then moves away from the fossa toward the specimen_bag, indicating the cleaning-and-coagulation objective is essentially complete.
+
+L3: In laparoscopic cholecystectomy, after cleaning-and-coagulation follows removal of the bagged specimen through the trocar site, so the next step is gallbladder-extraction.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+The clip ends during cleaning-and-coagulation. The next step after the clip is gallbladder-extraction.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the next step, gallbladder-extraction is the natural conclusion:
+  L1 (current step at the clip's END): from the activity in the FINAL part of the clip,
+     identify the phase in progress (instruments, action, structures).
+  L2 (completion cue): give the observed evidence that this phase's objective is essentially
+     achieved (target divided / freed / packed / fossa cleared), so a transition is due.
+  L3 (procedural logic & conclusion): apply the fixed phase order; the step following the
+     current one is the next action -> conclude gallbladder-extraction. If the next step is NOT the
+     textbook successor, justify it from the observed state (e.g. residual bleeding ->
+     coagulation is revisited) rather than forcing the order.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Read the END of the clip to set the current phase.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not base the current phase on early-clip activity.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","NAP","You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. The procedure includes the following phases: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction']. What comes next after the current video?","clipping-and-cutting","L1: At the end of the clip, the procedure is in Calot/hepatocystic triangle dissection: graspers retract the gallbladder neck/infundibulum while a hook/white-tipped dissector, bipolar, and irrigator work around the cystic duct region and gallbladder–liver interface.
+
+L2: The dissection plane has been widened, bleeding points have been controlled with bipolar coagulation, bloody fluid has been cleared, and the cystic duct region/gray tubular structure is exposed under sustained traction, indicating the Calot dissection objective is essentially achieved.
+
+L3: In the fixed laparoscopic cholecystectomy sequence, once Calot triangle dissection has exposed the ductal structures sufficiently, the next phase is clipping-and-cutting of the cystic duct/artery structures; therefore the next step is clipping-and-cutting.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+The clip ends during cleaning-and-coagulation. The next step after the clip is gallbladder-extraction.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the next step, gallbladder-extraction is the natural conclusion:
+  L1 (current step at the clip's END): from the activity in the FINAL part of the clip,
+     identify the phase in progress (instruments, action, structures).
+  L2 (completion cue): give the observed evidence that this phase's objective is essentially
+     achieved (target divided / freed / packed / fossa cleared), so a transition is due.
+  L3 (procedural logic & conclusion): apply the fixed phase order; the step following the
+     current one is the next action -> conclude gallbladder-extraction. If the next step is NOT the
+     textbook successor, justify it from the observed state (e.g. residual bleeding ->
+     coagulation is revisited) rather than forcing the order.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Read the END of the clip to set the current phase.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not base the current phase on early-clip activity.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","NAP","You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Considering these surgical phases: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction'], what is the most likely next phase?","cleaning-and-coagulation","L1 (current step at the clip's END): The final activity is gallbladder-packaging: graspers spread the specimen_bag on the liver surface, place the detached gallbladder into the translucent pouch, and cinch/draw the bag toward the trocar while retracting the liver near the liver bed/fossa.
+
+L2 (completion cue): The gallbladder is already freed from the liver bed and packed inside the partially collapsed specimen_bag, with the adjacent dissected fossa exposed rather than undergoing further hook dissection or Calot triangle work.
+
+L3 (procedural logic & conclusion): After gallbladder-packaging, the operative sequence proceeds to inspection, suction/irrigation, and hemostasis of the exposed liver bed; therefore the next step is cleaning-and-coagulation.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+The clip ends during cleaning-and-coagulation. The next step after the clip is gallbladder-extraction.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the next step, gallbladder-extraction is the natural conclusion:
+  L1 (current step at the clip's END): from the activity in the FINAL part of the clip,
+     identify the phase in progress (instruments, action, structures).
+  L2 (completion cue): give the observed evidence that this phase's objective is essentially
+     achieved (target divided / freed / packed / fossa cleared), so a transition is due.
+  L3 (procedural logic & conclusion): apply the fixed phase order; the step following the
+     current one is the next action -> conclude gallbladder-extraction. If the next step is NOT the
+     textbook successor, justify it from the observed state (e.g. residual bleeding ->
+     coagulation is revisited) rather than forcing the order.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Read the END of the clip to set the current phase.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not base the current phase on early-clip activity.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","NAP","You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Considering these surgical phases: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction'], what is the most likely next phase?","clipping-and-cutting","L1: At the clip’s end, the grasper maintains traction on the gallbladder infundibulum while the hook/white-tipped dissector, bipolar, and irrigator are used in the Calot hepatocystic triangle to clear fibrofatty tissue around the cystic duct region and gallbladder–liver interface.
+
+L2: The dissection has exposed a gray tubular cystic-duct-region structure, widened the plane around the gallbladder neck, and controlled minor bleeding with bipolar coagulation and irrigation, indicating the Calot triangle dissection objective is essentially achieved.
+
+L3: In the standard laparoscopic cholecystectomy sequence, once Calot triangle dissection has prepared the cystic duct/artery region, the next phase is application of clips and division of these structures; therefore the next step is clipping-and-cutting.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+The clip ends during cleaning-and-coagulation. The next step after the clip is gallbladder-extraction.
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the next step, gallbladder-extraction is the natural conclusion:
+  L1 (current step at the clip's END): from the activity in the FINAL part of the clip,
+     identify the phase in progress (instruments, action, structures).
+  L2 (completion cue): give the observed evidence that this phase's objective is essentially
+     achieved (target divided / freed / packed / fossa cleared), so a transition is due.
+  L3 (procedural logic & conclusion): apply the fixed phase order; the step following the
+     current one is the next action -> conclude gallbladder-extraction. If the next step is NOT the
+     textbook successor, justify it from the observed state (e.g. residual bleeding ->
+     coagulation is revisited) rather than forcing the order.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Read the END of the clip to set the current phase.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do not base the current phase on early-clip activity.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","DVC","You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Create an event list restricted to actions in ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction']. For each event: (1) start_time, (2) end_time, (3) description of this event.","0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.","L1 (scan & enumerate): The clip shows Gallbladder Packaging first: graspers unfold a specimen_bag on the liver, load the detached gallbladder, and cinch the bag. It then moves into Cleaning/Coagulation: graspers retract the liver and instruments contact the bloody cauterized gallbladder fossa/liver bed for cleaning or hemostasis.
+
+L2 (boundaries): The boundary at 97.0–98.0s is fixed when the action changes from closing and drawing the specimen_bag toward the trocar to deliberate liver elevation and exposure of the raw gallbladder fossa. This makes the packaging segment end before fossa-focused cleaning/coagulation begins, keeping the two segments contiguous and non-overlapping.
+
+L3 (per-segment content & conclusion): [0.0, 97.0] Gallbladder Packaging — graspers open/cinch specimen_bag around detached gallbladder; [98.0, 170.0] Cleaning/Coagulation — graspers retract liver while instrument cleans/coagulates gallbladder fossa.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Segments in order: [0.0-97.0s: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.] [98.0-170.0s: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.]
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the list of [start, end] segments with their captions is the natural conclusion:
+  L1 (scan & enumerate): sweeping the clip start to end, list which candidate phases appear
+     and in what order, by their visual signatures. Omit phases that do not appear.
+  L2 (boundaries): for each adjacent pair, state the transition cue (the change in
+     instrument/action) that fixes the boundary, so the segments are non-overlapping and contiguous.
+  L3 (per-segment content & conclusion): for each segment in order, give the key
+     instrument-action-structure its caption must carry, then conclude the list of [start, end]
+     segments with their captions.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Keep L3 at HEADLINE level (one short phrase per segment).
+- Justify non-overlap/contiguity at L2.
+- Timestamps ARE allowed.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT write the full captions inside the think — that duplicates the answer; headline only.
+- Do not include phases that are absent (it is a filter).
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","DVC","You are an expert in operative video analysis. The following video contains endoscopic footage of a laparoscopic cholecystectomy, where the gallbladder is removed using small incisions and specialized instruments. Identify and describe ONLY segments where the video shows actions from this list: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction']. Skip all other content. For each qualifying segment, give [start, end] and a concise description that explicitly names the action from the list.","0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+99.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.","L1 (scan & enumerate): The clip first shows **Gallbladder Packaging**: graspers open a specimen_bag, place the detached gallbladder inside, and cinch it closed. It then shows **Cleaning/Coagulation**: graspers retract the liver while an instrument works along the bloody cauterized liver bed/fossa.
+
+L2 (boundaries): The transition occurs at the change from bag handling and closure near the trocar to liver retraction with exposure of the gallbladder fossa and instrument contact for hemostasis/cleaning. This fixes two non-overlapping segments: packaging through 97.0s, then cleaning/coagulation from the next visible interval at 99.0s.
+
+L3 (per-segment content & conclusion):  
+[0.0, 97.0] — **Gallbladder Packaging: specimen_bag opened, gallbladder packed, bag cinched**  
+[99.0, 170.0] — **Cleaning/Coagulation: liver bed/fossa exposed and treated**","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Segments in order: [0.0-97.0s: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.] [98.0-170.0s: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.]
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the list of [start, end] segments with their captions is the natural conclusion:
+  L1 (scan & enumerate): sweeping the clip start to end, list which candidate phases appear
+     and in what order, by their visual signatures. Omit phases that do not appear.
+  L2 (boundaries): for each adjacent pair, state the transition cue (the change in
+     instrument/action) that fixes the boundary, so the segments are non-overlapping and contiguous.
+  L3 (per-segment content & conclusion): for each segment in order, give the key
+     instrument-action-structure its caption must carry, then conclude the list of [start, end]
+     segments with their captions.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Keep L3 at HEADLINE level (one short phrase per segment).
+- Justify non-overlap/contiguity at L2.
+- Timestamps ARE allowed.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT write the full captions inside the think — that duplicates the answer; headline only.
+- Do not include phases that are absent (it is a filter).
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","DVC","You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Identify and describe ONLY segments where the video shows actions from this list: ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction']. Skip all other content. For each qualifying segment, give [start, end] and a concise description that explicitly names the action from the list.","0.0-20.0 seconds: During the preparation phase, a grasper first secures the gallbladder near the fundus and retracts it superiorly against the liver, after which a second grasper enters from the left to grasp the lower gallbladder/infundibular region and maintain lateral traction while a white-tipped instrument briefly approaches the liver surface without visible dissection.
+24.0-673.0 seconds: During the Calot/hepatocystic triangle dissection, the gallbladder neck/infundibulum was repeatedly grasped and retracted superiorly, laterally, and away from the liver to maintain tension while a hook/white-tipped dissector opened the fibrofatty peritoneal tissue around the cystic duct and gallbladder–liver interface, progressively widening a pale-to-bloody dissection plane with minor bleeding, after which bipolar coagulation controlled visible vessels and bleeding points, irrigation/aspiration cleared bloody fluid, and continued traction exposed the cystic duct region, gray tubular structure, and inflamed liver-bed attachment for further separation.","L1: From 0.0–20.0 s the visible phase is Preparation: graspers secure the gallbladder fundus and infundibulum for superior/lateral retraction without dissection. From 24.0–673.0 s the visible phase is Calot/hepatocystic triangle dissection: traction exposes the infundibulum/cystic duct region while hook dissection, bipolar coagulation, and irrigation address fibrofatty tissue and bleeding.
+
+L2: The transition is fixed by the change from positioning-only gallbladder retraction to active hook opening of peritoneal/fibrofatty tissue around the cystic duct and gallbladder–liver interface. Thus the preparation interval ends at 20.0 s and the Calot dissection interval starts at 24.0 s, with no overlapping phase actions and no observed clipping, cutting, gallbladder detachment, packaging, or cleaning boundary.
+
+L3: [0.0, 20.0]: Preparation — fundus and infundibulum grasped for gallbladder retraction. [24.0, 673.0]: Calot triangle dissection — hook/bipolar/irrigator work exposes cystic duct region and liver-bed interface.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Segments in order: [0.0-97.0s: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.] [98.0-170.0s: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.]
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the list of [start, end] segments with their captions is the natural conclusion:
+  L1 (scan & enumerate): sweeping the clip start to end, list which candidate phases appear
+     and in what order, by their visual signatures. Omit phases that do not appear.
+  L2 (boundaries): for each adjacent pair, state the transition cue (the change in
+     instrument/action) that fixes the boundary, so the segments are non-overlapping and contiguous.
+  L3 (per-segment content & conclusion): for each segment in order, give the key
+     instrument-action-structure its caption must carry, then conclude the list of [start, end]
+     segments with their captions.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Keep L3 at HEADLINE level (one short phrase per segment).
+- Justify non-overlap/contiguity at L2.
+- Timestamps ARE allowed.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT write the full captions inside the think — that duplicates the answer; headline only.
+- Do not include phases that are absent (it is a filter).
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","DVC","You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Create an event list restricted to actions in ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction']. For each event: (1) start_time, (2) end_time, (3) description of this event.","0.0-579.0 seconds: During gallbladder dissection, graspers repeatedly retract and reposition the gallbladder and liver edge to tension the fibrous gallbladder–liver attachments, while a hook/white-tipped dissecting instrument progressively separates the gallbladder from the liver bed along the fossa—working around clipped structures from the lower exposed interface toward the upper/right attachments—thereby widening a pale fibrotic to raw blood-stained cauterized plane with intermittent char, smoke, and small bleeding, as the irrigator intermittently aspirates and irrigates pooled fluid and blood to keep the exposed dissection bed clear.
+583.0-680.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.","L1: From 0.0–579.0s, the visible phase is gallbladder dissection: graspers retract the gallbladder/liver while a hook separates fibrous attachments from the liver bed/fossa with irrigation/aspiration. From 583.0–680.0s, the phase is gallbladder packaging: graspers open a specimen_bag, place the detached gallbladder inside, cinch it, and draw it toward the trocar.
+
+L2: The transition is fixed after the brief dark/occluded interval by the change from hook-based cautery dissection and irrigator clearing of the liver bed to grasper manipulation of a translucent specimen_bag on the liver surface. Thus gallbladder dissection ends at 579.0s and gallbladder packaging begins at 583.0s, with no overlapping active phase.
+
+L3: [0.0, 579.0]: Gallbladder dissection from liver bed/fossa. [583.0, 680.0]: Gallbladder packaging in specimen_bag.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Segments in order: [0.0-97.0s: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.] [98.0-170.0s: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.]
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the list of [start, end] segments with their captions is the natural conclusion:
+  L1 (scan & enumerate): sweeping the clip start to end, list which candidate phases appear
+     and in what order, by their visual signatures. Omit phases that do not appear.
+  L2 (boundaries): for each adjacent pair, state the transition cue (the change in
+     instrument/action) that fixes the boundary, so the segments are non-overlapping and contiguous.
+  L3 (per-segment content & conclusion): for each segment in order, give the key
+     instrument-action-structure its caption must carry, then conclude the list of [start, end]
+     segments with their captions.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Keep L3 at HEADLINE level (one short phrase per segment).
+- Justify non-overlap/contiguity at L2.
+- Timestamps ARE allowed.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT write the full captions inside the think — that duplicates the answer; headline only.
+- Do not include phases that are absent (it is a filter).
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","DVC","You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Create an event list restricted to actions in ['preparation', 'carlot-triangle-dissection', 'clipping-and-cutting', 'gallbladder-dissection', 'gallbladder-packaging', 'cleaning-and-coagulation', 'gallbladder-extraction']. For each event: (1) start_time, (2) end_time, (3) description of this event.","0.0-20.0 seconds: During the preparation phase, a grasper first secures the gallbladder near the fundus and retracts it superiorly against the liver, after which a second grasper enters from the left to grasp the lower gallbladder/infundibular region and maintain lateral traction while a white-tipped instrument briefly approaches the liver surface without visible dissection.
+25.0-673.0 seconds: During the Calot/hepatocystic triangle dissection, the gallbladder neck/infundibulum was repeatedly grasped and retracted superiorly, laterally, and away from the liver to maintain tension while a hook/white-tipped dissector opened the fibrofatty peritoneal tissue around the cystic duct and gallbladder–liver interface, progressively widening a pale-to-bloody dissection plane with minor bleeding, after which bipolar coagulation controlled visible vessels and bleeding points, irrigation/aspiration cleared bloody fluid, and continued traction exposed the cystic duct region, gray tubular structure, and inflamed liver-bed attachment for further separation.","L1 (scan & enumerate): Preparation appears first, with graspers retracting the gallbladder fundus and infundibulum without tissue division; Calot/hepatocystic triangle dissection follows, with hook/white-tipped dissection, bipolar coagulation, and irrigation around the cystic duct and gallbladder–liver interface.
+
+L2 (boundaries): The transition is fixed between 20.0s and 25.0s by the change from traction/positioning only to active fibrofatty peritoneal dissection in the Calot triangle, making the two observed phase segments sequential and non-overlapping.
+
+L3 (per-segment content & conclusion): [0.0, 20.0] Preparation — gallbladder grasping and retraction. [25.0, 673.0] Calot/hepatocystic triangle dissection — hook dissection with bipolar hemostasis and irrigation.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+Segments in order: [0.0-97.0s: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.] [98.0-170.0s: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.]
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the list of [start, end] segments with their captions is the natural conclusion:
+  L1 (scan & enumerate): sweeping the clip start to end, list which candidate phases appear
+     and in what order, by their visual signatures. Omit phases that do not appear.
+  L2 (boundaries): for each adjacent pair, state the transition cue (the change in
+     instrument/action) that fixes the boundary, so the segments are non-overlapping and contiguous.
+  L3 (per-segment content & conclusion): for each segment in order, give the key
+     instrument-action-structure its caption must carry, then conclude the list of [start, end]
+     segments with their captions.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Keep L3 at HEADLINE level (one short phrase per segment).
+- Justify non-overlap/contiguity at L2.
+- Timestamps ARE allowed.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT write the full captions inside the think — that duplicates the answer; headline only.
+- Do not include phases that are absent (it is a filter).
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","VS","You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Summarize the video content in a short paragraph, focusing on the main surgical activities.","graspers unfold a translucent specimen_bag on the liver surface, open it into a pouch, and place the detached gallbladder inside. The bag is folded and cinched closed by manipulating the rim and drawstring, then drawn toward the trocar while the liver is retracted. After bag retrieval begins, graspers elevate and reposition the liver to expose the moist, cauterized gallbladder fossa, with instrument contact along the raw bed and clipped tissue for cleaning/coagulation before returning to the specimen_bag.","L1: The clip moves from gallbladder packaging to early extraction, with graspers unfolding a translucent specimen_bag on the liver, placing the detached gallbladder inside, cinching the rim and drawstring, and drawing the bag toward the trocar. It then transitions into cleaning/coagulation as graspers elevate the liver and expose the cauterized gallbladder fossa.
+
+L2: The salient flow is bag opening, gallbladder insertion, bag closure, and traction toward removal; repeated grasping, rim adjustments, and liver retraction are minor supporting maneuvers. Once the bag is partly controlled, attention shifts back to the liver bed and adjacent clipped hepatocystic/Calot triangle tissue for exposure and contact cleaning/coagulation.
+
+L3: Overall, the surgeon completes gallbladder packaging and begins specimen retrieval, then rechecks the operative field. The final progression is from secured specimen_bag handling to inspection and cleaning/coagulation of the moist, raw liver bed/fossa around the clipped cystic duct and cystic artery region before returning to the bag.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+High-level summary: <summary not generated>
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the 3-5 sentence summary is the natural conclusion:
+  L1 (survey the arc): across the whole clip, the major activities/phases in order — the
+     skeleton from start to end.
+  L2 (salience & transitions): pick the key actions and the transitions that define the flow;
+     mark repetitive or minor details to compress out.
+  L3 (compress & conclusion): state the high-level progression, then conclude the 3-5 sentence
+     summary.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Select and compress (arc + salience).
+- Lowercase instrument names; observable steps only.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT enumerate per segment or include timestamps (that is DVC, not VS).
+- Do not use 'indicates' / 'suggesting that' phrasing.
+- Do not restate the whole summary inside L1/L2.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","VS","You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Summarize the video content in a short paragraph, focusing on the main surgical activities.","graspers unfold and spread the specimen_bag on the liver surface, place the detached gallbladder into the pouch, and pack it down. The rim and drawstring are grasped to fold and cinch the bag closed, then the partially collapsed bag is drawn toward the trocar while the liver is retracted. Exposure shifts to the cauterized gallbladder fossa, where graspers elevate the liver and reposition along the raw bed margins as the instrument tip contacts the liver edge and clipped tissue for cleaning or coagulation before returning to the specimen_bag.","L1 (survey the arc): The clip begins in gallbladder packaging, with graspers unfolding a translucent specimen_bag on the liver, loading the detached gallbladder, and cinching the rim/drawstring closed. It then shifts toward cleaning/coagulation as the bag is drawn toward the trocar and the liver is retracted to expose the cauterized gallbladder fossa.
+
+L2 (salience & transitions): The key flow is bag deployment, specimen packing, bag closure, and traction toward extraction, followed by grasper elevation of the liver and instrument contact along the raw liver bed and adjacent clipped tissue. Repeated regrasping, spreading, and repositioning are exposure adjustments and can be compressed.
+
+L3 (compress & conclusion): Overall, the observed progression is gallbladder packaging with extraction setup, then inspection and cleaning/coagulation of the liver bed. Graspers manage the specimen_bag, then maintain exposure of the gallbladder fossa while the instrument tip works along the liver edge and clipped structures before returning to the bag.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+High-level summary: <summary not generated>
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the 3-5 sentence summary is the natural conclusion:
+  L1 (survey the arc): across the whole clip, the major activities/phases in order — the
+     skeleton from start to end.
+  L2 (salience & transitions): pick the key actions and the transitions that define the flow;
+     mark repetitive or minor details to compress out.
+  L3 (compress & conclusion): state the high-level progression, then conclude the 3-5 sentence
+     summary.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Select and compress (arc + salience).
+- Lowercase instrument names; observable steps only.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT enumerate per segment or include timestamps (that is DVC, not VS).
+- Do not use 'indicates' / 'suggesting that' phrasing.
+- Do not restate the whole summary inside L1/L2.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","VS","You are an expert in operative video analysis. The following video contains endoscopic footage of a laparoscopic cholecystectomy, where the gallbladder is removed using small incisions and specialized instruments. Describe the overall surgical procedure shown in the video without listing specific time segments.","A grasper secured the gallbladder fundus and retracted it superiorly, while a second grasper held the infundibular region laterally to set exposure. The hook/white-tipped dissector opened fibrofatty peritoneal tissue around the Calot/hepatocystic triangle and gallbladder–liver interface, enlarging a pale-to-bloody dissection plane. bipolar coagulation controlled bleeding points, and irrigation/aspiration cleared bloody fluid from the field. Continued traction exposed the cystic duct region, a gray tubular structure, and inflamed liver-bed attachments for further separation.","L1 (survey the arc): The clip begins in the preparation phase with a grasper elevating the gallbladder fundus against the liver while a second grasper takes the infundibulum/lower gallbladder laterally for exposure. It then proceeds into Calot (hepatocystic) triangle dissection, where the hook/white-tipped dissector works along the cystic duct region and gallbladder–liver bed interface, followed by bipolar hemostasis and irrigation/aspiration.
+
+L2 (salience & transitions): The defining transition is from simple exposure to active opening of fibrofatty peritoneal tissue around the hepatocystic triangle, with traction repeatedly adjusted to keep the infundibulum away from the liver and widen the working plane. Recurrent regrasping and minor instrument approaches are compressed, while the salient events are formation of a pale-to-bloody dissection plane, control of bleeding points with bipolar, clearing of bloody fluid with the irrigator, and exposure of a gray tubular cystic duct-region structure.
+
+L3 (compress & conclusion): Overall, the sequence shows gallbladder retraction to establish exposure, then Calot triangle and liver-bed dissection with hook/white-tipped instrumentation, hemostasis, suction/irrigation, and continued traction to expose the cystic duct region and inflamed attachments for further separation.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+High-level summary: <summary not generated>
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the 3-5 sentence summary is the natural conclusion:
+  L1 (survey the arc): across the whole clip, the major activities/phases in order — the
+     skeleton from start to end.
+  L2 (salience & transitions): pick the key actions and the transitions that define the flow;
+     mark repetitive or minor details to compress out.
+  L3 (compress & conclusion): state the high-level progression, then conclude the 3-5 sentence
+     summary.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Select and compress (arc + salience).
+- Lowercase instrument names; observable steps only.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT enumerate per segment or include timestamps (that is DVC, not VS).
+- Do not use 'indicates' / 'suggesting that' phrasing.
+- Do not restate the whole summary inside L1/L2.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","VS","You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Provide a brief, high-level summary of the entire video in just a few sentences.","graspers retract and reposition the gallbladder and liver edge while the hook separates fibrous attachments from the liver bed, extending the dissection plane around clipped structures with intermittent cautery, smoke, char, and minor bleeding. The irrigator clears pooled fluid and blood to maintain exposure of the raw gallbladder fossa. After the gallbladder is detached, graspers unfold and open the specimen bag on the liver surface, place the gallbladder inside, and cinch the bag closed. The partially collapsed bag is then drawn toward the trocar opening while a grasper retracts the liver to expose the dissected bed.","L1 (survey the arc): The clip progresses from gallbladder dissection off the liver bed/fossa, with graspers retracting the gallbladder and liver edge while a hook develops the cauterized plane near the clipped cystic duct/cystic artery stumps. It then transitions to gallbladder packaging, as graspers open a specimen_bag, place the detached gallbladder inside, cinch it closed, and draw it toward the trocar.
+
+L2 (salience & transitions): The defining actions are hook cautery and blunt separation of fibrous gallbladder–liver attachments, intermittent irrigator suction/irrigation of blood and fluid, and maintenance of exposure by grasper retraction. Repeated regrasping, smoke, char, and minor bleeding are secondary details, while the clear transition occurs when dissection stops and the specimen_bag is unfolded on the liver surface.
+
+L3 (compress & conclusion): The high-level progression is from completing gallbladder separation from the liver bed to specimen containment and early extraction. Graspers tension the gallbladder and liver edge while the hook separates the remaining attachments around the clipped Calot triangle structures, with the irrigator clearing the raw fossa. Once detached, the gallbladder is loaded into the specimen_bag, the bag is cinched closed, and the partially collapsed bag is pulled toward the trocar while the liver is retracted to keep the dissected bed visible.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+High-level summary: <summary not generated>
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the 3-5 sentence summary is the natural conclusion:
+  L1 (survey the arc): across the whole clip, the major activities/phases in order — the
+     skeleton from start to end.
+  L2 (salience & transitions): pick the key actions and the transitions that define the flow;
+     mark repetitive or minor details to compress out.
+  L3 (compress & conclusion): state the high-level progression, then conclude the 3-5 sentence
+     summary.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Select and compress (arc + salience).
+- Lowercase instrument names; observable steps only.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT enumerate per segment or include timestamps (that is DVC, not VS).
+- Do not use 'indicates' / 'suggesting that' phrasing.
+- Do not restate the whole summary inside L1/L2.
+
+Output only the three-level reasoning, nothing else."
+"/root/data/CAMMA_data/CholecT50/videos/VID01","VS","You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Describe the overall surgical procedure shown in the video without listing specific time segments.","A grasper retracts the gallbladder fundus superiorly against the liver while another grasper holds the infundibulum laterally to set tension. A hook/white-tipped dissector opens fibrofatty peritoneal tissue around the cystic duct region and along the gallbladder–liver interface, widening the dissection plane with intermittent minor bleeding. bipolar coagulates visible vessels and bleeding points, and the irrigator clears bloody fluid. Continued traction exposes the cystic duct region, a gray tubular structure, and inflamed liver-bed attachments for further separation.","L1: The clip begins in the preparation phase with a grasper lifting the gallbladder fundus superiorly against the liver and a second grasper taking the infundibulum for lateral traction. It then proceeds into Calot/hepatocystic triangle dissection, where a hook/white-tipped dissector works around the cystic duct region and gallbladder–liver interface.
+
+L2: The defining actions are sustained fundus and infundibular retraction, opening of fibrofatty peritoneal tissue, widening of the dissection plane, bipolar control of small bleeding points, and irrigator clearance of bloody fluid. Repeated traction adjustments and minor instrument repositioning are compressed because they serve the same goal of exposing the cystic duct region and liver-bed attachments.
+
+L3: The high-level progression is from exposure and tensioning of the gallbladder to active Calot triangle and liver-bed dissection with hemostasis and irrigation. The scene summarizes preparation followed by hepatocystic triangle dissection: graspers maintain traction while a hook/white-tipped dissector separates fibrofatty tissue, bipolar coagulates visible bleeding, and the irrigator clears the field as the cystic duct region, gray tubular structure, and inflamed liver-bed attachments become exposed.","You are a surgical reasoning annotator for laparoscopic cholecystectomy (Cholec/CholecT50).
+You observe the clip through its time-stamped segment observations:
+0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.
+98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.
+
+Verified facts for this question (rely on them, but NEVER reveal they were provided):
+High-level summary: <summary not generated>
+
+Write ONE chain-of-thought that justifies the answer FROM WHAT IS OBSERVED, in exactly three
+levels, in this order, one to two sentences each, so that the 3-5 sentence summary is the natural conclusion:
+  L1 (survey the arc): across the whole clip, the major activities/phases in order — the
+     skeleton from start to end.
+  L2 (salience & transitions): pick the key actions and the transitions that define the flow;
+     mark repetitive or minor details to compress out.
+  L3 (compress & conclusion): state the high-level progression, then conclude the 3-5 sentence
+     summary.
+
+DO:
+- Keep exactly three levels (L1 -> L2 -> L3), in order; ground every statement in observed
+  evidence (instruments, actions, tissue/structures, timing).
+- Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator),
+  the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery,
+  gallbladder, liver bed/fossa).
+- Write as if you are watching the video; make L3 conclude the answer; be concise.
+- Select and compress (arc + salience).
+- Lowercase instrument names; observable steps only.
+
+DON'T:
+- Do not reveal the facts were provided: never write ""given"", ""as provided"", ""the label"",
+  ""the answer"", ""ground truth"", and do not refer to ""the captions/observations/text"".
+- Do not invent anything not observed (no patient history, no off-screen events, no measurements).
+- Do not skip, merge, reorder, or add a level.
+- Do not hedge or list alternatives (""possibly X or Y"") — commit to the reasoning that reaches
+  the answer.
+- Do NOT enumerate per segment or include timestamps (that is DVC, not VS).
+- Do not use 'indicates' / 'suggesting that' phrasing.
+- Do not restate the whole summary inside L1/L2.
+
+Output only the three-level reasoning, nothing else."
