@@ -1,0 +1,33 @@
+{
+    "video_id":  "V7_36175",
+    "dataset":  "Endoscapes",
+    "timeline":  "normalized",
+    "native_fps":  null,
+    "default_playback_fps":  2,
+    "dir":  "./Videos/Endoscapes/Videos/",
+    "frames":  [
+                   "7_35450.jpg",
+                   "7_35475.jpg",
+                   "7_35500.jpg",
+                   "7_35525.jpg",
+                   "7_35550.jpg",
+                   "7_35575.jpg",
+                   "7_35600.jpg",
+                   "7_35625.jpg",
+                   "7_35650.jpg",
+                   "7_35675.jpg",
+                   "7_35700.jpg",
+                   "7_35725.jpg",
+                   "7_35750.jpg",
+                   "7_35775.jpg",
+                   "7_36275.jpg",
+                   "7_36775.jpg",
+                   "7_37700.jpg",
+                   "7_38175.jpg",
+                   "7_38650.jpg",
+                   "7_39125.jpg",
+                   "7_39600.jpg",
+                   "7_40075.jpg",
+                   "7_40550.jpg"
+               ]
+}

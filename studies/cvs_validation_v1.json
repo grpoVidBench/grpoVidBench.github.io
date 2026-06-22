@@ -124,6 +124,42 @@
                       "question":  "How does the Critical View of Safety (CVS) develop throughout this laparoscopic cholecystectomy dissection clip, and what is the final status of each criterion?",
                       "answer":  "C1 first met t=0.75; C2 first met t=0.75; C3 first met never; CVS never achieved; final: not achieved",
                       "think":  "L1: The dissection starts with obscured anatomy and progresses toward exposing key landmarks, but does not complete the full separation from the liver bed. L2: C1 (Two Structures) is met at t=0.75 when the cystic duct and artery are isolated; C2 (Hepatocystic Triangle Cleared) is met at t=0.75 when Calot\u0027s triangle is cleared of tissue; C3 (Cystic Plate Exposed) is never met as the gallbladder remains attached to the liver bed. L3: CVS is never achieved because C3 is never satisfied."
+                  },
+                  {
+                      "item_id":  "CVS-02",
+                      "task":  "CVS",
+                      "dataset":  "Endoscapes",
+                      "video_id":  "V8_14775",
+                      "question":  "Can you analyze the progression of the Critical View of Safety (CVS) criteria across this laparoscopic cholecystectomy clip and determine the final CVS status?",
+                      "answer":  "C1 first met t=0.50; C2 first met t=0.25; C3 first met never; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The dissection begins with a heavily obscured hepatocystic space, briefly achieves partial exposure, but ultimately regresses, failing to achieve the Critical View of Safety by the end. L2 (per-criterion progression): Criterion C1 (two structures) is first met at t=0.50 when the cystic duct and artery are identified at the gallbladder neck; Criterion C2 (triangle cleared) is first met at t=0.25 during temporary clearance; Criterion C3 (cystic plate exposed) is never met. L3 (CVS synthesis): Because C3 is never satisfied, the overall CVS is never achieved during the clip, and the final-frame status remains unachieved."
+                  },
+                  {
+                      "item_id":  "CVS-03",
+                      "task":  "CVS",
+                      "dataset":  "Endoscapes",
+                      "video_id":  "V7_36175",
+                      "question":  "Analyze the dissection progression in this clip with respect to the three Critical View of Safety (CVS) criteria and provide the final CVS verdict.",
+                      "answer":  "C1 first met t=0.17; C2 first met never; C3 first met never; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The clip captures initial gallbladder neck clearance but shows incomplete dissection of the hepatocystic triangle and liver bed. L2 (per-criterion progression): C1 is successfully met at t=0.17 when the two structures are isolated, whereas C2 and C3 are never met due to residual fibrofatty tissue and lack of cystic plate exposure. L3 (CVS synthesis): CVS is never fully achieved at any point, with C2 and C3 acting as the limiting criteria."
+                  },
+                  {
+                      "item_id":  "CVS-04",
+                      "task":  "CVS",
+                      "dataset":  "Endoscapes",
+                      "video_id":  "V2_29800",
+                      "question":  "How do the three criteria of the Critical View of Safety (CVS) progress throughout this surgical clip, and what is the final CVS status at the end of the sequence?",
+                      "answer":  "C1 first met t=1.00; C2 first met t=1.00; C3 first met never; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The dissection begins in an obscured field and progresses toward clearing structures by the final frame. L2 (per-criterion progression): C1 and C2 are both first met at t=1.00 (frame 31300) based on structure identification and triangle clearance, while C3 is never met. L3 (CVS synthesis): CVS is never achieved in this sequence because C3 remains unmet."
+                  },
+                  {
+                      "item_id":  "CVS-05",
+                      "task":  "CVS",
+                      "dataset":  "Endoscapes",
+                      "video_id":  "V5_5900",
+                      "question":  "Based on this laparoscopic cholecystectomy clip, how do the three criteria for the Critical View of Safety (CVS) progress over time, and what is the final CVS status at the end of the video?",
+                      "answer":  "C1 first met never; C2 first met t=1.00; C3 first met never; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The clip begins at t=0.00 with the gallbladder in the upper-left field and no CVS criteria satisfied as dissection is actively underway in the hepatocystic space. Over the course of the clip, lateral retraction helps open up the surgical field, allowing one of the criteria to be met by t=1.00, but the overall dissection halts before a complete CVS can be established.\n\nL2 (per-criterion progression):\n- C1 — TWO STRUCTURES: Throughout the entire clip, we focus on the gallbladder neck. The dual cystic structures (cystic duct and cystic artery) are never fully isolated or clearly identified entering the gallbladder. Therefore, C1 is never met.\n- C2 — HEPATOCYSTIC TRIANGLE CLEARED: Focusing on the Calot\u0027s triangle window, the space is initially obscured by fatty and fibrous tissue. By t=1.00, dissection and lateral retraction successfully clear this window of fibrofatty tissue. Therefore, C2 is first met at t=1.00.\n- C3 — CYSTIC PLATE EXPOSED: Focusing on the gallbladder-liver-bed interface, the lower third of the gallbladder remains adhered to the liver bed. The dissection is halted before this cystic plate is exposed. Therefore, C3 is never met.\n\nL3 (CVS synthesis): Because C1 and C3 are never met, all three criteria are never simultaneously satisfied. Thus, CVS is never achieved during this clip, and the final-frame status is not achieved."
                   }
               ]
 }

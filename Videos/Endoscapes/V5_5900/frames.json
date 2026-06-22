@@ -1,0 +1,18 @@
+{
+    "video_id":  "V5_5900",
+    "dataset":  "Endoscapes",
+    "timeline":  "normalized",
+    "native_fps":  null,
+    "default_playback_fps":  1,
+    "dir":  "./Videos/Endoscapes/Videos/",
+    "frames":  [
+                   "5_5175.jpg",
+                   "5_5200.jpg",
+                   "5_5225.jpg",
+                   "5_5250.jpg",
+                   "5_5275.jpg",
+                   "5_5300.jpg",
+                   "5_5825.jpg",
+                   "5_6350.jpg"
+               ]
+}
