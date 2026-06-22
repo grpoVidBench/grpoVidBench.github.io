@@ -129,22 +129,13 @@
                       "item_id":  "CVS-02",
                       "task":  "CVS",
                       "dataset":  "Endoscapes",
-                      "video_id":  "V8_14775",
-                      "question":  "Can you analyze the progression of the Critical View of Safety (CVS) criteria across this laparoscopic cholecystectomy clip and determine the final CVS status?",
-                      "answer":  "C1 first met t=0.50; C2 first met t=0.25; C3 first met never; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The dissection begins with a heavily obscured hepatocystic space, briefly achieves partial exposure, but ultimately regresses, failing to achieve the Critical View of Safety by the end. L2 (per-criterion progression): Criterion C1 (two structures) is first met at t=0.50 when the cystic duct and artery are identified at the gallbladder neck; Criterion C2 (triangle cleared) is first met at t=0.25 during temporary clearance; Criterion C3 (cystic plate exposed) is never met. L3 (CVS synthesis): Because C3 is never satisfied, the overall CVS is never achieved during the clip, and the final-frame status remains unachieved."
-                  },
-                  {
-                      "item_id":  "CVS-03",
-                      "task":  "CVS",
-                      "dataset":  "Endoscapes",
                       "video_id":  "V7_36175",
                       "question":  "Analyze the dissection progression in this clip with respect to the three Critical View of Safety (CVS) criteria and provide the final CVS verdict.",
                       "answer":  "C1 first met t=0.17; C2 first met never; C3 first met never; CVS never achieved; final: not achieved",
                       "think":  "L1 (trajectory survey): The clip captures initial gallbladder neck clearance but shows incomplete dissection of the hepatocystic triangle and liver bed. L2 (per-criterion progression): C1 is successfully met at t=0.17 when the two structures are isolated, whereas C2 and C3 are never met due to residual fibrofatty tissue and lack of cystic plate exposure. L3 (CVS synthesis): CVS is never fully achieved at any point, with C2 and C3 acting as the limiting criteria."
                   },
                   {
-                      "item_id":  "CVS-04",
+                      "item_id":  "CVS-03",
                       "task":  "CVS",
                       "dataset":  "Endoscapes",
                       "video_id":  "V2_29800",
@@ -153,7 +144,7 @@
                       "think":  "L1 (trajectory survey): The dissection begins in an obscured field and progresses toward clearing structures by the final frame. L2 (per-criterion progression): C1 and C2 are both first met at t=1.00 (frame 31300) based on structure identification and triangle clearance, while C3 is never met. L3 (CVS synthesis): CVS is never achieved in this sequence because C3 remains unmet."
                   },
                   {
-                      "item_id":  "CVS-05",
+                      "item_id":  "CVS-04",
                       "task":  "CVS",
                       "dataset":  "Endoscapes",
                       "video_id":  "V5_5900",
