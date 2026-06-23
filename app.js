@@ -387,8 +387,23 @@
     if (!id) { fatal("No study specified. Append ?study=<id> to the URL."); return; }
     fetch("./studies/" + id + ".json", { cache: "no-store" })
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .then((cfg) => { study = cfg; setTitleBar(); renderIntro(); })
+      .then((cfg) => {
+        study = cfg; setTitleBar();
+        // merge optional per-item Chinese translations (question_zh / answer_zh / think_zh / caption_zh)
+        return fetch("./studies/zh_items.json", { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null)).catch(() => null)
+          .then((zh) => { mergeItemTranslations(zh); renderIntro(); });
+      })
       .catch((e) => fatal("Could not load ./studies/" + id + ".json — " + e.message));
+  }
+
+  function mergeItemTranslations(zh) {
+    if (!zh || !study || !zh[study.study_id]) return;
+    const m = zh[study.study_id];
+    (study.items || []).forEach((it) => {
+      const z = m[it.item_id];
+      if (z) for (const k in z) { if (it[k] == null) it[k] = z[k]; }
+    });
   }
 
   function fatal(msg) {
