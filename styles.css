@@ -315,6 +315,21 @@ textarea { resize: vertical; min-height: 80px; }
 .dim.invalid .likert .opt label,
 .dim.invalid select, .dim.invalid textarea { border-color: var(--danger); }
 
+/* optional comment under a multiple-choice question */
+.dim-comment {
+  display: block; width: 100%; margin-top: 8px;
+  font: inherit; font-size: 13px; color: var(--ink);
+  padding: 7px 10px; background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+.dim-comment::placeholder { color: var(--ink-soft); }
+.dim-comment:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); background: var(--surface); }
+
+/* skipped item */
+.tag.skipped { background: #fbf0d6; color: var(--warn); }
+.skip-btn { color: var(--ink-soft); }
+.skip-btn:hover { color: var(--ink); }
+
 /* ---------- nav / sticky footer ---------- */
 .runner-foot {
   position: sticky; bottom: 0; z-index: 20;

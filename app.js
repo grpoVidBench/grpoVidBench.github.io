@@ -362,7 +362,10 @@
     progressText.textContent = answered + " / " + total + " done";
   }
 
+  function isSkipped(item) { return !!(state.skipped && state.skipped[item.item_id]); }
+
   function itemComplete(item) {
+    if (isSkipped(item)) return true;   // a skipped item is "resolved", not blocking
     const ans = state.answers[item.item_id] || {};
     return study.dimensions.every((dim) => {
       if (!dimVisible(dim, item) || !dimRequired(dim)) return true;
@@ -442,9 +445,10 @@
         study_id: study.study_id, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
-        order: ord, answers: {}, times: {}, wrapup: {}, current: 0,
+        order: ord, answers: {}, times: {}, skipped: {}, wrapup: {}, current: 0,
       };
     }
+    if (!state.skipped) state.skipped = {};   // back-compat for resumed sessions
     order = state.order;
     pos = Math.min(state.current || 0, order.length - 1);
     showWrapup = false;
@@ -467,8 +471,14 @@
     else if (item.group) head.appendChild(el("span", { class: "tag task", text: item.group }));
     card.appendChild(head);
 
+    if (isSkipped(item)) head.appendChild(el("span", { class: "tag skipped", text: "Skipped" }));
+
     // dimsHost holds the per-item rating questions
     const dimsHost = el("div", { class: "dims" });
+    if (isSkipped(item)) {
+      dimsHost.appendChild(el("div", { class: "banner info",
+        text: "You marked this item as skipped — answers below are optional. Answer any question to include it again." }));
+    }
     study.dimensions.forEach((dim) => {
       if (!dimVisible(dim, item)) return;
       dimsHost.appendChild(renderDimension(dim, item));
@@ -576,7 +586,7 @@
         const input = el("input", {
           type: "radio", name, id, value: String(v),
           checked: String(ans[dim.id]) === String(v) ? "checked" : null,
-          onchange: () => { ans[dim.id] = v; clearInvalid(wrap); commit(); },
+          onchange: () => { ans[dim.id] = v; clearInvalid(wrap); clearSkip(item); commit(); },
         });
         const lab = el("label", { for: id }, [
           el("span", { class: "n", text: String(v) }),
@@ -585,15 +595,17 @@
         group.appendChild(el("div", { class: "opt" }, [input, lab]));
       }
       wrap.appendChild(group);
+      addCommentBox(wrap, dim, ans);
     } else if (type === "select") {
       const sel = el("select", {
-        onchange: (e) => { ans[dim.id] = e.target.value; clearInvalid(wrap); commit(); },
+        onchange: (e) => { ans[dim.id] = e.target.value; clearInvalid(wrap); clearSkip(item); commit(); },
       });
       sel.appendChild(el("option", { value: "", text: "— select —" }));
       (dim.options || []).forEach((opt) => {
         sel.appendChild(el("option", { value: opt, text: opt, selected: ans[dim.id] === opt ? "selected" : null }));
       });
       wrap.appendChild(sel);
+      addCommentBox(wrap, dim, ans);
     } else {
       const ta = el("textarea", {
         placeholder: dim.placeholder || "Type here…",
@@ -605,7 +617,27 @@
     return wrap;
   }
 
+  // Optional free-text note attached to a multiple-choice question (likert / select).
+  // Stored alongside the rating as "<dim>__comment" so it flows into JSON + CSV export.
+  function addCommentBox(wrap, dim, ans) {
+    const key = dim.id + "__comment";
+    const ci = el("input", { type: "text", class: "dim-comment",
+      placeholder: "Add a comment (optional)",
+      oninput: (e) => { ans[key] = e.target.value; commitDebounced(); } });
+    ci.value = ans[key] || "";
+    wrap.appendChild(ci);
+  }
+
   function clearInvalid(node) { node.classList.remove("invalid"); }
+
+  // Answering a rating un-skips the item; drop the skipped tag/banner without re-rendering.
+  function clearSkip(item) {
+    if (state.skipped && state.skipped[item.item_id]) {
+      delete state.skipped[item.item_id];
+      const b = root.querySelector(".dims > .banner"); if (b) b.remove();
+      const t = root.querySelector(".tag.skipped"); if (t) t.remove();
+    }
+  }
 
   let commitTimer = null;
   function commit() { persistTime(); state.current = pos; saveState(state); setProgress(); }
@@ -617,15 +649,26 @@
     const prev = el("button", { class: "btn", text: "← Previous", disabled: pos === 0 ? "disabled" : null,
       onclick: () => goTo(pos - 1) });
     const count = el("span", { class: "count", text: "Item " + (pos + 1) + " of " + order.length });
+    const skip = el("button", { class: "btn btn-ghost skip-btn", text: "Skip this item",
+      title: "Mark this item skipped and move on", onclick: skipItem });
     const next = pos < order.length - 1
       ? el("button", { class: "btn btn-primary", text: "Next →", onclick: () => goTo(pos + 1) })
       : el("button", { class: "btn btn-primary", text: "Review & submit →", onclick: goWrapup });
     inner.appendChild(prev);
     inner.appendChild(count);
     inner.appendChild(el("span", { class: "spacer" }));
+    inner.appendChild(skip);
     inner.appendChild(next);
     foot.appendChild(inner);
     return foot;
+  }
+
+  function skipItem() {
+    const item = study.items[order[pos]];
+    state.skipped[item.item_id] = true;
+    persistTime(); commit();
+    if (pos < order.length - 1) goTo(pos + 1);
+    else goWrapup();
   }
 
   function goTo(p) {
@@ -673,6 +716,12 @@
       card.appendChild(el("div", { class: "banner info", text: "All items have their required answers. Add any final notes below, then submit." }));
     }
 
+    const nSkipped = order.filter((idx) => isSkipped(study.items[idx])).length;
+    if (nSkipped) {
+      card.appendChild(el("p", { class: "muted", style: "margin-top:-4px",
+        text: nSkipped + " item" + (nSkipped > 1 ? "s were" : " was") + " skipped (recorded as skipped). You can go back to answer any of them." }));
+    }
+
     // wrapup free-text (optional)
     if (Array.isArray(study.wrapup) && study.wrapup.length) {
       card.appendChild(el("h2", { text: "Final notes" }));
@@ -709,6 +758,7 @@
         task: item.task || item.group || null,
         seen_order: seenOrder[item.item_id],
         ms_on_item: state.times[item.item_id] || 0,
+        skipped: isSkipped(item),
         ratings: state.answers[item.item_id] || {},
       };
     });
@@ -731,13 +781,20 @@
     return v;
   }
   function buildCsv() {
-    const dims = study.dimensions.map((d) => d.id);
-    const header = ["reviewer_id", "item_id", "task", "seen_order", "ms_on_item"].concat(dims);
+    // one value column per dimension; multiple-choice dims also get a "<id>_comment" column
+    const cols = [];
+    study.dimensions.forEach((d) => {
+      cols.push({ key: d.id, header: d.id });
+      const t = dimType(d);
+      if (t === "likert" || t === "select") cols.push({ key: d.id + "__comment", header: d.id + "_comment" });
+    });
+    const header = ["reviewer_id", "item_id", "task", "seen_order", "ms_on_item", "skipped"]
+      .concat(cols.map((c) => c.header));
     const lines = [header.map(csvEscape).join(",")];
     const data = buildResponse();
     data.responses.forEach((r) => {
-      const row = [state.reviewer_id, r.item_id, r.task || "", r.seen_order, r.ms_on_item]
-        .concat(dims.map((d) => (r.ratings[d] != null ? r.ratings[d] : "")));
+      const row = [state.reviewer_id, r.item_id, r.task || "", r.seen_order, r.ms_on_item, r.skipped ? "yes" : ""]
+        .concat(cols.map((c) => (r.ratings[c.key] != null ? r.ratings[c.key] : "")));
       lines.push(row.map(csvEscape).join(","));
     });
     return lines.join("\r\n");
