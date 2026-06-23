@@ -54,6 +54,15 @@ a { color: var(--accent-ink); }
 .topbar .spacer { flex: 1; }
 .topbar .meta { font-size: 13px; color: var(--ink-soft); }
 
+.lang-toggle {
+  flex: none; margin-left: 14px; cursor: pointer;
+  font: inherit; font-size: 13px; font-weight: 600; line-height: 1;
+  padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  transition: background .12s ease, border-color .12s ease;
+}
+.lang-toggle:hover { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 28px 24px 96px; }
 .narrow { max-width: 760px; }
 

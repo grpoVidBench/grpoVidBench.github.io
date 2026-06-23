@@ -30,6 +30,13 @@
   }
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
+  // ---------- i18n shorthands (provided by i18n.js) ----------
+  const I = window.I18N || { tr: function (s) { return s; }, tf: function (s) { return s; }, L: function (o, f) { return o ? o[f] : ""; }, current: function () { return "en"; }, onChange: function () {}, mountToggle: function () {} };
+  const tr = function (s) { return I.tr(s); };          // translate a UI string
+  const tf = function (s, p) { return I.tf(s, p); };     // translate a template "{x}" string
+  const L = function (o, f) { return I.L(o, f); };        // localize a study/item field
+  let redraw = function () {};                            // re-render the current screen on language switch
+
   // ---------- minimal markdown ----------
   function escapeHtml(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -98,7 +105,8 @@
   }
   let savedTimer = null;
   function flashSaved() {
-    saveStatus.innerHTML = '<span class="saved-pill">Saved</span>';
+    saveStatus.innerHTML = '<span class="saved-pill"></span>';
+    saveStatus.querySelector(".saved-pill").textContent = tr("Saved");
     clearTimeout(savedTimer);
     savedTimer = setTimeout(() => { saveStatus.innerHTML = ""; }, 1400);
   }
@@ -115,7 +123,7 @@
   function taskLabel(code) {
     if (code == null) return "";
     const m = (study && study.task_labels) || {};
-    return m[code] || TASK_LABELS[code] || code;
+    return tr(m[code] || TASK_LABELS[code] || code);
   }
 
   // Build the "Context" block: a clear instruction + the per-task L1/L2/L3 template.
@@ -125,26 +133,23 @@
     const guide = (study.level_guides && item.task) ? study.level_guides[item.task] : null;
     if (!guide) return null;
     const wrap = el("div", { class: "qa-block qa-context" });
-    wrap.appendChild(el("div", { class: "qa-label", text: "Context — how to rate this reasoning" }));
+    wrap.appendChild(el("div", { class: "qa-label", text: tr("Context — how to rate this reasoning") }));
 
     const taskName = taskLabel(item.task);
-    const instr = el("p", { class: "ctx-instr" });
-    instr.appendChild(document.createTextNode("Read the model's reasoning "));
-    instr.appendChild(el("code", { text: "<think>" }));
-    instr.appendChild(document.createTextNode(
-      " above. For this " + taskName + " item" + (guide.q ? " — " + guide.q + " —" : " —") +
-      " a good trace must carry the three levels below. Check each level is present and correct, then answer the rating questions."
-    ));
-    wrap.appendChild(instr);
+    const q = L(guide, "q");
+    const tmpl = q
+      ? "Read the model's reasoning <think> above. For this {task} item — {q} — a good trace must carry the three levels below. Check each level is present and correct, then answer the rating questions."
+      : "Read the model's reasoning <think> above. For this {task} item, a good trace must carry the three levels below. Check each level is present and correct, then answer the rating questions.";
+    wrap.appendChild(el("p", { class: "ctx-instr", text: tf(tmpl, { task: taskName, q: q }) }));
 
     const g = el("div", { class: "level-guide" });
-    g.appendChild(el("div", { class: "lg-task", text: taskName + (guide.q ? " — " + guide.q : "") }));
-    (guide.levels || []).forEach((L) => {
+    g.appendChild(el("div", { class: "lg-task", text: taskName + (q ? " — " + q : "") }));
+    (guide.levels || []).forEach((lv) => {
       g.appendChild(el("div", { class: "lg-row" }, [
-        el("span", { class: "lg-k", text: L.k }),
+        el("span", { class: "lg-k", text: lv.k }),
         el("span", { class: "lg-d" }, [
-          el("strong", { text: L.label }),
-          document.createTextNode(L.desc ? " — " + L.desc : ""),
+          el("strong", { text: L(lv, "label") }),
+          document.createTextNode(lv.desc ? " — " + L(lv, "desc") : ""),
         ]),
       ]));
     });
@@ -229,7 +234,7 @@
         if (!requested.has(i)) { requested.add(i); const im = new Image(); im.src = frameUrl(i); }
       }
     }
-    function setBuffering(on) { overlay.classList.toggle("show", on); overlay.classList.remove("error"); overlay.textContent = "buffering…"; }
+    function setBuffering(on) { overlay.classList.toggle("show", on); overlay.classList.remove("error"); overlay.textContent = tr("buffering…"); }
     function showError(msg) { overlay.classList.add("show", "error"); overlay.textContent = msg; }
 
     function render() {
@@ -240,7 +245,7 @@
       if (img.getAttribute("src") !== url) {
         setBuffering(true);
         img.onload = () => setBuffering(false);
-        img.onerror = () => showError("Frame failed to load (" + frames[index] + ")");
+        img.onerror = () => showError(tf("Frame failed to load ({name})", { name: frames[index] }));
         img.src = url;
       }
       preload(index);
@@ -299,14 +304,15 @@
       });
       const unit = timeline === "normalized" ? " t" : (timeline === "index" ? "" : " s");
       if (segs.length) {
-        note.textContent = "Highlighted window" + (segs.length > 1 ? "s" : "") + ": " +
+        const lbl = tr(segs.length > 1 ? "Highlighted windows" : "Highlighted window");
+        note.textContent = lbl + ": " +
           segs.map(([a, b]) => a.toFixed(timeline === "normalized" ? 2 : 1) + "–" + b.toFixed(timeline === "normalized" ? 2 : 1) + unit).join(", ");
       } else if (timeline === "normalized") {
-        note.textContent = frames.length + " keyframes · timeline normalized 0.00–1.00";
+        note.textContent = tf("{n} keyframes · timeline normalized 0.00–1.00", { n: frames.length });
       } else if (timeline === "index") {
-        note.textContent = frames.length + " frames";
+        note.textContent = tf("{n} frames", { n: frames.length });
       } else {
-        note.textContent = "Source: " + nativeFps + " fps · " + frames.length + " frames";
+        note.textContent = tf("Source: {fps} fps · {n} frames", { fps: nativeFps, n: frames.length });
       }
     }
 
@@ -319,7 +325,7 @@
         nativeFps = manifest.native_fps || 1;
         playFps = manifest.default_playback_fps || 5;
         timeline = manifest.timeline || "seconds";
-        if (!frames.length) { showError("No frames in manifest."); return; }
+        if (!frames.length) { showError(tr("No frames in manifest.")); return; }
         slider.max = String(frames.length - 1);
         setSpeed(1);
         drawMarkers();
@@ -328,8 +334,8 @@
         setIndex(startIdx);
         preload(index);
       } catch (e) {
-        showError("Could not load video: " + e.message);
-        note.textContent = "Manifest expected at ./Videos/" + opts.dataset + "/" + opts.videoId + "/frames.json";
+        showError(tf("Could not load video: {msg}", { msg: e.message }));
+        note.textContent = tf("Manifest expected at {url}", { url: "./Videos/" + opts.dataset + "/" + opts.videoId + "/frames.json" });
       }
     })();
 
@@ -359,7 +365,7 @@
     const answered = order.filter((idx) => itemComplete(study.items[idx])).length;
     progressWrap.style.display = "flex";
     progressFill.style.width = (total ? (answered / total) * 100 : 0) + "%";
-    progressText.textContent = answered + " / " + total + " done";
+    progressText.textContent = tf("{a} / {b} done", { a: answered, b: total });
   }
 
   function isSkipped(item) { return !!(state.skipped && state.skipped[item.item_id]); }
@@ -381,43 +387,49 @@
     if (!id) { fatal("No study specified. Append ?study=<id> to the URL."); return; }
     fetch("./studies/" + id + ".json", { cache: "no-store" })
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .then((cfg) => { study = cfg; titleBar.textContent = study.title || study.study_id; renderIntro(); })
+      .then((cfg) => { study = cfg; setTitleBar(); renderIntro(); })
       .catch((e) => fatal("Could not load ./studies/" + id + ".json — " + e.message));
   }
 
   function fatal(msg) {
+    redraw = function () { fatal(msg); };
     clear(root);
     root.appendChild(el("div", { class: "banner warn", text: msg }));
-    root.appendChild(el("p", null, el("a", { href: "./index.html", text: "← Back to studies" })));
+    root.appendChild(el("p", null, el("a", { href: "./index.html", text: tr("← Back to studies") })));
   }
 
+  let introReviewerDraft = "";
+
   function renderIntro() {
+    redraw = renderIntro;
     clear(root);
     progressWrap.style.display = "none";
     const card = el("div", { class: "card narrow" });
     card.appendChild(el("p", { class: "eyebrow", text: studyTypeLabel() }));
-    card.appendChild(el("h1", { text: study.title || study.study_id }));
-    card.appendChild(el("div", { class: "prose", html: renderMarkdown(study.intro_md) }));
-    if (study.context_md) {
-      card.appendChild(el("h2", { text: "Reference" }));
-      card.appendChild(el("div", { class: "prose", html: renderMarkdown(study.context_md) }));
+    card.appendChild(el("h1", { text: L(study, "title") || study.study_id }));
+    card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(study, "intro_md")) }));
+    if (L(study, "context_md")) {
+      card.appendChild(el("h2", { text: tr("Reference") }));
+      card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(study, "context_md")) }));
     }
 
     let reviewerInput = null;
     if (study.require_reviewer_id) {
       const field = el("div", { style: "margin-top:18px" });
-      field.appendChild(el("label", { for: "reviewer", text: "Your initials or email (for de-duplication)" }));
-      reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: "e.g. SG or you@hospital.org", autocomplete: "off", style: "margin-top:6px;max-width:360px" });
+      field.appendChild(el("label", { for: "reviewer", text: tr("Your initials or email (for de-duplication)") }));
+      reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: tr("e.g. SG or you@hospital.org"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
+      reviewerInput.value = introReviewerDraft;
+      reviewerInput.addEventListener("input", () => { introReviewerDraft = reviewerInput.value; });
       field.appendChild(reviewerInput);
       card.appendChild(field);
     }
 
-    const btn = el("button", { class: "btn btn-primary", text: "Begin review", style: "margin-top:20px" });
+    const btn = el("button", { class: "btn btn-primary", text: tr("Begin review"), style: "margin-top:20px" });
     const errLine = el("div", { class: "banner warn", style: "display:none;margin-top:14px" });
     btn.addEventListener("click", () => {
       const reviewer = reviewerInput ? reviewerInput.value.trim() : "anonymous";
       if (study.require_reviewer_id && !reviewer) {
-        errLine.style.display = "block"; errLine.textContent = "Please enter your initials or email to begin.";
+        errLine.style.display = "block"; errLine.textContent = tr("Please enter your initials or email to begin.");
         return;
       }
       beginSession(reviewer);
@@ -430,7 +442,7 @@
   }
 
   function studyTypeLabel() {
-    return ({ criteria: "Study · criteria validation", think: "Study · reasoning validation", caption: "Study · summary validation" })[study.study_type] || "Study";
+    return tr(({ criteria: "Study · criteria validation", think: "Study · reasoning validation", caption: "Study · summary validation" })[study.study_type] || "Study");
   }
 
   function beginSession(reviewer) {
@@ -457,6 +469,7 @@
   }
 
   function renderItem() {
+    redraw = renderItem;
     if (player) { player.destroy(); player = null; }
     clear(root);
     showWrapup = false;
@@ -466,18 +479,18 @@
 
     const card = el("div", { class: "card" });
     const head = el("div", { class: "row", style: "display:flex;align-items:center;gap:10px;margin-bottom:4px" });
-    head.appendChild(el("span", { class: "tag", text: "Item " + (pos + 1) + " of " + order.length }));
+    head.appendChild(el("span", { class: "tag", text: tf("Item {n} of {total}", { n: pos + 1, total: order.length }) }));
     if (item.task) head.appendChild(el("span", { class: "tag task", text: taskLabel(item.task) }));
     else if (item.group) head.appendChild(el("span", { class: "tag task", text: item.group }));
     card.appendChild(head);
 
-    if (isSkipped(item)) head.appendChild(el("span", { class: "tag skipped", text: "Skipped" }));
+    if (isSkipped(item)) head.appendChild(el("span", { class: "tag skipped", text: tr("Skipped") }));
 
     // dimsHost holds the per-item rating questions
     const dimsHost = el("div", { class: "dims" });
     if (isSkipped(item)) {
       dimsHost.appendChild(el("div", { class: "banner info",
-        text: "You marked this item as skipped — answers below are optional. Answer any question to include it again." }));
+        text: tr("You marked this item as skipped — answers below are optional. Answer any question to include it again.") }));
     }
     study.dimensions.forEach((dim) => {
       if (!dimVisible(dim, item)) return;
@@ -509,14 +522,14 @@
   function renderCriteriaBody(card, item) {
     if (item.criterion) {
       card.appendChild(el("div", { class: "qa-block" }, [
-        el("div", { class: "qa-label", text: "Criterion under review" }),
-        el("div", { class: "qa-text", text: item.criterion }),
+        el("div", { class: "qa-label", text: tr("Criterion under review") }),
+        el("div", { class: "qa-text", text: L(item, "criterion") }),
       ]));
     }
     if (item.rationale) {
       card.appendChild(el("div", { class: "qa-block" }, [
-        el("div", { class: "qa-label", text: "Intended rationale" }),
-        el("div", { class: "qa-text muted", text: item.rationale }),
+        el("div", { class: "qa-label", text: tr("Intended rationale") }),
+        el("div", { class: "qa-text muted", text: L(item, "rationale") }),
       ]));
     }
   }
@@ -528,38 +541,38 @@
         start: item.start, end: item.end, segments: item.segments,
       });
     } else {
-      playerCol.appendChild(el("div", { class: "no-media", text: "No video associated with this item." }));
+      playerCol.appendChild(el("div", { class: "no-media", text: tr("No video associated with this item.") }));
     }
 
     if (item.question) {
       contentCol.appendChild(el("div", { class: "qa-block" }, [
-        el("div", { class: "qa-label", text: "Question shown to the model" }),
-        el("div", { class: "qa-text", text: item.question }),
+        el("div", { class: "qa-label", text: tr("Question shown to the model") }),
+        el("div", { class: "qa-text", text: L(item, "question") }),
       ]));
     }
     if (item.answer != null && item.answer !== "") {
       contentCol.appendChild(el("div", { class: "qa-block" }, [
-        el("div", { class: "qa-label", text: "Model's answer" }),
-        el("div", { class: "qa-text qa-answer", text: item.answer }),
+        el("div", { class: "qa-label", text: tr("Model's answer") }),
+        el("div", { class: "qa-text qa-answer", text: L(item, "answer") }),
       ]));
     }
     if (study.study_type === "caption" && item.caption) {
       contentCol.appendChild(el("div", { class: "qa-block" }, [
-        el("div", { class: "qa-label", text: "Model's summary" }),
-        el("div", { class: "qa-text qa-answer", text: item.caption }),
+        el("div", { class: "qa-label", text: tr("Model's summary") }),
+        el("div", { class: "qa-text qa-answer", text: L(item, "caption") }),
       ]));
     }
     if (study.study_type === "think") {
       const t = item.think;
       if (t != null && String(t).trim() !== "") {
         contentCol.appendChild(el("div", { class: "qa-block" }, [
-          el("div", { class: "qa-label", text: "Model's reasoning (<think>)" }),
-          el("div", { class: "qa-text qa-think", text: t }),
+          el("div", { class: "qa-label", text: tr("Model's reasoning (<think>)") }),
+          el("div", { class: "qa-text qa-think", text: L(item, "think") }),
         ]));
       } else {
         contentCol.appendChild(el("div", { class: "qa-block" }, [
-          el("div", { class: "qa-label", text: "Model's reasoning" }),
-          el("div", { class: "no-media", text: "No reasoning trace for this item — rate the answer only." }),
+          el("div", { class: "qa-label", text: tr("Model's reasoning") }),
+          el("div", { class: "no-media", text: tr("No reasoning trace for this item — rate the answer only.") }),
         ]));
       }
     }
@@ -568,9 +581,9 @@
   function renderDimension(dim, item) {
     const wrap = el("div", { class: "dim", "data-dim": dim.id });
     const label = el("label", { class: "dim-q" });
-    label.appendChild(document.createTextNode(dim.label || dim.id));
+    label.appendChild(document.createTextNode(L(dim, "label") || dim.id));
     if (dimRequired(dim)) label.appendChild(el("span", { class: "req-star", text: "*" }));
-    else label.appendChild(el("span", { class: "opt-note", text: "(optional)" }));
+    else label.appendChild(el("span", { class: "opt-note", text: tr("(optional)") }));
     wrap.appendChild(label);
 
     const ans = state.answers[item.item_id] || (state.answers[item.item_id] = {});
@@ -590,7 +603,7 @@
         });
         const lab = el("label", { for: id }, [
           el("span", { class: "n", text: String(v) }),
-          cap ? el("span", { class: "cap", text: cap }) : null,
+          cap ? el("span", { class: "cap", text: tr(cap) }) : null,
         ]);
         group.appendChild(el("div", { class: "opt" }, [input, lab]));
       }
@@ -600,15 +613,16 @@
       const sel = el("select", {
         onchange: (e) => { ans[dim.id] = e.target.value; clearInvalid(wrap); clearSkip(item); commit(); },
       });
-      sel.appendChild(el("option", { value: "", text: "— select —" }));
+      sel.appendChild(el("option", { value: "", text: tr("— select —") }));
       (dim.options || []).forEach((opt) => {
-        sel.appendChild(el("option", { value: opt, text: opt, selected: ans[dim.id] === opt ? "selected" : null }));
+        // value stays the canonical English option; only the displayed text is localized
+        sel.appendChild(el("option", { value: opt, text: tr(opt), selected: ans[dim.id] === opt ? "selected" : null }));
       });
       wrap.appendChild(sel);
       addCommentBox(wrap, dim, ans);
     } else {
       const ta = el("textarea", {
-        placeholder: dim.placeholder || "Type here…",
+        placeholder: dim.placeholder ? tr(dim.placeholder) : tr("Type here…"),
         oninput: (e) => { ans[dim.id] = e.target.value; clearInvalid(wrap); commitDebounced(); },
       });
       ta.value = ans[dim.id] || "";
@@ -622,7 +636,7 @@
   function addCommentBox(wrap, dim, ans) {
     const key = dim.id + "__comment";
     const ci = el("input", { type: "text", class: "dim-comment",
-      placeholder: "Add a comment (optional)",
+      placeholder: tr("Add a comment (optional)"),
       oninput: (e) => { ans[key] = e.target.value; commitDebounced(); } });
     ci.value = ans[key] || "";
     wrap.appendChild(ci);
@@ -646,14 +660,14 @@
   function renderFooter() {
     const foot = el("div", { class: "runner-foot" });
     const inner = el("div", { class: "runner-foot-inner" });
-    const prev = el("button", { class: "btn", text: "← Previous", disabled: pos === 0 ? "disabled" : null,
+    const prev = el("button", { class: "btn", text: tr("← Previous"), disabled: pos === 0 ? "disabled" : null,
       onclick: () => goTo(pos - 1) });
-    const count = el("span", { class: "count", text: "Item " + (pos + 1) + " of " + order.length });
-    const skip = el("button", { class: "btn btn-ghost skip-btn", text: "Skip this item",
-      title: "Mark this item skipped and move on", onclick: skipItem });
+    const count = el("span", { class: "count", text: tf("Item {n} of {total}", { n: pos + 1, total: order.length }) });
+    const skip = el("button", { class: "btn btn-ghost skip-btn", text: tr("Skip this item"),
+      title: tr("Skip this item"), onclick: skipItem });
     const next = pos < order.length - 1
-      ? el("button", { class: "btn btn-primary", text: "Next →", onclick: () => goTo(pos + 1) })
-      : el("button", { class: "btn btn-primary", text: "Review & submit →", onclick: goWrapup });
+      ? el("button", { class: "btn btn-primary", text: tr("Next →"), onclick: () => goTo(pos + 1) })
+      : el("button", { class: "btn btn-primary", text: tr("Review & submit →"), onclick: goWrapup });
     inner.appendChild(prev);
     inner.appendChild(count);
     inner.appendChild(el("span", { class: "spacer" }));
@@ -695,41 +709,45 @@
   }
 
   function renderWrapup() {
+    redraw = renderWrapup;
     clear(root);
     window.scrollTo({ top: 0 });
     const card = el("div", { class: "card narrow" });
-    card.appendChild(el("p", { class: "eyebrow", text: "Almost done" }));
-    card.appendChild(el("h1", { text: "Review & submit" }));
+    card.appendChild(el("p", { class: "eyebrow", text: tr("Almost done") }));
+    card.appendChild(el("h1", { text: tr("Review & submit") }));
 
     const bad = incompleteItems();
     if (bad.length) {
       const b = el("div", { class: "banner warn" });
-      b.appendChild(el("div", { text: bad.length + " item" + (bad.length > 1 ? "s" : "") + " still need a required answer:" }));
+      b.appendChild(el("div", { text: tf("{n} item(s) still need a required answer:", { n: bad.length }) }));
       const ul = el("ul");
       bad.forEach(({ k, item }) => {
-        const a = el("a", { text: "Item " + (k + 1) + (item.task ? " (" + item.task + ")" : ""), onclick: () => { showWrapup = false; goTo(k); } });
+        const txt = item.task
+          ? tf("Item {n} ({task})", { n: k + 1, task: taskLabel(item.task) })
+          : tf("Item {n}", { n: k + 1 });
+        const a = el("a", { text: txt, onclick: () => { showWrapup = false; goTo(k); } });
         ul.appendChild(el("li", null, a));
       });
       b.appendChild(ul);
       card.appendChild(b);
     } else {
-      card.appendChild(el("div", { class: "banner info", text: "All items have their required answers. Add any final notes below, then submit." }));
+      card.appendChild(el("div", { class: "banner info", text: tr("All items have their required answers. Add any final notes below, then submit.") }));
     }
 
     const nSkipped = order.filter((idx) => isSkipped(study.items[idx])).length;
     if (nSkipped) {
       card.appendChild(el("p", { class: "muted", style: "margin-top:-4px",
-        text: nSkipped + " item" + (nSkipped > 1 ? "s were" : " was") + " skipped (recorded as skipped). You can go back to answer any of them." }));
+        text: tf("{n} item(s) were skipped (recorded as skipped). You can go back to answer any of them.", { n: nSkipped }) }));
     }
 
     // wrapup free-text (optional)
     if (Array.isArray(study.wrapup) && study.wrapup.length) {
-      card.appendChild(el("h2", { text: "Final notes" }));
+      card.appendChild(el("h2", { text: tr("Final notes") }));
       study.wrapup.forEach((w) => {
         const field = el("div", { style: "margin-bottom:14px" });
         field.appendChild(el("label", { class: "dim-q", for: "wrap_" + w.id }, [
-          document.createTextNode(w.label || w.id),
-          el("span", { class: "opt-note", text: "(optional)" }),
+          document.createTextNode(L(w, "label") || w.id),
+          el("span", { class: "opt-note", text: tr("(optional)") }),
         ]));
         const ta = el("textarea", { id: "wrap_" + w.id,
           oninput: (e) => { state.wrapup[w.id] = e.target.value; commitDebounced(); } });
@@ -739,9 +757,9 @@
       });
     }
 
-    const submit = el("button", { class: "btn btn-primary", text: "Submit responses", disabled: bad.length ? "disabled" : null,
+    const submit = el("button", { class: "btn btn-primary", text: tr("Submit responses"), disabled: bad.length ? "disabled" : null,
       onclick: doSubmit });
-    const back = el("button", { class: "btn btn-ghost", text: "← Back to items", onclick: () => { showWrapup = false; goTo(pos); } });
+    const back = el("button", { class: "btn btn-ghost", text: tr("← Back to items"), onclick: () => { showWrapup = false; goTo(pos); } });
     card.appendChild(el("div", { class: "dl-row" }, [submit, back]));
     root.appendChild(card);
     progressWrap.style.display = "none";
@@ -847,32 +865,39 @@
   }
 
   function renderDone(base, postMsg, autoSent) {
+    redraw = function () { renderDone(base, postMsg, autoSent); };
     clear(root);
     window.scrollTo({ top: 0 });
     const card = el("div", { class: "card narrow" });
     card.appendChild(el("div", { class: "done-icon", text: "✓" }));
-    card.appendChild(el("h1", { text: "Thank you — review complete" }));
-    card.appendChild(el("p", { class: "lead", text: autoSent
+    card.appendChild(el("h1", { text: tr("Thank you — review complete") }));
+    card.appendChild(el("p", { class: "lead", text: tr(autoSent
       ? "Your responses were submitted automatically. A JSON and CSV copy was also downloaded to your computer as a backup — no need to email anything unless asked."
-      : "Your responses have been downloaded as a JSON and a CSV file. Please send us the file (whichever your coordinator requested)." }));
-    if (postMsg) card.appendChild(el("div", { class: "banner info", text: postMsg }));
-    card.appendChild(el("p", { class: "muted", text: "Files: " + base + ".json  ·  " + base + ".csv" }));
+      : "Your responses have been downloaded as a JSON and a CSV file. Please send us the file (whichever your coordinator requested).") }));
+    if (postMsg) card.appendChild(el("div", { class: "banner info", text: tr(postMsg) }));
+    card.appendChild(el("p", { class: "muted", text: tf("Files: {json} · {csv}", { json: base + ".json", csv: base + ".csv" }) }));
 
     const dl = el("div", { class: "dl-row" }, [
-      el("button", { class: "btn", text: "Download JSON again",
+      el("button", { class: "btn", text: tr("Download JSON again"),
         onclick: () => download(base + ".json", JSON.stringify(buildResponse(), null, 2), "application/json") }),
-      el("button", { class: "btn", text: "Download CSV again",
+      el("button", { class: "btn", text: tr("Download CSV again"),
         onclick: () => download(base + ".csv", buildCsv(), "text/csv") }),
     ]);
     card.appendChild(dl);
-    card.appendChild(el("p", null, el("a", { href: "./index.html", text: "← Back to all studies" })));
+    card.appendChild(el("p", null, el("a", { href: "./index.html", text: tr("← Back to all studies") })));
     root.appendChild(card);
     progressWrap.style.display = "none";
   }
 
+  function setTitleBar() { if (study) titleBar.textContent = L(study, "title") || study.study_id; }
+
   // ---------- lifecycle ----------
   window.addEventListener("beforeunload", () => { try { persistTime(); if (state) saveState(state); } catch (e) {} });
   document.addEventListener("visibilitychange", () => { if (document.hidden) { persistTime(); if (state) saveState(state); } });
+
+  // language toggle: mount in the top bar, re-render the current screen on switch
+  I.mountToggle(document.querySelector(".topbar-inner"));
+  I.onChange(function () { setTitleBar(); redraw(); });
 
   start();
 })();

@@ -3,6 +3,7 @@
     "study_type":  "caption",
     "title":  "CholecT50 video summaries - clinician review",
     "intro_md":  "Watch each clip, then rate the model\u0027s **summary** of the procedure.\n\nJudge whether the summary is factually correct, complete, uses the right terminology, and free of hallucinated detail.",
+    "intro_md_zh":  "观看每个片段，然后评价模型对手术过程的**总结**。\n\n判断该总结是否事实正确、完整、术语使用恰当，且无幻觉细节。",
     "context_md":  null,
     "require_reviewer_id":  true,
     "randomize_items":  true,

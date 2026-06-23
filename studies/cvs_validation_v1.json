@@ -3,7 +3,9 @@
     "study_type":  "think",
     "title":  "Endoscapes CVS - clinician review",
     "intro_md":  "Each clip is a short, time-ordered set of keyframes from a laparoscopic cholecystectomy dissection toward the **Critical View of Safety (CVS)**.\n\nFor each clip, scrub the keyframes (timeline runs **0.00 to 1.00**, normalized over the clip), then rate the model\u0027s **answer** (when each criterion is first met and the final verdict) and its **reasoning**.",
+    "intro_md_zh":  "每个片段是腹腔镜胆囊切除术中朝向**安全关键视图（CVS）**分离过程的一组按时间排序的关键帧。\n\n对每个片段，拖动浏览这些关键帧（时间轴在整段上归一化为 **0.00 至 1.00**），然后评价模型的**回答**（各标准首次满足的时间及最终判定）及其**推理**。",
     "context_md":  "The three CVS criteria, judged **independently**, each from its own evidence region:\n\n- **C1 - Two structures:** exactly two tubular structures (cystic duct and cystic artery) seen entering the gallbladder. Judged only from the structures at the **gallbladder neck**.\n- **C2 - Hepatocystic triangle cleared:** the Calot (hepatocystic) triangle is free of fat and fibrous tissue. Judged only from the **triangle window**.\n- **C3 - Cystic plate exposed:** the lower third of the gallbladder is dissected off the cystic plate. Judged only from the **gallbladder-liver-bed interface**.\n\nCVS is achieved only when **C1 and C2 and C3** are all met simultaneously.",
+    "context_md_zh":  "三条 CVS 标准需**独立**判断，每条仅依据其自身的证据区域：\n\n- **C1 - 两条结构：** 恰好有两条管状结构（胆囊管与胆囊动脉）进入胆囊。仅依据**胆囊颈部**的结构判断。\n- **C2 - 肝胆三角已清理：** 肝胆三角（Calot 三角）内无脂肪和纤维组织。仅依据**三角窗口**判断。\n- **C3 - 胆囊板已暴露：** 胆囊下三分之一已从胆囊板分离。仅依据**胆囊-肝床界面**判断。\n\n只有当 **C1、C2、C3** 同时满足时，才达成 CVS。",
     "task_labels":  {
                         "CVS":  "Critical View of Safety (CVS)"
                     },

@@ -3,6 +3,7 @@
     "study_type":  "think",
     "title":  "CholecT50 reasoning - clinician review",
     "intro_md":  "Watch each clip, then rate the model\u0027s **answer** and its three-level **reasoning** `\u003cthink\u003e`.\n\nThe reasoning is always written in three labelled levels (**L1 -\u003e L2 -\u003e L3**); what each level should contain depends on the task. A reminder of the levels **for the current task** stays pinned under the video on every item, so you can rate against it as you read.",
+    "intro_md_zh":  "观看每个片段，然后评价模型的**回答**及其三层**推理** `\u003cthink\u003e`。\n\n推理始终按三个带标签的层级书写（**L1 -\u003e L2 -\u003e L3**）；每个层级应包含的内容取决于任务。**当前任务**对应的层级说明会固定显示在每个条目的视频下方，便于您边阅读边评价。",
     "context_md":  null,
     "task_labels":  {
                         "TAL":  "Temporal Action Localization (TAL)",
