@@ -188,6 +188,7 @@
     const LOOKAHEAD = 25;
     let manifest = null, frames = [], dir = "", nativeFps = 1, playFps = 5, timeline = "seconds";
     let index = 0, playing = false, speed = 1, rafTimer = null, lastTick = 0;
+    let loIdx = 0, hiIdx = 0;   // navigable clip range (indices); restricts to the portion the model saw
     let destroyed = false;
     const requested = new Set();
 
@@ -230,7 +231,7 @@
       return v * nativeFps;
     }
     function preload(from) {
-      for (let i = from; i < Math.min(frames.length, from + LOOKAHEAD); i++) {
+      for (let i = from; i < Math.min(hiIdx + 1, from + LOOKAHEAD); i++) {
         if (!requested.has(i)) { requested.add(i); const im = new Image(); im.src = frameUrl(i); }
       }
     }
@@ -252,7 +253,7 @@
     }
 
     function setIndex(i, fromUser) {
-      index = Math.max(0, Math.min(frames.length - 1, Math.round(i)));
+      index = Math.max(loIdx, Math.min(hiIdx, Math.round(i)));
       if (fromUser) stop();
       render();
     }
@@ -267,7 +268,7 @@
       const interval = 1000 / (playFps * speed);
       if (dt >= interval) {
         lastTick = ts;
-        if (index >= frames.length - 1) { stop(); return; }
+        if (index >= hiIdx) { stop(); return; }
         // only advance if current frame is loaded (graceful buffering)
         if (img.complete && img.naturalWidth > 0) setIndex(index + 1);
       }
@@ -275,7 +276,7 @@
     }
     function play() {
       if (playing || frames.length === 0) return;
-      if (index >= frames.length - 1) setIndex(0);
+      if (index >= hiIdx) setIndex(loIdx);
       playing = true; lastTick = 0; playBtn.innerHTML = "❚❚"; playBtn.setAttribute("aria-label", "Pause");
       rafTimer = requestAnimationFrame(tick);
     }
@@ -288,7 +289,8 @@
 
     function drawMarkers() {
       clear(markers);
-      const total = Math.max(1, frames.length - 1);
+      const span = Math.max(1, hiIdx - loIdx);   // marker positions are relative to the visible clip
+      const clipCount = hiIdx - loIdx + 1;
       const segs = [];
       if (opts.segments && opts.segments.length) {
         opts.segments.forEach((s) => segs.push([s[0], s[1]]));
@@ -296,10 +298,10 @@
         segs.push([opts.start, opts.end]);
       }
       segs.forEach(([a, b]) => {
-        const ia = Math.max(0, Math.min(total, toIndex(a)));
-        const ib = Math.max(0, Math.min(total, toIndex(b)));
-        const left = (ia / total) * 100;
-        const width = Math.max(1.2, ((ib - ia) / total) * 100);
+        const ia = Math.max(loIdx, Math.min(hiIdx, toIndex(a)));
+        const ib = Math.max(loIdx, Math.min(hiIdx, toIndex(b)));
+        const left = ((ia - loIdx) / span) * 100;
+        const width = Math.max(1.2, ((ib - ia) / span) * 100);
         markers.appendChild(el("div", { class: "seg", style: "left:" + left + "%;width:" + width + "%" }));
       });
       const unit = timeline === "normalized" ? " t" : (timeline === "index" ? "" : " s");
@@ -308,11 +310,11 @@
         note.textContent = lbl + ": " +
           segs.map(([a, b]) => a.toFixed(timeline === "normalized" ? 2 : 1) + "–" + b.toFixed(timeline === "normalized" ? 2 : 1) + unit).join(", ");
       } else if (timeline === "normalized") {
-        note.textContent = tf("{n} keyframes · timeline normalized 0.00–1.00", { n: frames.length });
+        note.textContent = tf("{n} keyframes · timeline normalized 0.00–1.00", { n: clipCount });
       } else if (timeline === "index") {
-        note.textContent = tf("{n} frames", { n: frames.length });
+        note.textContent = tf("{n} frames", { n: clipCount });
       } else {
-        note.textContent = tf("Source: {fps} fps · {n} frames", { fps: nativeFps, n: frames.length });
+        note.textContent = tf("Source: {fps} fps · {n} frames", { fps: nativeFps, n: clipCount });
       }
     }
 
@@ -326,11 +328,16 @@
         playFps = manifest.default_playback_fps || 5;
         timeline = manifest.timeline || "seconds";
         if (!frames.length) { showError(tr("No frames in manifest.")); return; }
-        slider.max = String(frames.length - 1);
+        // restrict the navigable range to the clip the model actually saw (if specified)
+        loIdx = (opts.clipStart != null) ? Math.max(0, Math.round(toIndex(opts.clipStart))) : 0;
+        hiIdx = (opts.clipEnd != null) ? Math.min(frames.length - 1, Math.round(toIndex(opts.clipEnd))) : frames.length - 1;
+        if (hiIdx <= loIdx) { loIdx = 0; hiIdx = frames.length - 1; }   // fallback if clip looks invalid
+        slider.min = String(loIdx);
+        slider.max = String(hiIdx);
         setSpeed(1);
         drawMarkers();
         const startIdx = (opts.start != null) ? Math.round(toIndex(opts.start))
-          : (opts.segments && opts.segments.length ? Math.round(toIndex(opts.segments[0][0])) : 0);
+          : (opts.segments && opts.segments.length ? Math.round(toIndex(opts.segments[0][0])) : loIdx);
         setIndex(startIdx);
         preload(index);
       } catch (e) {
@@ -554,6 +561,7 @@
       player = FramePlayer(playerCol, {
         dataset: item.dataset, videoId: item.video_id,
         start: item.start, end: item.end, segments: item.segments,
+        clipStart: item.clip_start, clipEnd: item.clip_end,
       });
     } else {
       playerCol.appendChild(el("div", { class: "no-media", text: tr("No video associated with this item.") }));

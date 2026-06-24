@@ -140,15 +140,6 @@
                       "item_id":  "CVS-03",
                       "task":  "CVS",
                       "dataset":  "Endoscapes",
-                      "video_id":  "V2_29800",
-                      "question":  "How do the three criteria of the Critical View of Safety (CVS) progress throughout this surgical clip, and what is the final CVS status at the end of the sequence?",
-                      "answer":  "C1 first met t=1.00; C2 first met t=1.00; C3 first met never; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The dissection begins in an obscured field and progresses toward clearing structures by the final frame. L2 (per-criterion progression): C1 and C2 are both first met at t=1.00 (frame 31300) based on structure identification and triangle clearance, while C3 is never met. L3 (CVS synthesis): CVS is never achieved in this sequence because C3 remains unmet."
-                  },
-                  {
-                      "item_id":  "CVS-04",
-                      "task":  "CVS",
-                      "dataset":  "Endoscapes",
                       "video_id":  "V5_5900",
                       "question":  "Based on this laparoscopic cholecystectomy clip, how do the three criteria for the Critical View of Safety (CVS) progress over time, and what is the final CVS status at the end of the video?",
                       "answer":  "C1 first met never; C2 first met t=1.00; C3 first met never; CVS never achieved; final: not achieved",
