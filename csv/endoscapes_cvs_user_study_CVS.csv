@@ -1,5 +1,5 @@
-"video_path","task","question","answer","think","prompt"
-"/root/dataset/new_datasets/Endoscapes/endoscapes/train/3_13525.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_14275.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_15025.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_15775.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_16525.jpg","cvs_video","<image>
+"video_path","video_id","frame_ids","task","question","answer","think","prompt"
+"/root/dataset/new_datasets/Endoscapes/endoscapes/train/3_13525.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_14275.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_15025.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_15775.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/3_16525.jpg","3","13525 14275 15025 15775 16525","cvs_video","<image>
 <image>
 <image>
 <image>
@@ -29,7 +29,7 @@ Rules:
 - Do NOT reveal that any trajectory, narrative, label, or ground truth was provided. Never write ""given"" or ""as provided"".
 - Do NOT confuse the criteria or renumber them; the timeline MUST match the reference trajectory.
 Return ONLY the JSON object."
-"/root/dataset/new_datasets/Endoscapes/endoscapes/train/8_14775.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_15525.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_16275.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_17025.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_17775.jpg","cvs_video","<image>
+"/root/dataset/new_datasets/Endoscapes/endoscapes/train/8_14775.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_15525.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_16275.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_17025.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/8_17775.jpg","8","14775 15525 16275 17025 17775","cvs_video","<image>
 <image>
 <image>
 <image>
@@ -59,7 +59,7 @@ Rules:
 - Do NOT reveal that any trajectory, narrative, label, or ground truth was provided. Never write ""given"" or ""as provided"".
 - Do NOT confuse the criteria or renumber them; the timeline MUST match the reference trajectory.
 Return ONLY the JSON object."
-"/root/dataset/new_datasets/Endoscapes/endoscapes/train/7_36175.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_36925.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_37675.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_38425.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_39175.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_39925.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_40675.jpg","cvs_video","<image>
+"/root/dataset/new_datasets/Endoscapes/endoscapes/train/7_36175.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_36925.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_37675.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_38425.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_39175.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_39925.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/7_40675.jpg","7","36175 36925 37675 38425 39175 39925 40675","cvs_video","<image>
 <image>
 <image>
 <image>
@@ -91,7 +91,7 @@ Rules:
 - Do NOT reveal that any trajectory, narrative, label, or ground truth was provided. Never write ""given"" or ""as provided"".
 - Do NOT confuse the criteria or renumber them; the timeline MUST match the reference trajectory.
 Return ONLY the JSON object."
-"/root/dataset/new_datasets/Endoscapes/endoscapes/train/2_29800.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/2_30550.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/2_31300.jpg","cvs_video","<image>
+"/root/dataset/new_datasets/Endoscapes/endoscapes/train/2_29800.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/2_30550.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/2_31300.jpg","2","29800 30550 31300","cvs_video","<image>
 <image>
 <image>
 How do the three criteria of the Critical View of Safety (CVS) progress throughout this surgical clip, and what is the final CVS status at the end of the sequence?","C1 first met t=1.00; C2 first met t=1.00; C3 first met never; CVS never achieved; final: not achieved","L1 (trajectory survey): The dissection begins in an obscured field and progresses toward clearing structures by the final frame. L2 (per-criterion progression): C1 and C2 are both first met at t=1.00 (frame 31300) based on structure identification and triangle clearance, while C3 is never met. L3 (CVS synthesis): CVS is never achieved in this sequence because C3 remains unmet.","You are building ONE training QA example for a surgical vision-language model from a SHORT CLIP (time-ordered frames) of a laparoscopic cholecystectomy dissection toward the Critical View of Safety (CVS).
@@ -119,7 +119,7 @@ Rules:
 - Do NOT reveal that any trajectory, narrative, label, or ground truth was provided. Never write ""given"" or ""as provided"".
 - Do NOT confuse the criteria or renumber them; the timeline MUST match the reference trajectory.
 Return ONLY the JSON object."
-"/root/dataset/new_datasets/Endoscapes/endoscapes/train/5_5900.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/5_6650.jpg","cvs_video","<image>
+"/root/dataset/new_datasets/Endoscapes/endoscapes/train/5_5900.jpg ; /root/dataset/new_datasets/Endoscapes/endoscapes/train/5_6650.jpg","5","5900 6650","cvs_video","<image>
 <image>
 Based on this laparoscopic cholecystectomy clip, how do the three criteria for the Critical View of Safety (CVS) progress over time, and what is the final CVS status at the end of the video?","C1 first met never; C2 first met t=1.00; C3 first met never; CVS never achieved; final: not achieved","L1 (trajectory survey): The clip begins at t=0.00 with the gallbladder in the upper-left field and no CVS criteria satisfied as dissection is actively underway in the hepatocystic space. Over the course of the clip, lateral retraction helps open up the surgical field, allowing one of the criteria to be met by t=1.00, but the overall dissection halts before a complete CVS can be established.
 
