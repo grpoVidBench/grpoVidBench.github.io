@@ -393,6 +393,105 @@
     return { destroy() { destroyed = true; stop(); clearTimeout(bufTimer); } };
   }
 
+  // Native <video> player (used when the manifest provides media_url, e.g. CholecT50).
+  // Timeline, slider, speed and window markers are all expressed in SOURCE seconds.
+  function VideoPlayer(container, opts) {
+    let destroyed = false, mediaFps = 5, mediaStart = 0, nativeFps = 1, lo = 0, hi = 0;
+    const stage = el("div", { class: "stage" });
+    const video = el("video", { class: "vid", playsinline: "", preload: "auto" });
+    video.muted = true;
+    const overlay = el("div", { class: "overlay" });
+    stage.appendChild(video); stage.appendChild(overlay);
+
+    const playBtn = el("button", { class: "pp", title: "Play / pause", "aria-label": "Play", html: "▶" });
+    const timeLabel = el("span", { class: "time", text: "0.0 s" });
+    const markers = el("div", { class: "scrub-markers" });
+    const slider = el("input", { type: "range", min: "0", max: "0", value: "0", step: "1" });
+    const scrubWrap = el("div", { class: "scrub-wrap" }, [markers, slider]);
+    const speedBox = el("div", { class: "speed" });
+    const speeds = [0.5, 1, 2, 4];
+    const speedBtns = speeds.map((sp) => el("button", { text: sp + "×", onclick: () => setSpeed(sp) }));
+    speedBtns.forEach((b) => speedBox.appendChild(b));
+    const note = el("div", { class: "player-note" });
+    const controls = el("div", { class: "controls" }, [
+      el("div", { class: "row" }, [playBtn, scrubWrap]),
+      el("div", { class: "row" }, [timeLabel, el("span", { class: "spacer", style: "flex:1" }), speedBox]),
+      note,
+    ]);
+    container.appendChild(el("div", { class: "player" }, [stage, controls]));
+
+    const srcPerVid = () => mediaFps / nativeFps;          // source seconds per video second
+    const toSrc = (vt) => mediaStart + vt * srcPerVid();   // video time -> source second
+    const toVid = (s) => (s - mediaStart) / srcPerVid();   // source second -> video time
+    function setBuffering(on) { overlay.classList.toggle("show", on); overlay.classList.remove("error"); overlay.textContent = tr("buffering…"); }
+    function setSpeed(sp) { video.playbackRate = sp; speedBtns.forEach((b, k) => b.classList.toggle("active", speeds[k] === sp)); }
+    function updateUI() {
+      const s = Math.max(lo, Math.min(hi, toSrc(video.currentTime)));
+      slider.value = String(Math.round(s));
+      timeLabel.textContent = s.toFixed(1) + " s";
+    }
+
+    playBtn.addEventListener("click", () => { if (video.paused) video.play(); else video.pause(); });
+    video.addEventListener("play", () => { playBtn.innerHTML = "❚❚"; playBtn.setAttribute("aria-label", "Pause"); });
+    video.addEventListener("pause", () => { playBtn.innerHTML = "▶"; playBtn.setAttribute("aria-label", "Play"); });
+    video.addEventListener("timeupdate", () => { updateUI(); if (toSrc(video.currentTime) >= hi) { video.pause(); try { video.currentTime = toVid(hi); } catch (e) {} } });
+    video.addEventListener("waiting", () => setBuffering(true));
+    video.addEventListener("playing", () => setBuffering(false));
+    video.addEventListener("canplay", () => setBuffering(false));
+    video.addEventListener("error", () => { overlay.classList.add("show", "error"); overlay.textContent = tf("Could not load video: {msg}", { msg: "media" }); });
+    slider.addEventListener("input", () => { video.pause(); try { video.currentTime = toVid(parseFloat(slider.value)); } catch (e) {} updateUI(); });
+
+    function drawMarkers() {
+      clear(markers);
+      const span = Math.max(1, hi - lo);
+      const segs = [];
+      if (opts.segments && opts.segments.length) opts.segments.forEach((s) => segs.push([s[0], s[1]]));
+      else if (opts.start != null && opts.end != null) segs.push([opts.start, opts.end]);
+      segs.forEach(([a, b]) => {
+        const ia = Math.max(lo, Math.min(hi, a)), ib = Math.max(lo, Math.min(hi, b));
+        markers.appendChild(el("div", { class: "seg", style: "left:" + ((ia - lo) / span * 100) + "%;width:" + Math.max(1.2, (ib - ia) / span * 100) + "%" }));
+      });
+      if (segs.length) {
+        note.textContent = tr(segs.length > 1 ? "Highlighted windows" : "Highlighted window") + ": " +
+          segs.map(([a, b]) => a.toFixed(1) + "–" + b.toFixed(1) + " s").join(", ");
+      } else { note.textContent = ""; }
+    }
+
+    (async function init() {
+      try {
+        const m = await getManifest(opts.dataset, opts.videoId);
+        if (destroyed) return;
+        mediaFps = m.media_fps || 5; mediaStart = m.media_start || 0; nativeFps = m.native_fps || 1;
+        lo = (opts.clipStart != null) ? opts.clipStart : mediaStart;
+        hi = (opts.clipEnd != null) ? opts.clipEnd : null;
+        setSpeed(1);
+        video.addEventListener("loadedmetadata", () => {
+          if (destroyed) return;
+          if (hi == null) hi = toSrc(video.duration);
+          slider.min = String(Math.floor(lo)); slider.max = String(Math.ceil(hi));
+          drawMarkers();
+          const startS = (opts.start != null) ? opts.start : lo;
+          try { video.currentTime = toVid(Math.max(lo, Math.min(hi, startS))); } catch (e) {}
+          updateUI();
+        }, { once: true });
+        video.src = m.media_url;
+      } catch (e) {
+        overlay.classList.add("show", "error"); overlay.textContent = tf("Could not load video: {msg}", { msg: e.message });
+      }
+    })();
+
+    return { destroy() { destroyed = true; try { video.pause(); video.removeAttribute("src"); video.load(); } catch (e) {} } };
+  }
+
+  // Choose the video player when the manifest has media_url, else the frame-by-frame player.
+  function mountPlayer(container, opts) {
+    let destroyed = false, inner = null;
+    getManifest(opts.dataset, opts.videoId)
+      .then((m) => { if (destroyed) return; inner = (m && m.media_url) ? VideoPlayer(container, opts) : FramePlayer(container, opts); })
+      .catch(() => { if (!destroyed) inner = FramePlayer(container, opts); });
+    return { destroy() { destroyed = true; if (inner && inner.destroy) inner.destroy(); } };
+  }
+
   // ---------- app state ----------
   let study = null;
   let taskFilter = null;  // when set (?task=TAL), only that task's items are reviewed
@@ -631,7 +730,7 @@
 
   function renderMediaBody(playerCol, contentCol, item) {
     if (item.dataset && item.video_id) {
-      player = FramePlayer(playerCol, {
+      player = mountPlayer(playerCol, {
         dataset: item.dataset, videoId: item.video_id,
         start: item.start, end: item.end, segments: item.segments,
         clipStart: item.clip_start, clipEnd: item.clip_end,
