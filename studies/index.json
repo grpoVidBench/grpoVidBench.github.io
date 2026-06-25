@@ -1,5 +1,4 @@
 [
-  {"study_id":"think_criteria_v1","title":"1 · Validate the reasoning criteria"},
-  {"study_id":"think_validation_v1","title":"2 · Validate per-video reasoning"},
-  {"study_id":"cvs_validation_v1","title":"3 · Validate Endoscapes CVS reasoning"}
+  {"study_id":"think_validation_v1","title":"1 · Validate per-video reasoning"},
+  {"study_id":"cvs_validation_v1","title":"2 · Validate Endoscapes CVS reasoning"}
 ]
