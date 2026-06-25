@@ -107,6 +107,21 @@ p { margin: 0 0 12px; }
   background: var(--surface-2); padding: 1px 5px; border-radius: 5px;
 }
 
+/* elaborate "what you need to do" checklist on the task intro screen */
+.todo-list { margin: 8px 0 4px; padding-left: 0; list-style: none; counter-reset: todo; }
+.todo-list li {
+  position: relative; padding: 8px 0 8px 38px; margin: 0;
+  border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.55;
+}
+.todo-list li:first-child { border-top: none; }
+.todo-list li::before {
+  counter-increment: todo; content: counter(todo);
+  position: absolute; left: 0; top: 7px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent-ink);
+  font-size: 12.5px; font-weight: 700; display: grid; place-items: center;
+}
+
 /* ---------- study picker ---------- */
 .study-grid { display: grid; gap: 16px; margin-top: 20px; }
 .study-link {

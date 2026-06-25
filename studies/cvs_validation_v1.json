@@ -39,6 +39,32 @@
                                              ]
                                }
                    },
+    "task_instructions":  {
+                              "CVS":  {
+                                          "context":  "**Critical View of Safety (CVS).** Each clip is a short, time-ordered set of keyframes from a laparoscopic cholecystectomy dissection. The model was asked *how the CVS develops* across the clip - when each of the three criteria (C1, C2, C3) is first met (or never) and the final CVS verdict - and justified it with a three-level reasoning trace. You are validating the **per-criterion timing** and the **final verdict**, judging each criterion only from its own evidence region.",
+                                          "context_zh":  "**安全关键视图（CVS）。** 每个片段是腹腔镜胆囊切除术分离过程中一组按时间排序的关键帧。模型被要求判断 *CVS 在整个片段中如何变化*——三条标准（C1、C2、C3）各自何时首次满足（或始终未满足）以及最终的 CVS 判定——并用三层推理加以论证。您需要验证**各标准的时间判断**和**最终判定**，且每条标准仅依据其自身的证据区域来判断。",
+                                          "steps":  [
+                                                        "Scrub the keyframes from t = 0.00 to 1.00 to follow the dissection over time.",
+                                                        "Read the model\u0027s answer - when C1, C2 and C3 are each first met (or never) and the final CVS verdict.",
+                                                        "Judge each criterion from its own region: C1 = two structures at the gallbladder neck; C2 = the Calot (hepatocystic) triangle window cleared; C3 = the cystic plate (liver bed) exposed.",
+                                                        "Decide whether the final CVS verdict (achieved / not achieved) is correct.",
+                                                        "Read the reasoning - L1 start-to-end trajectory, L2 tracks C1/C2/C3 separately, L3 synthesizes the verdict; check it does not confuse one criterion with another.",
+                                                        "Check the prompt\u0027s Rules (e.g. do not renumber the criteria; the timeline must match).",
+                                                        "Rate every question below; correct the reasoning in the editable box if it is wrong but fixable, otherwise use the comment fields.",
+                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                    ],
+                                          "steps_zh":  [
+                                                           "将关键帧从 t = 0.00 拖动到 1.00，跟踪分离过程随时间的变化。",
+                                                           "阅读模型的答案——C1、C2、C3 各自何时首次满足（或始终未满足）以及最终 CVS 判定。",
+                                                           "依据各自的区域判断每条标准：C1 = 胆囊颈部的两条结构；C2 = 肝胆三角（Calot 三角）窗口已清理；C3 = 胆囊板（肝床）已暴露。",
+                                                           "判断最终的 CVS 判定（已达成/未达成）是否正确。",
+                                                           "阅读推理——L1 从头到尾的轨迹，L2 分别跟踪 C1/C2/C3，L3 综合得出判定；检查其是否混淆了不同标准。",
+                                                           "检查提示词的规则（例如不得重新编号标准；时间线必须一致）。",
+                                                           "对下方每个问题评分；若推理有误但可修正，请在可编辑框中更正，否则使用备注栏。",
+                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                       ]
+                                      }
+                          },
     "require_reviewer_id":  true,
     "randomize_items":  false,
     "collect_endpoint":  null,

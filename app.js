@@ -478,9 +478,20 @@
     clear(root);
     progressWrap.style.display = "none";
     const card = el("div", { class: "card narrow" });
-    card.appendChild(el("p", { class: "eyebrow", text: studyTypeLabel() }));
+    const ti = (taskFilter && study.task_instructions) ? study.task_instructions[taskFilter] : null;
+    card.appendChild(el("p", { class: "eyebrow", text: taskFilter ? taskLabel(taskFilter) : studyTypeLabel() }));
     card.appendChild(el("h1", { text: L(study, "title") || study.study_id }));
-    card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(study, "intro_md")) }));
+    if (ti) {
+      // elaborate, task-specific briefing: context + a "what to do" checklist
+      card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(ti, "context")) }));
+      card.appendChild(el("h2", { text: tr("What you need to do") }));
+      const ol = el("ol", { class: "todo-list" });
+      const steps = (I.current() === "zh" && ti.steps_zh) ? ti.steps_zh : (ti.steps || []);
+      steps.forEach((s) => ol.appendChild(el("li", { text: s })));
+      card.appendChild(ol);
+    } else {
+      card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(study, "intro_md")) }));
+    }
     if (L(study, "context_md")) {
       card.appendChild(el("h2", { text: tr("Reference") }));
       card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(study, "context_md")) }));

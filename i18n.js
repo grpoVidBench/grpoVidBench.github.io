@@ -44,6 +44,7 @@
     "e.g. SG or you@hospital.org": "例如 SG 或 you@hospital.org",
     "Please enter your initials or email to begin.": "请先输入您的姓名缩写或邮箱以开始。",
     "Reference": "参考信息",
+    "What you need to do": "您需要做的事",
 
     // ---- item sections ----
     "Question shown to the model": "提供给模型的问题",

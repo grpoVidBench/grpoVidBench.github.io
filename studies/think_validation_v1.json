@@ -162,6 +162,104 @@
                                            ]
                               }
                    },
+    "task_instructions":  {
+                              "TAL":  {
+                                          "context":  "**Temporal Action Localization (TAL).** The model watched this clip and was asked *when a specific surgical phase occurs*. It had to answer with a time span (start-end, in seconds) and justify that span with a three-level reasoning trace. You are validating two things: whether the **answer (the time span) is correct**, and whether the **reasoning genuinely supports it** from what is visible in the video.",
+                                          "context_zh":  "**时间动作定位（TAL）。** 模型观看了该片段，并被要求判断*某个特定手术阶段在何时发生*。它需要给出一个时间区间（起止，以秒为单位），并用三层推理加以论证。您需要验证两点：**答案（时间区间）是否正确**，以及**推理是否真正依据视频中可见的内容支持该答案**。",
+                                          "steps":  [
+                                                        "Play the clip and scrub to the highlighted window and its start/end edges.",
+                                                        "Read the question (which phase is asked about) and the model\u0027s answer (the time span).",
+                                                        "Decide whether the answer\u0027s start and end match what you actually see.",
+                                                        "Read the reasoning and check each level against the pinned guide - L1 names the phase\u0027s visible onset cue, L2 justifies the end by contrast with the neighbouring phase, L3 confirms the span via the fixed phase order.",
+                                                        "Check the reasoning obeys the prompt\u0027s DO / DON\u0027T (grounded in visible evidence; does not merely restate the time; no invented span).",
+                                                        "Rate every question below (faithfulness, logic, L1/L2/L3 correctness, overall, main error).",
+                                                        "If the reasoning or the time span is wrong but fixable, correct it in the editable box; otherwise explain the problem in the comment fields.",
+                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                    ],
+                                          "steps_zh":  [
+                                                           "播放片段，并拖动到高亮区间及其起止边界处。",
+                                                           "阅读问题（询问的是哪个阶段）和模型的答案（时间区间）。",
+                                                           "判断答案的起点和终点是否与您实际看到的相符。",
+                                                           "阅读推理，并对照固定显示的层级说明逐层检查——L1 指出该阶段可见的起始线索，L2 通过与相邻阶段的对比论证结束点，L3 依据固定的阶段顺序确认该区间。",
+                                                           "检查推理是否遵守提示词的应当/不应当（以可见证据为依据；不只是复述时间；不臆造区间）。",
+                                                           "对下方每个问题评分（忠实度、逻辑、L1/L2/L3 是否正确、总体、主要错误）。",
+                                                           "若推理或时间区间有误但可修正，请在可编辑框中更正；否则在备注栏说明问题。",
+                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                       ]
+                                      },
+                              "NAP":  {
+                                          "context":  "**Next Action Prediction (NAP).** The model watched this clip and was asked to *predict the next surgical phase* that follows after the clip ends. It had to name that next phase and justify it with a three-level reasoning trace. You are validating whether the **predicted next phase is correct**, and whether the **reasoning reads the END of the clip correctly** to get there.",
+                                          "context_zh":  "**下一步动作预测（NAP）。** 模型观看了该片段，并被要求*预测片段结束后接下来的手术阶段*。它需要指出下一阶段，并用三层推理加以论证。您需要验证**预测的下一阶段是否正确**，以及**推理是否正确解读了片段的结尾**来得出该结论。",
+                                          "steps":  [
+                                                        "Play the clip, paying close attention to the FINAL seconds (the phase in progress at the end).",
+                                                        "Read the question and the model\u0027s predicted next phase (the answer).",
+                                                        "Decide whether that is the correct next phase given the clip\u0027s ending state.",
+                                                        "Read the reasoning - L1 should identify the phase in progress at the clip\u0027s end, L2 the evidence its objective is essentially complete, L3 the procedural-order logic to the next phase.",
+                                                        "Check the prompt\u0027s DO / DON\u0027T (the current phase is read from the END, not from early-clip activity).",
+                                                        "Rate every question below.",
+                                                        "If the reasoning or the predicted phase is wrong but fixable, correct it in the editable box; otherwise use the comment fields.",
+                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                    ],
+                                          "steps_zh":  [
+                                                           "播放片段，特别留意最后几秒（结尾处正在进行的阶段）。",
+                                                           "阅读问题和模型预测的下一阶段（答案）。",
+                                                           "根据片段结尾的状态，判断这是否为正确的下一阶段。",
+                                                           "阅读推理——L1 应指出片段结尾正在进行的阶段，L2 给出该阶段目标基本完成的证据，L3 给出通向下一阶段的流程顺序逻辑。",
+                                                           "检查提示词的应当/不应当（当前阶段应依据结尾判断，而非片段早期的操作）。",
+                                                           "对下方每个问题评分。",
+                                                           "若推理或预测的阶段有误但可修正，请在可编辑框中更正；否则使用备注栏。",
+                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                       ]
+                                      },
+                              "DVC":  {
+                                          "context":  "**Dense Video Captioning (DVC).** The model watched this clip and was asked to *break it into phase segments* - for each segment give a [start, end] time and a short description - then justify the segmentation with a three-level reasoning trace. You are validating whether the **segments, their boundaries, and their descriptions are correct**, and whether the reasoning supports them.",
+                                          "context_zh":  "**密集视频描述（DVC）。** 模型观看了该片段，并被要求*将其划分为多个阶段时间段*——为每段给出 [起始, 结束] 时间和简短描述——并用三层推理论证该划分。您需要验证**各时间段、其边界及描述是否正确**，以及推理是否支持它们。",
+                                          "steps":  [
+                                                        "Play the clip and note which phases appear and roughly when they change.",
+                                                        "Read the model\u0027s answer - the list of segments with their times and descriptions.",
+                                                        "Check the segments are correct, contiguous and non-overlapping, with none invented or missing.",
+                                                        "Read the reasoning - L1 enumerates the phases in order, L2 justifies each boundary by a visible transition cue, L3 gives a one-line headline per segment.",
+                                                        "Check the prompt\u0027s DO / DON\u0027T (headline-level L3; no full captions duplicated in the reasoning; absent phases excluded).",
+                                                        "Rate every question below.",
+                                                        "The answer is editable for this task - correct the segment list, times or descriptions if needed, and edit the reasoning too; otherwise use the comment fields.",
+                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                    ],
+                                          "steps_zh":  [
+                                                           "播放片段，留意出现了哪些阶段以及它们大致何时切换。",
+                                                           "阅读模型的答案——包含各时间段及其时间和描述的列表。",
+                                                           "检查各时间段是否正确、连续且不重叠，没有臆造或遗漏。",
+                                                           "阅读推理——L1 按顺序枚举各阶段，L2 通过可见的转换线索论证每个边界，L3 为每段给出一句标题。",
+                                                           "检查提示词的应当/不应当（L3 为标题层级；推理中不重复完整描述；排除未出现的阶段）。",
+                                                           "对下方每个问题评分。",
+                                                           "该任务的答案可编辑——如有需要请更正时间段列表、时间或描述，并同时编辑推理；否则使用备注栏。",
+                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                       ]
+                                      },
+                              "VS":  {
+                                         "context":  "**Video Summarization (VS).** The model watched this clip and was asked to *summarize the whole procedure* in a short paragraph (no per-segment timestamps), then justify it with a three-level reasoning trace. You are validating whether the **summary is faithful, complete and well-formed**, and whether the reasoning supports it.",
+                                         "context_zh":  "**视频总结（VS）。** 模型观看了该片段，并被要求用一段简短文字*总结整个手术过程*（不含逐段时间戳），并用三层推理加以论证。您需要验证**总结是否忠实、完整、表述恰当**，以及推理是否支持它。",
+                                         "steps":  [
+                                                       "Play the whole clip to get its overall arc.",
+                                                       "Read the model\u0027s summary (the answer).",
+                                                       "Check it is factually correct, covers the main surgical activities, omits nothing important, and invents nothing.",
+                                                       "Read the reasoning - L1 surveys the arc, L2 separates the salient actions from minor/repeated ones, L3 compresses to the final summary.",
+                                                       "Check the prompt\u0027s DO / DON\u0027T (no per-segment enumeration or timestamps; lowercase instrument names; no \u0027indicates / suggesting that\u0027 phrasing).",
+                                                       "Rate every question below.",
+                                                       "The summary (answer) is editable for this task - rewrite it if needed, and edit the reasoning too; otherwise use the comment fields.",
+                                                       "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                   ],
+                                         "steps_zh":  [
+                                                          "完整播放片段，了解其整体过程。",
+                                                          "阅读模型的总结（答案）。",
+                                                          "检查其是否事实正确、涵盖主要手术操作、无重要遗漏、且无臆造。",
+                                                          "阅读推理——L1 梳理整体过程，L2 将显著操作与次要/重复操作区分开，L3 压缩为最终总结。",
+                                                          "检查提示词的应当/不应当（不逐段列举或加时间戳；器械名称小写；不使用「表明/暗示」之类措辞）。",
+                                                          "对下方每个问题评分。",
+                                                          "该任务的总结（答案）可编辑——如有需要请重写，并同时编辑推理；否则使用备注栏。",
+                                                          "若您无法评估该片段，请点击「跳过该条目」。"
+                                                      ]
+                                     }
+                          },
     "require_reviewer_id":  true,
     "randomize_items":  true,
     "collect_endpoint":  null,
