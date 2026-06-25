@@ -304,11 +304,21 @@ textarea.qa-think-edit:focus { outline: none; border-color: var(--accent); box-s
 .lg-d { color: var(--ink-soft); }
 .lg-d strong { color: var(--ink); font-weight: 600; }
 
-/* prompt DO / DON'T rules panel (after the context block) */
+/* prompt DO / DON'T rules panel (after the context block) — collapsible */
 .rules-block {
   background: var(--surface-2); border: 1px solid var(--line);
   border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 16px;
 }
+details.rules-block { padding: 0; }
+details.rules-block > summary {
+  cursor: pointer; padding: 12px 16px; list-style-position: inside;
+  user-select: none;
+}
+details.rules-block > summary .qa-label { display: inline; }
+details.rules-block > summary::-webkit-details-marker { color: var(--ink-soft); }
+details.rules-block[open] > summary { border-bottom: 1px solid var(--line); }
+details.rules-block > :not(summary) { margin-left: 16px; margin-right: 16px; }
+details.rules-block > .edit-hint { margin-bottom: 12px; }
 .rules-head {
   font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
   margin: 10px 0 4px;

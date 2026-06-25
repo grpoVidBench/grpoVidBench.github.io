@@ -169,8 +169,12 @@
     const any = (src.do && src.do.length) || (src.dont && src.dont.length) || (src.rules && src.rules.length);
     if (!any) return null;
     const editsMap = state.ruleEdits || (state.ruleEdits = {});
-    const wrap = el("div", { class: "qa-block rules-block" });
-    wrap.appendChild(el("div", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow — editable") }));
+    const wrap = el("details", { class: "qa-block rules-block" });
+    wrap.open = rulesOpen;
+    wrap.addEventListener("toggle", () => { rulesOpen = wrap.open; });
+    wrap.appendChild(el("summary", { class: "rules-summary" }, [
+      el("span", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow — editable") }),
+    ]));
     const section = (cls, headKey, arr, kind) => {
       if (!arr || !arr.length) return;
       const key = item.task + "|" + kind;
@@ -394,6 +398,7 @@
   let player = null;
   let itemEnterTime = 0;
   let showWrapup = false;
+  let rulesOpen = false;  // collapsible rules panel: remembered across items in a session
 
   function persistTime() {
     if (showWrapup || pos < 0 || pos >= order.length) return;
