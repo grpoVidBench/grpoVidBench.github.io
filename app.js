@@ -494,10 +494,11 @@
         study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
-        order: ord, answers: {}, times: {}, skipped: {}, wrapup: {}, current: 0,
+        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, wrapup: {}, current: 0,
       };
     }
     if (!state.skipped) state.skipped = {};   // back-compat for resumed sessions
+    if (!state.edits) state.edits = {};
     order = state.order;
     pos = Math.min(state.current || 0, order.length - 1);
     showWrapup = false;
@@ -603,10 +604,7 @@
     if (study.study_type === "think") {
       const t = item.think;
       if (t != null && String(t).trim() !== "") {
-        contentCol.appendChild(el("div", { class: "qa-block" }, [
-          el("div", { class: "qa-label", text: tr("Model's reasoning (<think>)") }),
-          el("div", { class: "qa-text qa-think", text: L(item, "think") }),
-        ]));
+        contentCol.appendChild(buildReasoningEditor(item));
       } else {
         contentCol.appendChild(el("div", { class: "qa-block" }, [
           el("div", { class: "qa-label", text: tr("Model's reasoning") }),
@@ -614,6 +612,25 @@
         ]));
       }
     }
+  }
+
+  // Editable reasoning trace. Pre-filled with the model's <think> (current language);
+  // the reviewer's edits are stored per item and saved in the export.
+  function buildReasoningEditor(item) {
+    const edits = state.edits || (state.edits = {});
+    const wrap = el("div", { class: "qa-block" });
+    const ta = el("textarea", { class: "qa-text qa-think qa-think-edit", spellcheck: "false" });
+    ta.value = (item.item_id in edits) ? edits[item.item_id] : (L(item, "think") || "");
+    ta.addEventListener("input", () => { edits[item.item_id] = ta.value; commitDebounced(); });
+    const reset = el("a", { class: "reset-link", text: tr("Reset to original"),
+      onclick: () => { delete edits[item.item_id]; ta.value = L(item, "think") || ""; commit(); } });
+    wrap.appendChild(el("div", { class: "qa-edit-head" }, [
+      el("span", { class: "qa-label", text: tr("Model's reasoning (<think>) — editable") }),
+      reset,
+    ]));
+    wrap.appendChild(ta);
+    wrap.appendChild(el("div", { class: "edit-hint", text: tr("You can correct this reasoning; your edits are saved with your response.") }));
+    return wrap;
   }
 
   function renderDimension(dim, item) {
@@ -809,7 +826,7 @@
     order.forEach((idx, k) => { seenOrder[study.items[idx].item_id] = k + 1; });
     const responses = order.map((idx) => {
       const item = study.items[idx];
-      return {
+      const r = {
         item_id: item.item_id,
         task: item.task || item.group || null,
         seen_order: seenOrder[item.item_id],
@@ -817,6 +834,16 @@
         skipped: isSkipped(item),
         ratings: state.answers[item.item_id] || {},
       };
+      // reasoning edits (only for items that have a <think> trace)
+      if (item.think != null && String(item.think).trim() !== "") {
+        const editsMap = state.edits || {};
+        const edited = (item.item_id in editsMap) ? editsMap[item.item_id] : item.think;
+        const changed = (item.item_id in editsMap) && edited !== item.think && edited !== (item.think_zh || null);
+        r.reasoning_original = item.think;
+        r.reasoning_edited = edited;
+        r.reasoning_changed = changed;
+      }
+      return r;
     });
     const out = {
       study_id: study.study_id,
@@ -846,12 +873,13 @@
       if (t === "likert" || t === "select") cols.push({ key: d.id + "__comment", header: d.id + "_comment" });
     });
     const header = ["reviewer_id", "item_id", "task", "seen_order", "ms_on_item", "skipped"]
-      .concat(cols.map((c) => c.header));
+      .concat(cols.map((c) => c.header)).concat(["reasoning_changed", "reasoning_edited"]);
     const lines = [header.map(csvEscape).join(",")];
     const data = buildResponse();
     data.responses.forEach((r) => {
       const row = [state.reviewer_id, r.item_id, r.task || "", r.seen_order, r.ms_on_item, r.skipped ? "yes" : ""]
-        .concat(cols.map((c) => (r.ratings[c.key] != null ? r.ratings[c.key] : "")));
+        .concat(cols.map((c) => (r.ratings[c.key] != null ? r.ratings[c.key] : "")))
+        .concat([r.reasoning_changed ? "yes" : "", r.reasoning_edited != null ? r.reasoning_edited : ""]);
       lines.push(row.map(csvEscape).join(","));
     });
     return lines.join("\r\n");
