@@ -227,7 +227,7 @@
     // opts: dataset, videoId, start, end, segments
     const LOOKAHEAD = 25;
     let manifest = null, frames = [], dir = "", nativeFps = 1, playFps = 5, timeline = "seconds";
-    let index = 0, playing = false, speed = 1, rafTimer = null, lastTick = 0;
+    let index = 0, playing = false, speed = 1, rafTimer = null, lastTick = 0, bufTimer = null;
     let loIdx = 0, hiIdx = 0;   // navigable clip range (indices); restricts to the portion the model saw
     let destroyed = false;
     const requested = new Set();
@@ -284,10 +284,14 @@
       timeLabel.textContent = tlabel(index);
       const url = frameUrl(index);
       if (img.getAttribute("src") !== url) {
-        setBuffering(true);
-        img.onload = () => setBuffering(false);
-        img.onerror = () => showError(tf("Frame failed to load ({name})", { name: frames[index] }));
+        clearTimeout(bufTimer);
+        img.onload = () => { clearTimeout(bufTimer); setBuffering(false); };
+        img.onerror = () => { clearTimeout(bufTimer); showError(tf("Frame failed to load ({name})", { name: frames[index] })); };
         img.src = url;
+        // Only flash "buffering" if the frame is NOT already cached/preloaded and is slow to
+        // arrive — otherwise it would flicker on every frame during normal playback.
+        if (img.complete && img.naturalWidth > 0) setBuffering(false);
+        else bufTimer = setTimeout(() => setBuffering(true), 180);
       }
       preload(index);
     }
@@ -386,7 +390,7 @@
       }
     })();
 
-    return { destroy() { destroyed = true; stop(); } };
+    return { destroy() { destroyed = true; stop(); clearTimeout(bufTimer); } };
   }
 
   // ---------- app state ----------
