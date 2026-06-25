@@ -124,6 +124,7 @@ p { margin: 0 0 12px; }
   background: var(--accent-soft); color: var(--accent-ink);
   font-weight: 700; font-size: 18px;
 }
+.study-num.task-num { font-size: 14px; letter-spacing: .02em; }
 .study-link .t { font-weight: 600; font-size: 17px; }
 .study-link .s { color: var(--ink-soft); font-size: 13px; margin-top: 2px; }
 .study-link .arrow { margin-left: auto; color: var(--ink-soft); font-size: 22px; }

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>grpoVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=8" />
+  <link rel="stylesheet" href="./styles.css?v=10" />
 </head>
 <body>
   <header class="topbar">
@@ -16,65 +16,87 @@
   </header>
 
   <main class="wrap narrow">
-    <p class="eyebrow" id="pk-eyebrow">Reviewer studies</p>
-    <h1 id="pk-h1">Choose a study to review</h1>
-    <p class="lead" id="pk-lead">Each study is self-contained: read the short intro, then rate items one at a time.
-      Your progress is saved in this browser automatically, and you export your responses at the end.</p>
+    <p class="eyebrow" id="pk-eyebrow">Review tasks</p>
+    <h1 id="pk-h1">Choose a task to review</h1>
+    <p class="lead" id="pk-lead">Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.</p>
 
-    <div id="study-list" class="study-grid">
-      <div class="center-load"><div class="spinner"></div><span id="pk-loading">Loading studies…</span></div>
+    <div id="task-list" class="study-grid">
+      <div class="center-load"><div class="spinner"></div><span id="pk-loading">Loading tasks…</span></div>
     </div>
     <div id="error" class="banner warn" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=9"></script>
+  <script src="./i18n.js?v=10"></script>
   <script>
     (function () {
       var I = window.I18N;
-      var list = document.getElementById('study-list');
+      var list = document.getElementById('task-list');
       var err = document.getElementById('error');
-      var studies = null;
+      var tasks = null;   // [{ task, study_id, count }]
 
       function applyStatic() {
         document.getElementById('tb-sub').textContent = I.tr('clinician review');
         document.getElementById('tb-tag').textContent = I.tr('CholecT50 · surgical video reasoning');
-        document.getElementById('pk-eyebrow').textContent = I.tr('Reviewer studies');
-        document.getElementById('pk-h1').textContent = I.tr('Choose a study to review');
-        document.getElementById('pk-lead').textContent = I.tr('Each study is self-contained: read the short intro, then rate items one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.');
+        document.getElementById('pk-eyebrow').textContent = I.tr('Review tasks');
+        document.getElementById('pk-h1').textContent = I.tr('Choose a task to review');
+        document.getElementById('pk-lead').textContent = I.tr('Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.');
         var ld = document.getElementById('pk-loading');
-        if (ld) ld.textContent = I.tr('Loading studies…');
+        if (ld) ld.textContent = I.tr('Loading tasks…');
         document.title = (I.current && I.current() === 'zh') ? 'grpoVidBench · 临床医生研究' : 'grpoVidBench · Clinician Studies';
       }
 
-      function renderList() {
-        if (!studies) return;
+      function renderTasks() {
+        if (!tasks) return;
         list.innerHTML = '';
-        studies.forEach(function (s, i) {
+        if (!tasks.length) { list.innerHTML = '<p class="muted">—</p>'; return; }
+        tasks.forEach(function (t) {
           var a = document.createElement('a');
           a.className = 'study-link';
-          a.href = './study.html?study=' + encodeURIComponent(s.study_id);
+          a.href = './study.html?study=' + encodeURIComponent(t.study_id) + '&task=' + encodeURIComponent(t.task);
           a.innerHTML =
-            '<span class="study-num">' + (i + 1) + '</span>' +
+            '<span class="study-num task-num"></span>' +
             '<span><span class="t"></span><span class="s"></span></span>' +
             '<span class="arrow">→</span>';
-          a.querySelector('.t').textContent = I.tr(s.title) || s.study_id;
-          a.querySelector('.s').textContent = s.study_id;
+          a.querySelector('.task-num').textContent = t.task;
+          a.querySelector('.t').textContent = I.taskName(t.task);
+          a.querySelector('.s').textContent = (t.count === 1) ? I.tr('1 clip') : I.tf('{n} clips', { n: t.count });
           list.appendChild(a);
         });
-        if (!studies.length) list.innerHTML = '<p class="muted">—</p>';
+      }
+
+      // Build the task list by grouping every study's items by their "task" field.
+      function buildTasks(studies) {
+        return Promise.all(studies.map(function (s) {
+          return fetch('./studies/' + s.study_id + '.json', { cache: 'no-store' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (cfg) { return cfg ? { study_id: s.study_id, items: cfg.items || [] } : null; })
+            .catch(function () { return null; });
+        })).then(function (loaded) {
+          var order = [];
+          var byTask = {};
+          loaded.filter(Boolean).forEach(function (st) {
+            st.items.forEach(function (it) {
+              var tk = it.task || it.group || 'OTHER';
+              if (!byTask[tk]) { byTask[tk] = { task: tk, study_id: st.study_id, count: 0 }; order.push(byTask[tk]); }
+              byTask[tk].count++;
+            });
+          });
+          return order;
+        });
       }
 
       I.mountToggle(document.querySelector('.topbar-inner'));
-      I.onChange(function () { applyStatic(); renderList(); });
+      I.onChange(function () { applyStatic(); renderTasks(); });
       applyStatic();
 
       fetch('./studies/index.json', { cache: 'no-store' })
         .then(function (res) { if (!res.ok) throw new Error('index.json HTTP ' + res.status); return res.json(); })
-        .then(function (data) { studies = data; renderList(); })
+        .then(function (studies) { return buildTasks(studies); })
+        .then(function (t) { tasks = t; renderTasks(); })
         .catch(function (e) {
           list.innerHTML = '';
           err.style.display = 'block';
-          err.textContent = 'Could not load ./studies/index.json — ' + e.message;
+          err.textContent = 'Could not load studies — ' + e.message;
         });
     })();
   </script>

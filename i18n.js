@@ -20,10 +20,17 @@
     "clinician review": "临床医生评审",
     "CholecT50 · surgical video reasoning": "CholecT50 · 外科手术视频推理",
     "Reviewer studies": "评审研究",
+    "Review tasks": "评审任务",
     "Choose a study to review": "选择要评审的研究",
+    "Choose a task to review": "选择要评审的任务",
     "Each study is self-contained: read the short intro, then rate items one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.":
       "每个研究都是独立的：先阅读简短说明，然后逐条评价。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
+    "Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.":
+      "选择一个任务以逐条评审其片段。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
     "Loading studies…": "正在加载研究…",
+    "Loading tasks…": "正在加载任务…",
+    "{n} clips": "{n} 个片段",
+    "1 clip": "1 个片段",
 
     // ---- study type eyebrow ----
     "Study · criteria validation": "研究 · 标准验证",
@@ -280,6 +287,15 @@
     if (z != null && z !== "") return z;
     return tr(en);
   }
+  // task code -> human label (localized via the MAP above)
+  var TASK_NAMES = {
+    TAL: "Temporal Action Localization (TAL)",
+    NAP: "Next Action Prediction (NAP)",
+    DVC: "Dense Video Captioning (DVC)",
+    VS: "Video Summarization (VS)",
+    CVS: "Critical View of Safety (CVS)"
+  };
+  function taskName(code) { return tr(TASK_NAMES[code] || code); }
   function current() { return lang; }
   function setLang(l) {
     lang = (l === "zh") ? "zh" : "en";
@@ -304,5 +320,5 @@
     return b;
   }
   try { document.documentElement.lang = (lang === "zh") ? "zh-Hans" : "en"; } catch (e) {}
-  window.I18N = { tr: tr, tf: tf, L: L, current: current, setLang: setLang, onChange: onChange, mountToggle: mountToggle };
+  window.I18N = { tr: tr, tf: tf, L: L, taskName: taskName, current: current, setLang: setLang, onChange: onChange, mountToggle: mountToggle };
 })();

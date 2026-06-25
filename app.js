@@ -92,14 +92,17 @@
   }
 
   // ---------- storage ----------
-  function storageKey(studyId, reviewer) { return "grpovidbench:" + studyId + ":" + (reviewer || "_"); }
-  function loadState(studyId, reviewer) {
-    try { const r = localStorage.getItem(storageKey(studyId, reviewer)); return r ? JSON.parse(r) : null; }
+  // key includes the task group so different tasks of the same study don't share state
+  function storageKey(studyId, task, reviewer) {
+    return "grpovidbench:" + studyId + (task ? ":" + task : "") + ":" + (reviewer || "_");
+  }
+  function loadState(studyId, task, reviewer) {
+    try { const r = localStorage.getItem(storageKey(studyId, task, reviewer)); return r ? JSON.parse(r) : null; }
     catch (e) { return null; }
   }
   function saveState(state) {
     try {
-      localStorage.setItem(storageKey(state.study_id, state.reviewer_id), JSON.stringify(state));
+      localStorage.setItem(storageKey(state.study_id, state.task_group, state.reviewer_id), JSON.stringify(state));
       flashSaved();
     } catch (e) { /* ignore quota errors */ }
   }
@@ -351,6 +354,7 @@
 
   // ---------- app state ----------
   let study = null;
+  let taskFilter = null;  // when set (?task=TAL), only that task's items are reviewed
   let state = null;       // persisted session state
   let order = [];         // shuffled item indices
   let pos = 0;            // position within order (current item)
@@ -391,15 +395,24 @@
   function start() {
     const params = new URLSearchParams(location.search);
     const id = params.get("study");
+    taskFilter = params.get("task") || null;
     if (!id) { fatal("No study specified. Append ?study=<id> to the URL."); return; }
     fetch("./studies/" + id + ".json", { cache: "no-store" })
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then((cfg) => {
-        study = cfg; setTitleBar();
+        study = cfg;
         // merge optional per-item Chinese translations (question_zh / answer_zh / think_zh / caption_zh)
         return fetch("./studies/zh_items.json", { cache: "no-store" })
           .then((r) => (r.ok ? r.json() : null)).catch(() => null)
-          .then((zh) => { mergeItemTranslations(zh); renderIntro(); });
+          .then((zh) => {
+            mergeItemTranslations(zh);
+            if (taskFilter) {
+              study.items = (study.items || []).filter((it) => (it.task || it.group || "") === taskFilter);
+              if (!study.items.length) { fatal("No items found for task '" + taskFilter + "' in this study."); return; }
+            }
+            setTitleBar();
+            renderIntro();
+          });
       })
       .catch((e) => fatal("Could not load ./studies/" + id + ".json — " + e.message));
   }
@@ -468,15 +481,17 @@
   }
 
   function beginSession(reviewer) {
-    const existing = loadState(study.study_id, reviewer);
+    const existing = loadState(study.study_id, taskFilter, reviewer);
     if (existing && existing.order && existing.order.length === study.items.length) {
       state = existing;
       state.user_agent = navigator.userAgent;
+      state.task_group = taskFilter;
     } else {
       const n = study.items.length;
-      const ord = study.randomize_items ? seededOrder(n, study.study_id + "::" + reviewer) : Array.from({ length: n }, (_, i) => i);
+      const seed = study.study_id + "::" + (taskFilter || "") + "::" + reviewer;
+      const ord = study.randomize_items ? seededOrder(n, seed) : Array.from({ length: n }, (_, i) => i);
       state = {
-        study_id: study.study_id, reviewer_id: reviewer,
+        study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
         order: ord, answers: {}, times: {}, skipped: {}, wrapup: {}, current: 0,
@@ -805,6 +820,7 @@
     });
     const out = {
       study_id: study.study_id,
+      task_group: taskFilter || null,
       reviewer_id: state.reviewer_id,
       started_at: state.started_at,
       submitted_at: new Date().toISOString(),
@@ -861,7 +877,7 @@
     const data = buildResponse();
     const csvText = buildCsv();
     const stamp = data.submitted_at.replace(/[:]/g, "-");
-    const base = "responses_" + safeName(study.study_id) + "_" + safeName(state.reviewer_id) + "_" + stamp;
+    const base = "responses_" + safeName(study.study_id) + (taskFilter ? "_" + safeName(taskFilter) : "") + "_" + safeName(state.reviewer_id) + "_" + stamp;
     // always download a local backup
     download(base + ".json", JSON.stringify(data, null, 2), "application/json");
     download(base + ".csv", csvText, "text/csv");
@@ -912,7 +928,11 @@
     progressWrap.style.display = "none";
   }
 
-  function setTitleBar() { if (study) titleBar.textContent = L(study, "title") || study.study_id; }
+  function setTitleBar() {
+    if (!study) return;
+    const base = L(study, "title") || study.study_id;
+    titleBar.textContent = taskFilter ? (I.taskName(taskFilter) + " · " + base) : base;
+  }
 
   // ---------- lifecycle ----------
   window.addEventListener("beforeunload", () => { try { persistTime(); if (state) saveState(state); } catch (e) {} });
