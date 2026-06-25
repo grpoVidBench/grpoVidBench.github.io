@@ -115,6 +115,7 @@
     "1 · Validate the reasoning criteria": "1 · 验证推理标准",
     "2 · Validate per-video reasoning": "2 · 验证逐视频推理",
     "3 · Validate video summaries": "3 · 验证视频总结",
+    "3 · Validate Endoscapes CVS reasoning": "3 · 验证 Endoscapes CVS 推理",
     "4 · Validate Endoscapes CVS reasoning": "4 · 验证 Endoscapes CVS 推理",
 
     // ---- dimension labels (think) ----
