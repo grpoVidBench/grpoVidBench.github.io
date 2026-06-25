@@ -58,6 +58,8 @@
 
     // ---- prompt DO / DON'T rules ----
     "Prompt rules the reasoning had to follow": "推理需遵循的提示词规则",
+    "Prompt rules the reasoning had to follow — editable": "推理需遵循的提示词规则 — 可编辑",
+    "You can edit these rules; your edits are saved with your response.": "您可以编辑这些规则；您的编辑将随评审结果一并保存。",
     "DO": "应当（DO）",
     "DON'T": "不应当（DON'T）",
     "Rules": "规则",

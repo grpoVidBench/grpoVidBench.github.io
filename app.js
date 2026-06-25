@@ -160,25 +160,36 @@
     return wrap;
   }
 
-  // Read-only panel of the prompt's DO / DON'T (or CVS Rules) for the item's task,
-  // shown after the Context block so reviewers can judge against the original rules.
+  // Editable panel of the prompt's DO / DON'T (or CVS Rules) for the item's task,
+  // shown after the Context block. Each section is one textarea (one rule per line).
+  // Edits are stored per task (= per session) and saved in the export.
   function buildRules(item) {
-    const rules = (study.task_rules && item.task) ? study.task_rules[item.task] : null;
-    if (!rules) return null;
-    const any = (rules.do && rules.do.length) || (rules.dont && rules.dont.length) || (rules.rules && rules.rules.length);
+    const src = (study.task_rules && item.task) ? study.task_rules[item.task] : null;
+    if (!src) return null;
+    const any = (src.do && src.do.length) || (src.dont && src.dont.length) || (src.rules && src.rules.length);
     if (!any) return null;
+    const editsMap = state.ruleEdits || (state.ruleEdits = {});
     const wrap = el("div", { class: "qa-block rules-block" });
-    wrap.appendChild(el("div", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow") }));
-    const section = (cls, headKey, arr) => {
+    wrap.appendChild(el("div", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow — editable") }));
+    const section = (cls, headKey, arr, kind) => {
       if (!arr || !arr.length) return;
-      wrap.appendChild(el("div", { class: "rules-head " + cls, text: tr(headKey) }));
-      const ul = el("ul", { class: "rules-list" });
-      arr.forEach((b) => ul.appendChild(el("li", { text: tr(b) })));
-      wrap.appendChild(ul);
+      const key = item.task + "|" + kind;
+      const def = arr.map((b) => "- " + tr(b)).join("\n");   // localized default text
+      const ta = el("textarea", { class: "rules-edit", spellcheck: "false" });
+      ta.value = (key in editsMap) ? editsMap[key] : def;
+      ta.addEventListener("input", () => { editsMap[key] = ta.value; commitDebounced(); });
+      const head = el("div", { class: "qa-edit-head" }, [
+        el("span", { class: "rules-head " + cls, text: tr(headKey) }),
+        el("a", { class: "reset-link", text: tr("Reset to original"),
+          onclick: () => { delete editsMap[key]; ta.value = def; commit(); } }),
+      ]);
+      wrap.appendChild(head);
+      wrap.appendChild(ta);
     };
-    section("do", "DO", rules.do);
-    section("dont", "DON'T", rules.dont);
-    section("rules", "Rules", rules.rules);
+    section("do", "DO", src.do, "do");
+    section("dont", "DON'T", src.dont, "dont");
+    section("rules", "Rules", src.rules, "rules");
+    wrap.appendChild(el("div", { class: "edit-hint", text: tr("You can edit these rules; your edits are saved with your response.") }));
     return wrap;
   }
 
@@ -516,12 +527,13 @@
         study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
-        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, wrapup: {}, current: 0,
+        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, ruleEdits: {}, wrapup: {}, current: 0,
       };
     }
     if (!state.skipped) state.skipped = {};   // back-compat for resumed sessions
     if (!state.edits) state.edits = {};
     if (!state.answerEdits) state.answerEdits = {};
+    if (!state.ruleEdits) state.ruleEdits = {};
     order = state.order;
     pos = Math.min(state.current || 0, order.length - 1);
     showWrapup = false;
@@ -906,8 +918,34 @@
       user_agent: state.user_agent || navigator.userAgent,
       responses,
     };
+    // task-level prompt-rule edits (DO / DON'T / Rules), keyed by task
+    const ruleOut = buildRuleEdits();
+    if (Object.keys(ruleOut).length) out.task_rules = ruleOut;
     if (Array.isArray(study.wrapup) && study.wrapup.length) out.wrapup = state.wrapup || {};
     return out;
+  }
+
+  // Collect original + edited DO/DON'T/Rules for every task present in this session.
+  function buildRuleEdits() {
+    const result = {};
+    if (!study.task_rules) return result;
+    const tasks = [];
+    (study.items || []).forEach((it) => { if (it.task && tasks.indexOf(it.task) < 0) tasks.push(it.task); });
+    const editsMap = state.ruleEdits || {};
+    tasks.forEach((tk) => {
+      const src = study.task_rules[tk];
+      if (!src) return;
+      const entry = {};
+      ["do", "dont", "rules"].forEach((kind) => {
+        if (!src[kind] || !src[kind].length) return;
+        const original = src[kind].map((b) => "- " + b).join("\n");   // English canonical
+        const key = tk + "|" + kind;
+        const edited = (key in editsMap) ? editsMap[key] : original;
+        entry[kind] = { original, edited, changed: key in editsMap };
+      });
+      if (Object.keys(entry).length) result[tk] = entry;
+    });
+    return result;
   }
 
   function csvEscape(v) {

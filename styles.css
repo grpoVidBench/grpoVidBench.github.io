@@ -318,6 +318,13 @@ textarea.qa-think-edit:focus { outline: none; border-color: var(--accent); box-s
 .rules-head.rules { color: var(--accent-ink); }
 .rules-list { margin: 0 0 4px; padding-left: 20px; }
 .rules-list li { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin: 3px 0; }
+textarea.rules-edit {
+  width: 100%; min-height: 96px; resize: vertical; margin-top: 2px;
+  font: inherit; font-size: 12.5px; line-height: 1.5; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm); padding: 8px 10px;
+}
+textarea.rules-edit:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
 /* ---------- dimensions ---------- */
 .dims { margin-top: 22px; display: flex; flex-direction: column; gap: 18px; }
