@@ -494,11 +494,12 @@
         study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
-        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, wrapup: {}, current: 0,
+        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, wrapup: {}, current: 0,
       };
     }
     if (!state.skipped) state.skipped = {};   // back-compat for resumed sessions
     if (!state.edits) state.edits = {};
+    if (!state.answerEdits) state.answerEdits = {};
     order = state.order;
     pos = Math.min(state.current || 0, order.length - 1);
     showWrapup = false;
@@ -590,10 +591,14 @@
       ]));
     }
     if (item.answer != null && item.answer !== "") {
-      contentCol.appendChild(el("div", { class: "qa-block" }, [
-        el("div", { class: "qa-label", text: tr("Model's answer") }),
-        el("div", { class: "qa-text qa-answer", text: L(item, "answer") }),
-      ]));
+      if (answerEditable(item)) {
+        contentCol.appendChild(buildAnswerEditor(item));
+      } else {
+        contentCol.appendChild(el("div", { class: "qa-block" }, [
+          el("div", { class: "qa-label", text: tr("Model's answer") }),
+          el("div", { class: "qa-text qa-answer", text: L(item, "answer") }),
+        ]));
+      }
     }
     if (study.study_type === "caption" && item.caption) {
       contentCol.appendChild(el("div", { class: "qa-block" }, [
@@ -614,22 +619,36 @@
     }
   }
 
-  // Editable reasoning trace. Pre-filled with the model's <think> (current language);
-  // the reviewer's edits are stored per item and saved in the export.
+  // The model's answer is editable only for these tasks (the answer is free-text there)
+  function answerEditable(item) { return item.task === "DVC" || item.task === "VS"; }
+
   function buildReasoningEditor(item) {
-    const edits = state.edits || (state.edits = {});
+    return buildEditableField(item, "think", state.edits || (state.edits = {}), {
+      box: "qa-think", label: "Model's reasoning (<think>) — editable",
+      hint: "You can correct this reasoning; your edits are saved with your response.",
+    });
+  }
+  function buildAnswerEditor(item) {
+    return buildEditableField(item, "answer", state.answerEdits || (state.answerEdits = {}), {
+      box: "qa-answer", label: "Model's answer — editable",
+      hint: "You can correct this answer; your edits are saved with your response.",
+    });
+  }
+
+  // Generic editable field. Pre-filled with the model's text (current language);
+  // the reviewer's edits are stored per item in editsMap and saved in the export.
+  function buildEditableField(item, field, editsMap, opts) {
     const wrap = el("div", { class: "qa-block" });
-    const ta = el("textarea", { class: "qa-text qa-think qa-think-edit", spellcheck: "false" });
-    ta.value = (item.item_id in edits) ? edits[item.item_id] : (L(item, "think") || "");
-    ta.addEventListener("input", () => { edits[item.item_id] = ta.value; commitDebounced(); });
+    const ta = el("textarea", { class: "qa-text " + opts.box + " qa-think-edit", spellcheck: "false" });
+    ta.value = (item.item_id in editsMap) ? editsMap[item.item_id] : (L(item, field) || "");
+    ta.addEventListener("input", () => { editsMap[item.item_id] = ta.value; commitDebounced(); });
     const reset = el("a", { class: "reset-link", text: tr("Reset to original"),
-      onclick: () => { delete edits[item.item_id]; ta.value = L(item, "think") || ""; commit(); } });
+      onclick: () => { delete editsMap[item.item_id]; ta.value = L(item, field) || ""; commit(); } });
     wrap.appendChild(el("div", { class: "qa-edit-head" }, [
-      el("span", { class: "qa-label", text: tr("Model's reasoning (<think>) — editable") }),
-      reset,
+      el("span", { class: "qa-label", text: tr(opts.label) }), reset,
     ]));
     wrap.appendChild(ta);
-    wrap.appendChild(el("div", { class: "edit-hint", text: tr("You can correct this reasoning; your edits are saved with your response.") }));
+    wrap.appendChild(el("div", { class: "edit-hint", text: tr(opts.hint) }));
     return wrap;
   }
 
@@ -843,6 +862,15 @@
         r.reasoning_edited = edited;
         r.reasoning_changed = changed;
       }
+      // answer edits (only for tasks whose answer is editable: DVC, VS)
+      if (answerEditable(item) && item.answer != null && item.answer !== "") {
+        const aem = state.answerEdits || {};
+        const aedited = (item.item_id in aem) ? aem[item.item_id] : item.answer;
+        const achanged = (item.item_id in aem) && aedited !== item.answer && aedited !== (item.answer_zh || null);
+        r.answer_original = item.answer;
+        r.answer_edited = aedited;
+        r.answer_changed = achanged;
+      }
       return r;
     });
     const out = {
@@ -873,13 +901,17 @@
       if (t === "likert" || t === "select") cols.push({ key: d.id + "__comment", header: d.id + "_comment" });
     });
     const header = ["reviewer_id", "item_id", "task", "seen_order", "ms_on_item", "skipped"]
-      .concat(cols.map((c) => c.header)).concat(["reasoning_changed", "reasoning_edited"]);
+      .concat(cols.map((c) => c.header))
+      .concat(["reasoning_changed", "reasoning_edited", "answer_changed", "answer_edited"]);
     const lines = [header.map(csvEscape).join(",")];
     const data = buildResponse();
     data.responses.forEach((r) => {
       const row = [state.reviewer_id, r.item_id, r.task || "", r.seen_order, r.ms_on_item, r.skipped ? "yes" : ""]
         .concat(cols.map((c) => (r.ratings[c.key] != null ? r.ratings[c.key] : "")))
-        .concat([r.reasoning_changed ? "yes" : "", r.reasoning_edited != null ? r.reasoning_edited : ""]);
+        .concat([
+          r.reasoning_changed ? "yes" : "", r.reasoning_edited != null ? r.reasoning_edited : "",
+          r.answer_changed ? "yes" : "", r.answer_edited != null ? r.answer_edited : "",
+        ]);
       lines.push(row.map(csvEscape).join(","));
     });
     return lines.join("\r\n");
