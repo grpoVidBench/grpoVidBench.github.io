@@ -93,6 +93,75 @@
                                                ]
                                 }
                      },
+    "task_rules":  {
+                       "TAL":  {
+                                   "do":  [
+                                              "Keep exactly three levels (L1 -\u003e L2 -\u003e L3), in order; ground every statement in observed evidence (instruments, actions, tissue/structures, timing).",
+                                              "Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator), the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery, gallbladder, liver bed/fossa).",
+                                              "Write as if you are watching the video; make L3 conclude the answer; be concise.",
+                                              "Justify the span from the onset/offset activity; do NOT merely restate the time.",
+                                              "Timestamps ARE allowed (the span is the answer)."
+                                          ],
+                                   "dont":  [
+                                                "Do not reveal the facts were provided: never write \"given\", \"as provided\", \"the label\", \"the answer\", \"ground truth\", and do not refer to \"the captions/observations/text\".",
+                                                "Do not invent anything not observed (no patient history, no off-screen events, no measurements).",
+                                                "Do not skip, merge, reorder, or add a level.",
+                                                "Do not hedge or list alternatives (\"possibly X or Y\") — commit to the reasoning that reaches the answer.",
+                                                "Do not invent a span for an absent phase — conclude it does not occur."
+                                            ]
+                               },
+                       "NAP":  {
+                                   "do":  [
+                                              "Keep exactly three levels (L1 -\u003e L2 -\u003e L3), in order; ground every statement in observed evidence (instruments, actions, tissue/structures, timing).",
+                                              "Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator), the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery, gallbladder, liver bed/fossa).",
+                                              "Write as if you are watching the video; make L3 conclude the answer; be concise.",
+                                              "Read the END of the clip to set the current phase."
+                                          ],
+                                   "dont":  [
+                                                "Do not reveal the facts were provided: never write \"given\", \"as provided\", \"the label\", \"the answer\", \"ground truth\", and do not refer to \"the captions/observations/text\".",
+                                                "Do not invent anything not observed (no patient history, no off-screen events, no measurements).",
+                                                "Do not skip, merge, reorder, or add a level.",
+                                                "Do not hedge or list alternatives (\"possibly X or Y\") — commit to the reasoning that reaches the answer.",
+                                                "Do not base the current phase on early-clip activity."
+                                            ]
+                               },
+                       "DVC":  {
+                                   "do":  [
+                                              "Keep exactly three levels (L1 -\u003e L2 -\u003e L3), in order; ground every statement in observed evidence (instruments, actions, tissue/structures, timing).",
+                                              "Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator), the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery, gallbladder, liver bed/fossa).",
+                                              "Write as if you are watching the video; make L3 conclude the answer; be concise.",
+                                              "Keep L3 at HEADLINE level (one short phrase per segment).",
+                                              "Justify non-overlap/contiguity at L2.",
+                                              "Timestamps ARE allowed."
+                                          ],
+                                   "dont":  [
+                                                "Do not reveal the facts were provided: never write \"given\", \"as provided\", \"the label\", \"the answer\", \"ground truth\", and do not refer to \"the captions/observations/text\".",
+                                                "Do not invent anything not observed (no patient history, no off-screen events, no measurements).",
+                                                "Do not skip, merge, reorder, or add a level.",
+                                                "Do not hedge or list alternatives (\"possibly X or Y\") — commit to the reasoning that reaches the answer.",
+                                                "Do NOT write the full captions inside the think — that duplicates the answer; headline only.",
+                                                "Do not include phases that are absent (it is a filter)."
+                                            ]
+                               },
+                       "VS":  {
+                                  "do":  [
+                                             "Keep exactly three levels (L1 -\u003e L2 -\u003e L3), in order; ground every statement in observed evidence (instruments, actions, tissue/structures, timing).",
+                                             "Use precise vocabulary: instruments (grasper, hook, scissors, clipper, bipolar, irrigator), the seven phases, the Calot (hepatocystic) triangle, anatomy (cystic duct, cystic artery, gallbladder, liver bed/fossa).",
+                                             "Write as if you are watching the video; make L3 conclude the answer; be concise.",
+                                             "Select and compress (arc + salience).",
+                                             "Lowercase instrument names; observable steps only."
+                                         ],
+                                  "dont":  [
+                                               "Do not reveal the facts were provided: never write \"given\", \"as provided\", \"the label\", \"the answer\", \"ground truth\", and do not refer to \"the captions/observations/text\".",
+                                               "Do not invent anything not observed (no patient history, no off-screen events, no measurements).",
+                                               "Do not skip, merge, reorder, or add a level.",
+                                               "Do not hedge or list alternatives (\"possibly X or Y\") — commit to the reasoning that reaches the answer.",
+                                               "Do NOT enumerate per segment or include timestamps (that is DVC, not VS).",
+                                               "Do not use \u0027indicates\u0027 / \u0027suggesting that\u0027 phrasing.",
+                                               "Do not restate the whole summary inside L1/L2."
+                                           ]
+                              }
+                   },
     "require_reviewer_id":  true,
     "randomize_items":  true,
     "collect_endpoint":  null,

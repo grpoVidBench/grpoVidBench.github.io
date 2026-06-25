@@ -304,6 +304,21 @@ textarea.qa-think-edit:focus { outline: none; border-color: var(--accent); box-s
 .lg-d { color: var(--ink-soft); }
 .lg-d strong { color: var(--ink); font-weight: 600; }
 
+/* prompt DO / DON'T rules panel (after the context block) */
+.rules-block {
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 16px;
+}
+.rules-head {
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  margin: 10px 0 4px;
+}
+.rules-head.do { color: var(--ok); }
+.rules-head.dont { color: var(--danger); }
+.rules-head.rules { color: var(--accent-ink); }
+.rules-list { margin: 0 0 4px; padding-left: 20px; }
+.rules-list li { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin: 3px 0; }
+
 /* ---------- dimensions ---------- */
 .dims { margin-top: 22px; display: flex; flex-direction: column; gap: 18px; }
 .dim { }

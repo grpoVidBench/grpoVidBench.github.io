@@ -160,6 +160,28 @@
     return wrap;
   }
 
+  // Read-only panel of the prompt's DO / DON'T (or CVS Rules) for the item's task,
+  // shown after the Context block so reviewers can judge against the original rules.
+  function buildRules(item) {
+    const rules = (study.task_rules && item.task) ? study.task_rules[item.task] : null;
+    if (!rules) return null;
+    const any = (rules.do && rules.do.length) || (rules.dont && rules.dont.length) || (rules.rules && rules.rules.length);
+    if (!any) return null;
+    const wrap = el("div", { class: "qa-block rules-block" });
+    wrap.appendChild(el("div", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow") }));
+    const section = (cls, headKey, arr) => {
+      if (!arr || !arr.length) return;
+      wrap.appendChild(el("div", { class: "rules-head " + cls, text: tr(headKey) }));
+      const ul = el("ul", { class: "rules-list" });
+      arr.forEach((b) => ul.appendChild(el("li", { text: tr(b) })));
+      wrap.appendChild(ul);
+    };
+    section("do", "DO", rules.do);
+    section("dont", "DON'T", rules.dont);
+    section("rules", "Rules", rules.rules);
+    return wrap;
+  }
+
   function dimType(dim) {
     if (dim.type) return dim.type;
     if (dim.scale) return "likert";
@@ -546,6 +568,8 @@
       renderMediaBody(playerCol, contentCol, item);
       const ctx = buildContext(item);   // instruction + per-task L1/L2/L3 template
       if (ctx) contentCol.appendChild(ctx);
+      const rules = buildRules(item);    // the task's DO / DON'T rules, after the context
+      if (rules) contentCol.appendChild(rules);
       contentCol.appendChild(dimsHost);
       layout.appendChild(playerCol);
       layout.appendChild(contentCol);

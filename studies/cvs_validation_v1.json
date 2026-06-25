@@ -31,6 +31,14 @@
                                                 ]
                                  }
                      },
+    "task_rules":  {
+                       "CVS":  {
+                                   "rules":  [
+                                                 "Do NOT reveal that any trajectory, narrative, label, or ground truth was provided. Never write \"given\" or \"as provided\".",
+                                                 "Do NOT confuse the criteria or renumber them; the timeline MUST match the reference trajectory."
+                                             ]
+                               }
+                   },
     "require_reviewer_id":  true,
     "randomize_items":  false,
     "collect_endpoint":  null,
