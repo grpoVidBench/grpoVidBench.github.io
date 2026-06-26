@@ -166,7 +166,7 @@
     ta.addEventListener("input", () => { editsMap[key] = ta.value; commitDebounced(); });
 
     const head = el("div", { class: "qa-edit-head" }, [
-      el("span", { class: "qa-label", text: tr("Context — how to rate this reasoning") }),
+      el("span", { class: "qa-label", text: tr("Context — how to rate this reasoning — editable") }),
       el("a", { class: "reset-link", text: tr("Reset to original"),
         onclick: () => { delete editsMap[key]; ta.value = def; commit(); } }),
     ]);
