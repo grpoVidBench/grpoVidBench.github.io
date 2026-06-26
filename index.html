@@ -55,7 +55,7 @@
           a.href = './study.html?study=' + encodeURIComponent(t.study_id) + '&task=' + encodeURIComponent(t.task);
           a.innerHTML =
             '<span class="study-num task-num"></span>' +
-            '<span><span class="t"></span><span class="s"></span></span>' +
+            '<span><span class="t"></span> <span class="s"></span></span>' +
             '<span class="arrow">→</span>';
           a.querySelector('.task-num').textContent = t.task;
           a.querySelector('.t').textContent = I.taskName(t.task);
