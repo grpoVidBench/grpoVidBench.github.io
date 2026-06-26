@@ -129,34 +129,51 @@
     return tr(m[code] || TASK_LABELS[code] || code);
   }
 
-  // Build the "Context" block: a clear instruction + the per-task L1/L2/L3 template.
-  // Shown inline in the QA flow (just before the rating questions). Returns null if
-  // the study defines no level guide for this item's task.
+  // Render the per-task L1/L2/L3 guide as plain text (one block per level).
+  // localized=true uses the current language; false gives the English canonical (for export).
+  function buildGuideText(guide, localized) {
+    if (!guide) return "";
+    const lines = [];
+    const q = localized ? L(guide, "q") : guide.q;
+    if (q) lines.push(q);
+    (guide.levels || []).forEach((lv) => {
+      const label = localized ? L(lv, "label") : lv.label;
+      const desc = localized ? L(lv, "desc") : lv.desc;
+      lines.push(lv.k + " (" + label + "): " + desc);
+    });
+    return lines.join("\n\n");
+  }
+
+  // Build the "Context" block: a clear instruction + an EDITABLE per-task L1/L2/L3 guide.
+  // Shown inline in the QA flow (just before the rules / rating questions). The guide is
+  // stored per task (= per session) and saved in the export. Returns null if no guide.
   function buildContext(item) {
     const guide = (study.level_guides && item.task) ? study.level_guides[item.task] : null;
     if (!guide) return null;
     const wrap = el("div", { class: "qa-block qa-context" });
-    wrap.appendChild(el("div", { class: "qa-label", text: tr("Context — how to rate this reasoning") }));
 
     const taskName = taskLabel(item.task);
     const q = L(guide, "q");
     const tmpl = q
       ? "Read the model's reasoning <think> above. For this {task} item — {q} — a good trace must carry the three levels below. Check each level is present and correct, then answer the rating questions."
       : "Read the model's reasoning <think> above. For this {task} item, a good trace must carry the three levels below. Check each level is present and correct, then answer the rating questions.";
-    wrap.appendChild(el("p", { class: "ctx-instr", text: tf(tmpl, { task: taskName, q: q }) }));
 
-    const g = el("div", { class: "level-guide" });
-    g.appendChild(el("div", { class: "lg-task", text: taskName + (q ? " — " + q : "") }));
-    (guide.levels || []).forEach((lv) => {
-      g.appendChild(el("div", { class: "lg-row" }, [
-        el("span", { class: "lg-k", text: lv.k }),
-        el("span", { class: "lg-d" }, [
-          el("strong", { text: L(lv, "label") }),
-          document.createTextNode(lv.desc ? " — " + L(lv, "desc") : ""),
-        ]),
-      ]));
-    });
-    wrap.appendChild(g);
+    const editsMap = state.contextEdits || (state.contextEdits = {});
+    const key = item.task;
+    const def = buildGuideText(guide, true);
+    const ta = el("textarea", { class: "rules-edit ctx-guide-edit", spellcheck: "false" });
+    ta.value = (key in editsMap) ? editsMap[key] : def;
+    ta.addEventListener("input", () => { editsMap[key] = ta.value; commitDebounced(); });
+
+    const head = el("div", { class: "qa-edit-head" }, [
+      el("span", { class: "qa-label", text: tr("Context — how to rate this reasoning") }),
+      el("a", { class: "reset-link", text: tr("Reset to original"),
+        onclick: () => { delete editsMap[key]; ta.value = def; commit(); } }),
+    ]);
+    wrap.appendChild(head);
+    wrap.appendChild(el("p", { class: "ctx-instr", text: tf(tmpl, { task: taskName, q: q }) }));
+    wrap.appendChild(ta);
+    wrap.appendChild(el("div", { class: "edit-hint", text: tr("You can edit these reasoning levels; your edits are saved with your response.") }));
     return wrap;
   }
 
@@ -169,12 +186,8 @@
     const any = (src.do && src.do.length) || (src.dont && src.dont.length) || (src.rules && src.rules.length);
     if (!any) return null;
     const editsMap = state.ruleEdits || (state.ruleEdits = {});
-    const wrap = el("details", { class: "qa-block rules-block" });
-    wrap.open = rulesOpen;
-    wrap.addEventListener("toggle", () => { rulesOpen = wrap.open; });
-    wrap.appendChild(el("summary", { class: "rules-summary" }, [
-      el("span", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow — editable") }),
-    ]));
+    const wrap = el("div", { class: "qa-block rules-block" });
+    wrap.appendChild(el("div", { class: "qa-label", text: tr("Prompt rules the reasoning had to follow — editable") }));
     const section = (cls, headKey, arr, kind) => {
       if (!arr || !arr.length) return;
       const key = item.task + "|" + kind;
@@ -501,7 +514,6 @@
   let player = null;
   let itemEnterTime = 0;
   let showWrapup = false;
-  let rulesOpen = false;  // collapsible rules panel: remembered across items in a session
 
   function persistTime() {
     if (showWrapup || pos < 0 || pos >= order.length) return;
@@ -646,13 +658,14 @@
         study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
-        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, ruleEdits: {}, wrapup: {}, current: 0,
+        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, ruleEdits: {}, contextEdits: {}, wrapup: {}, current: 0,
       };
     }
     if (!state.skipped) state.skipped = {};   // back-compat for resumed sessions
     if (!state.edits) state.edits = {};
     if (!state.answerEdits) state.answerEdits = {};
     if (!state.ruleEdits) state.ruleEdits = {};
+    if (!state.contextEdits) state.contextEdits = {};
     order = state.order;
     pos = Math.min(state.current || 0, order.length - 1);
     showWrapup = false;
@@ -1040,8 +1053,28 @@
     // task-level prompt-rule edits (DO / DON'T / Rules), keyed by task
     const ruleOut = buildRuleEdits();
     if (Object.keys(ruleOut).length) out.task_rules = ruleOut;
+    // task-level Context (L1/L2/L3 guide) edits, keyed by task
+    const ctxOut = buildContextEdits();
+    if (Object.keys(ctxOut).length) out.task_context = ctxOut;
     if (Array.isArray(study.wrapup) && study.wrapup.length) out.wrapup = state.wrapup || {};
     return out;
+  }
+
+  // Collect original + edited Context guide (L1/L2/L3) for every task in this session.
+  function buildContextEdits() {
+    const result = {};
+    if (!study.level_guides) return result;
+    const tasks = [];
+    (study.items || []).forEach((it) => { if (it.task && tasks.indexOf(it.task) < 0) tasks.push(it.task); });
+    const cEdits = state.contextEdits || {};
+    tasks.forEach((tk) => {
+      const g = study.level_guides[tk];
+      if (!g) return;
+      const original = buildGuideText(g, false);   // English canonical
+      const edited = (tk in cEdits) ? cEdits[tk] : original;
+      result[tk] = { original, edited, changed: tk in cEdits };
+    });
+    return result;
   }
 
   // Collect original + edited DO/DON'T/Rules for every task present in this session.

@@ -351,6 +351,7 @@ textarea.rules-edit {
   border-radius: var(--radius-sm); padding: 8px 10px;
 }
 textarea.rules-edit:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+textarea.ctx-guide-edit { min-height: 168px; }
 
 /* ---------- dimensions ---------- */
 .dims { margin-top: 22px; display: flex; flex-direction: column; gap: 18px; }

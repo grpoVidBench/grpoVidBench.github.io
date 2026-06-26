@@ -96,6 +96,7 @@
 
     // ---- context guide ----
     "Context — how to rate this reasoning": "背景说明——如何评价该推理",
+    "You can edit these reasoning levels; your edits are saved with your response.": "您可以编辑这些推理层级；您的编辑将随评审结果一并保存。",
 
     // ---- dimensions / inputs ----
     "(optional)": "（可选）",
