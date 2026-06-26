@@ -431,6 +431,26 @@ textarea.ctx-guide-edit { min-height: 168px; }
 }
 .saved-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
 
+/* ---------- resume / welcome-back overview ---------- */
+.resume-list { display: flex; flex-direction: column; gap: 8px; margin: 18px 0; }
+.resume-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; text-align: left; cursor: pointer; font: inherit;
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-sm); padding: 10px 14px;
+  transition: border-color .12s ease, background .12s ease;
+}
+.resume-row:hover { background: var(--surface-2); border-color: var(--accent); }
+.resume-row.done { border-left-color: var(--ok); }
+.resume-row.skipped { border-left-color: var(--warn); }
+.resume-row.todo { border-left-color: var(--line-strong); }
+.resume-label { font-weight: 600; font-size: 14px; }
+.resume-status { font-size: 12px; font-weight: 700; letter-spacing: .03em; }
+.resume-row.done .resume-status { color: var(--ok); }
+.resume-row.skipped .resume-status { color: var(--warn); }
+.resume-row.todo .resume-status { color: var(--ink-soft); }
+
 /* ---------- done screen ---------- */
 .done-icon {
   width: 64px; height: 64px; border-radius: 50%; background: var(--accent-soft);

@@ -45,6 +45,14 @@
     "Please enter your initials or email to begin.": "请先输入您的姓名缩写或邮箱以开始。",
     "Reference": "参考信息",
     "What you need to do": "您需要做的事",
+    "Welcome back": "欢迎回来",
+    "Your progress was saved. Pick up where you left off — the items you've already done are marked below.": "您的进度已保存。从上次中断处继续——您已完成的条目在下方已标注。",
+    "{a} answered · {s} skipped · {r} remaining (of {t})": "已回答 {a} · 已跳过 {s} · 剩余 {r}（共 {t}）",
+    "Done": "已完成",
+    "Not started": "未开始",
+    "Continue where you left off": "从上次中断处继续",
+    "Start over (clear my saved answers)": "重新开始（清除我已保存的答案）",
+    "Start over? This permanently clears your saved answers for this task.": "确定重新开始吗？这将永久清除您在该任务中已保存的答案。",
 
     // ---- item sections ----
     "Question shown to the model": "提供给模型的问题",

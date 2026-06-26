@@ -514,9 +514,10 @@
   let player = null;
   let itemEnterTime = 0;
   let showWrapup = false;
+  let showResume = false;   // on the "welcome back" overview, not on an item
 
   function persistTime() {
-    if (showWrapup || pos < 0 || pos >= order.length) return;
+    if (showResume || showWrapup || pos < 0 || pos >= order.length) return;
     const item = study.items[order[pos]];
     if (!item) return;
     const add = Date.now() - itemEnterTime;
@@ -646,7 +647,8 @@
 
   function beginSession(reviewer) {
     const existing = loadState(study.study_id, taskFilter, reviewer);
-    if (existing && existing.order && existing.order.length === study.items.length) {
+    const resumed = !!(existing && existing.order && existing.order.length === study.items.length);
+    if (resumed) {
       state = existing;
       state.user_agent = navigator.userAgent;
       state.task_group = taskFilter;
@@ -670,6 +672,86 @@
     pos = Math.min(state.current || 0, order.length - 1);
     showWrapup = false;
     saveState(state);
+    // If resuming a session that already has progress, show the "welcome back" overview
+    // instead of dropping straight into an item.
+    const resolved = order.filter((idx) => itemComplete(study.items[idx])).length;
+    if (resumed && resolved > 0) renderResume();
+    else renderItem();
+  }
+
+  function renderResume() {
+    redraw = renderResume;
+    showResume = true; showWrapup = false;
+    if (player) { player.destroy(); player = null; }
+    clear(root);
+    progressWrap.style.display = "none";
+    window.scrollTo({ top: 0 });
+
+    const total = order.length;
+    let answered = 0, skippedN = 0, remaining = 0;
+    order.forEach((idx) => {
+      const it = study.items[idx];
+      if (isSkipped(it)) skippedN++;
+      else if (itemComplete(it)) answered++;
+      else remaining++;
+    });
+
+    const card = el("div", { class: "card narrow" });
+    card.appendChild(el("p", { class: "eyebrow", text: tr("Welcome back") }));
+    card.appendChild(el("h1", { text: (taskFilter ? taskLabel(taskFilter) + " · " : "") + (L(study, "title") || study.study_id) }));
+    card.appendChild(el("p", { class: "lead", text: tr("Your progress was saved. Pick up where you left off — the items you've already done are marked below.") }));
+
+    const track = el("div", { class: "progress-track", style: "margin:6px 0 4px" });
+    track.appendChild(el("div", { class: "progress-fill", style: "width:" + (total ? (answered + skippedN) / total * 100 : 0) + "%" }));
+    card.appendChild(track);
+    card.appendChild(el("p", { class: "muted", style: "margin-top:6px",
+      text: tf("{a} answered · {s} skipped · {r} remaining (of {t})", { a: answered, s: skippedN, r: remaining, t: total }) }));
+
+    const listWrap = el("div", { class: "resume-list" });
+    order.forEach((idx, k) => {
+      const it = study.items[idx];
+      const sk = isSkipped(it), done = !sk && itemComplete(it);
+      const row = el("button", { class: "resume-row" + (done ? " done" : sk ? " skipped" : " todo"),
+        onclick: () => { showResume = false; goTo(k); } });
+      row.appendChild(el("span", { class: "resume-label",
+        text: it.task ? tf("Item {n} ({task})", { n: k + 1, task: taskLabel(it.task) }) : tf("Item {n}", { n: k + 1 }) }));
+      row.appendChild(el("span", { class: "resume-status",
+        text: done ? tr("Done") : sk ? tr("Skipped") : tr("Not started") }));
+      listWrap.appendChild(row);
+    });
+    card.appendChild(listWrap);
+
+    const firstRemaining = order.findIndex((idx) => !itemComplete(study.items[idx]));
+    const btns = el("div", { class: "dl-row" });
+    if (firstRemaining >= 0) {
+      btns.appendChild(el("button", { class: "btn btn-primary", text: tr("Continue where you left off"),
+        onclick: () => { showResume = false; goTo(firstRemaining); } }));
+      btns.appendChild(el("button", { class: "btn", text: tr("Review & submit →"),
+        onclick: () => { showResume = false; goWrapup(); } }));
+    } else {
+      btns.appendChild(el("button", { class: "btn btn-primary", text: tr("Review & submit →"),
+        onclick: () => { showResume = false; goWrapup(); } }));
+    }
+    card.appendChild(btns);
+    card.appendChild(el("p", { style: "margin-top:6px" },
+      el("a", { class: "muted", style: "cursor:pointer;font-size:13px;text-decoration:underline", text: tr("Start over (clear my saved answers)"), onclick: startOver })));
+    root.appendChild(card);
+  }
+
+  function startOver() {
+    if (!window.confirm(tr("Start over? This permanently clears your saved answers for this task."))) return;
+    try { localStorage.removeItem(storageKey(study.study_id, taskFilter, state.reviewer_id)); } catch (e) {}
+    const reviewer = state.reviewer_id;
+    const n = study.items.length;
+    const seed = study.study_id + "::" + (taskFilter || "") + "::" + reviewer;
+    const ord = study.randomize_items ? seededOrder(n, seed) : Array.from({ length: n }, (_, i) => i);
+    state = {
+      study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
+      started_at: new Date().toISOString(), user_agent: navigator.userAgent,
+      order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, ruleEdits: {}, contextEdits: {}, wrapup: {}, current: 0,
+    };
+    order = state.order; pos = 0; showResume = false; showWrapup = false;
+    saveState(state);
     renderItem();
   }
 
@@ -677,7 +759,7 @@
     redraw = renderItem;
     if (player) { player.destroy(); player = null; }
     clear(root);
-    showWrapup = false;
+    showWrapup = false; showResume = false;
     itemEnterTime = Date.now();
     const item = study.items[order[pos]];
     state.current = pos;
@@ -952,6 +1034,7 @@
 
   function renderWrapup() {
     redraw = renderWrapup;
+    showResume = false;
     clear(root);
     window.scrollTo({ top: 0 });
     const card = el("div", { class: "card narrow" });
