@@ -410,6 +410,7 @@
   // Timeline, slider, speed and window markers are all expressed in SOURCE seconds.
   function VideoPlayer(container, opts) {
     let destroyed = false, mediaFps = 5, mediaStart = 0, nativeFps = 1, lo = 0, hi = 0;
+    let normalized = false, duration = 0;   // normalized: position is t in [0,1] mapped straight to video time
     const stage = el("div", { class: "stage" });
     const video = el("video", { class: "vid", playsinline: "", preload: "auto" });
     video.muted = true;
@@ -434,14 +435,16 @@
     container.appendChild(el("div", { class: "player" }, [stage, controls]));
 
     const srcPerVid = () => mediaFps / nativeFps;          // source seconds per video second
-    const toSrc = (vt) => mediaStart + vt * srcPerVid();   // video time -> source second
-    const toVid = (s) => (s - mediaStart) / srcPerVid();   // source second -> video time
+    // position units: "source seconds" by default; normalized timeline maps video time straight to t∈[0,1]
+    const toSrc = (vt) => normalized ? (duration ? vt / duration : 0) : mediaStart + vt * srcPerVid();
+    const toVid = (s) => normalized ? s * duration : (s - mediaStart) / srcPerVid();
+    const fmt = (s) => normalized ? s.toFixed(2) + " · t" : s.toFixed(1) + " s";
     function setBuffering(on) { overlay.classList.toggle("show", on); overlay.classList.remove("error"); overlay.textContent = tr("buffering…"); }
     function setSpeed(sp) { video.playbackRate = sp; speedBtns.forEach((b, k) => b.classList.toggle("active", speeds[k] === sp)); }
     function updateUI() {
       const s = Math.max(lo, Math.min(hi, toSrc(video.currentTime)));
-      slider.value = String(Math.round(s));
-      timeLabel.textContent = s.toFixed(1) + " s";
+      slider.value = String(normalized ? s : Math.round(s));
+      timeLabel.textContent = fmt(s);
     }
 
     playBtn.addEventListener("click", () => { if (video.paused) video.play(); else video.pause(); });
@@ -466,7 +469,7 @@
       });
       if (segs.length) {
         note.textContent = tr(segs.length > 1 ? "Highlighted windows" : "Highlighted window") + ": " +
-          segs.map(([a, b]) => a.toFixed(1) + "–" + b.toFixed(1) + " s").join(", ");
+          segs.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", ");
       } else { note.textContent = ""; }
     }
 
@@ -474,14 +477,17 @@
       try {
         const m = await getManifest(opts.dataset, opts.videoId);
         if (destroyed) return;
+        normalized = (m.timeline === "normalized");
         mediaFps = m.media_fps || 5; mediaStart = m.media_start || 0; nativeFps = m.native_fps || 1;
-        lo = (opts.clipStart != null) ? opts.clipStart : mediaStart;
-        hi = (opts.clipEnd != null) ? opts.clipEnd : null;
+        lo = (opts.clipStart != null) ? opts.clipStart : (normalized ? 0 : mediaStart);
+        hi = (opts.clipEnd != null) ? opts.clipEnd : (normalized ? 1 : null);
         setSpeed(1);
         video.addEventListener("loadedmetadata", () => {
           if (destroyed) return;
+          duration = video.duration || 0;
           if (hi == null) hi = toSrc(video.duration);
-          slider.min = String(Math.floor(lo)); slider.max = String(Math.ceil(hi));
+          if (normalized) { slider.min = String(lo); slider.max = String(hi); slider.step = "0.01"; }
+          else { slider.min = String(Math.floor(lo)); slider.max = String(Math.ceil(hi)); }
           drawMarkers();
           const startS = (opts.start != null) ? opts.start : lo;
           try { video.currentTime = toVid(Math.max(lo, Math.min(hi, startS))); } catch (e) {}
