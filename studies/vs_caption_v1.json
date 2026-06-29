@@ -74,49 +74,19 @@
                       "item_id":  "VS-01",
                       "task":  "VS",
                       "dataset":  "CholecT50",
-                      "video_id":  "VID01",
+                      "video_id":  "VS__VID01_0_673_0_25",
                       "clip_start":  0,
-                      "clip_end":  170,
-                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Summarize the video content in a short paragraph, focusing on the main surgical activities.",
-                      "caption":  "graspers unfold a translucent specimen_bag on the liver surface, open it into a pouch, and place the detached gallbladder inside. The bag is folded and cinched closed by manipulating the rim and drawstring, then drawn toward the trocar while the liver is retracted. After bag retrieval begins, graspers elevate and reposition the liver to expose the moist, cauterized gallbladder fossa, with instrument contact along the raw bed and clipped tissue for cleaning/coagulation before returning to the specimen_bag."
+                      "clip_end":  673,
+                      "question":  "You are an expert in operative video analysis. The following video contains endoscopic footage of a laparoscopic cholecystectomy, where the gallbladder is removed using small incisions and specialized instruments. Describe the overall surgical procedure shown in the video without listing specific time segments.",
+                      "caption":  "A grasper secured the gallbladder fundus and retracted it superiorly, while a second grasper held the infundibular region laterally to set exposure. The hook/white-tipped dissector opened fibrofatty peritoneal tissue around the Calot/hepatocystic triangle and gallbladder–liver interface, enlarging a pale-to-bloody dissection plane. bipolar coagulation controlled bleeding points, and irrigation/aspiration cleared bloody fluid from the field. Continued traction exposed the cystic duct region, a gray tubular structure, and inflamed liver-bed attachments for further separation."
                   },
                   {
                       "item_id":  "VS-02",
                       "task":  "VS",
                       "dataset":  "CholecT50",
-                      "video_id":  "VID01",
+                      "video_id":  "VS__VID01_0_673_0_2",
                       "clip_start":  0,
-                      "clip_end":  170,
-                      "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Summarize the video content in a short paragraph, focusing on the main surgical activities.",
-                      "caption":  "graspers unfold and spread the specimen_bag on the liver surface, place the detached gallbladder into the pouch, and pack it down. The rim and drawstring are grasped to fold and cinch the bag closed, then the partially collapsed bag is drawn toward the trocar while the liver is retracted. Exposure shifts to the cauterized gallbladder fossa, where graspers elevate the liver and reposition along the raw bed margins as the instrument tip contacts the liver edge and clipped tissue for cleaning or coagulation before returning to the specimen_bag."
-                  },
-                  {
-                      "item_id":  "VS-03",
-                      "task":  "VS",
-                      "dataset":  "CholecT50",
-                      "video_id":  "VID01",
-                      "clip_start":  0,
-                      "clip_end":  170,
-                      "question":  "You are an expert in operative video analysis. The following video contains endoscopic footage of a laparoscopic cholecystectomy, where the gallbladder is removed using small incisions and specialized instruments. Describe the overall surgical procedure shown in the video without listing specific time segments.",
-                      "caption":  "A grasper secured the gallbladder fundus and retracted it superiorly, while a second grasper held the infundibular region laterally to set exposure. The hook/white-tipped dissector opened fibrofatty peritoneal tissue around the Calot/hepatocystic triangle and gallbladder–liver interface, enlarging a pale-to-bloody dissection plane. bipolar coagulation controlled bleeding points, and irrigation/aspiration cleared bloody fluid from the field. Continued traction exposed the cystic duct region, a gray tubular structure, and inflamed liver-bed attachments for further separation."
-                  },
-                  {
-                      "item_id":  "VS-04",
-                      "task":  "VS",
-                      "dataset":  "CholecT50",
-                      "video_id":  "VID01",
-                      "clip_start":  0,
-                      "clip_end":  170,
-                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Provide a brief, high-level summary of the entire video in just a few sentences.",
-                      "caption":  "graspers retract and reposition the gallbladder and liver edge while the hook separates fibrous attachments from the liver bed, extending the dissection plane around clipped structures with intermittent cautery, smoke, char, and minor bleeding. The irrigator clears pooled fluid and blood to maintain exposure of the raw gallbladder fossa. After the gallbladder is detached, graspers unfold and open the specimen bag on the liver surface, place the gallbladder inside, and cinch the bag closed. The partially collapsed bag is then drawn toward the trocar opening while a grasper retracts the liver to expose the dissected bed."
-                  },
-                  {
-                      "item_id":  "VS-05",
-                      "task":  "VS",
-                      "dataset":  "CholecT50",
-                      "video_id":  "VID01",
-                      "clip_start":  0,
-                      "clip_end":  170,
+                      "clip_end":  673,
                       "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Describe the overall surgical procedure shown in the video without listing specific time segments.",
                       "caption":  "A grasper retracts the gallbladder fundus superiorly against the liver while another grasper holds the infundibulum laterally to set tension. A hook/white-tipped dissector opens fibrofatty peritoneal tissue around the cystic duct region and along the gallbladder–liver interface, widening the dissection plane with intermittent minor bleeding. bipolar coagulates visible vessels and bleeding points, and the irrigator clears bloody fluid. Continued traction exposes the cystic duct region, a gray tubular structure, and inflamed liver-bed attachments for further separation."
                   }
