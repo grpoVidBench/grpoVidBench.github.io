@@ -224,12 +224,23 @@
   function dimRequired(dim) { return !dim.optional; }
 
   // ---------- frame player ----------
+  // Cache-buster shared with the asset version on this script's own <src> tag
+  // (e.g. app.js?v=23). Appending it to the manifest URL stops the browser/CDN
+  // from serving a stale frames.json after a deploy. Falls back to no query.
+  const ASSET_VER = (function () {
+    try {
+      var s = document.currentScript || document.querySelector('script[src*="app.js"]');
+      var m = s && s.src && s.src.match(/[?&]v=([^&]+)/);
+      return m ? m[1] : "";
+    } catch (e) { return ""; }
+  })();
   const manifestCache = {};
   async function getManifest(dataset, videoId) {
     const key = dataset + "/" + videoId;
     if (manifestCache[key]) return manifestCache[key];
-    const url = "./Videos/" + dataset + "/" + videoId + "/frames.json";
-    const res = await fetch(url, { cache: "force-cache" });
+    let url = "./Videos/" + dataset + "/" + videoId + "/frames.json";
+    if (ASSET_VER) url += "?v=" + encodeURIComponent(ASSET_VER);
+    const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) throw new Error("frames.json HTTP " + res.status);
     const m = await res.json();
     manifestCache[key] = m;
