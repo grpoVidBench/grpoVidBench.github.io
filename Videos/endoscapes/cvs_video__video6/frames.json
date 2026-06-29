@@ -2,6 +2,7 @@
     "video_id":  "cvs_video__video6",
     "dataset":  "endoscapes",
     "timeline":  "normalized",
+    "duration_seconds":  722,
     "native_fps":  null,
     "media_url":  "./Videos/endoscapes/cvs_video__video6/clip.mp4",
     "default_playback_fps":  5,

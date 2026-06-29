@@ -3,6 +3,7 @@
     "dataset":  "cholect50",
     "native_fps":  1,
     "timeline":  "seconds",
+    "duration_seconds":  358,
     "media_url":  "./Videos/cholect50/DVC__VID05_1305_1663_0_5/clip.mp4",
     "media_fps":  10,
     "media_start":  0,

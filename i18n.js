@@ -306,6 +306,7 @@
     "{n} keyframes · timeline normalized 0.00–1.00": "{n} 个关键帧 · 时间轴归一化为 0.00–1.00",
     "{n} frames": "{n} 帧",
     "Source: {fps} fps · {n} frames": "来源：{fps} fps · 共 {n} 帧",
+    "clip length {mmss} ({sec} s)": "片段时长 {mmss}（{sec} 秒）",
     "{n} item(s) still need a required answer:": "还有 {n} 个条目的必填项未完成：",
     "Item {n} ({task})": "第 {n} 项（{task}）",
     "Item {n}": "第 {n} 项",

@@ -247,6 +247,14 @@
     return m;
   }
 
+  // Localized "clip length M:SS (N s)" label from a manifest duration in real seconds.
+  function clipLenLabel(sec) {
+    if (typeof sec !== "number" || !(sec > 0)) return "";
+    const r = Math.round(sec);
+    const mmss = Math.floor(r / 60) + ":" + String(r % 60).padStart(2, "0");
+    return tf("clip length {mmss} ({sec} s)", { mmss: mmss, sec: r });
+  }
+
   function FramePlayer(container, opts) {
     // opts: dataset, videoId, start, end, segments
     const LOOKAHEAD = 25;
@@ -273,9 +281,10 @@
     speedBtns.forEach((b) => speedBox.appendChild(b));
     const note = el("div", { class: "player-note" });
 
+    const lengthLabel = el("span", { class: "clip-len" });
     const controls = el("div", { class: "controls" }, [
       el("div", { class: "row" }, [playBtn, scrubWrap]),
-      el("div", { class: "row" }, [timeLabel, el("span", { class: "spacer", style: "flex:1" }), speedBox]),
+      el("div", { class: "row" }, [timeLabel, lengthLabel, el("span", { class: "spacer", style: "flex:1" }), speedBox]),
       note,
     ]);
     const wrap = el("div", { class: "player" }, [stage, controls]);
@@ -391,6 +400,7 @@
         manifest = await getManifest(opts.dataset, opts.videoId);
         if (destroyed) return;
         frames = manifest.frames || [];
+        lengthLabel.textContent = clipLenLabel(manifest.duration_seconds);
         dir = manifest.dir || ("./Videos/" + opts.dataset + "/" + opts.videoId + "/");
         nativeFps = manifest.native_fps || 1;
         playFps = manifest.default_playback_fps || 5;
@@ -438,9 +448,10 @@
     const speedBtns = speeds.map((sp) => el("button", { text: sp + "×", onclick: () => setSpeed(sp) }));
     speedBtns.forEach((b) => speedBox.appendChild(b));
     const note = el("div", { class: "player-note" });
+    const lengthLabel = el("span", { class: "clip-len" });
     const controls = el("div", { class: "controls" }, [
       el("div", { class: "row" }, [playBtn, scrubWrap]),
-      el("div", { class: "row" }, [timeLabel, el("span", { class: "spacer", style: "flex:1" }), speedBox]),
+      el("div", { class: "row" }, [timeLabel, lengthLabel, el("span", { class: "spacer", style: "flex:1" }), speedBox]),
       note,
     ]);
     container.appendChild(el("div", { class: "player" }, [stage, controls]));
@@ -489,6 +500,7 @@
         const m = await getManifest(opts.dataset, opts.videoId);
         if (destroyed) return;
         normalized = (m.timeline === "normalized");
+        lengthLabel.textContent = clipLenLabel(m.duration_seconds);
         mediaFps = m.media_fps || 5; mediaStart = m.media_start || 0; nativeFps = m.native_fps || 1;
         lo = (opts.clipStart != null) ? opts.clipStart : (normalized ? 0 : mediaStart);
         hi = (opts.clipEnd != null) ? opts.clipEnd : (normalized ? 1 : null);
