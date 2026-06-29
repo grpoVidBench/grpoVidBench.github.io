@@ -2,8 +2,8 @@
     "study_id":  "cvs_validation_v1",
     "study_type":  "think",
     "title":  "Endoscapes CVS - clinician review",
-    "intro_md":  "Each clip is a short, time-ordered set of keyframes from a laparoscopic cholecystectomy dissection toward the **Critical View of Safety (CVS)**.\n\nFor each clip, scrub the keyframes (timeline runs **0.00 to 1.00**, normalized over the clip), then rate the model\u0027s **answer** (when each criterion is first met and the final verdict) and its **reasoning**.",
-    "intro_md_zh":  "每个片段是腹腔镜胆囊切除术中朝向**安全关键视图（CVS）**分离过程的一组按时间排序的关键帧。\n\n对每个片段，拖动浏览这些关键帧（时间轴在整段上归一化为 **0.00 至 1.00**），然后评价模型的**回答**（各标准首次满足的时间及最终判定）及其**推理**。",
+    "intro_md":  "Each clip is a short, time-ordered set of keyframes from a laparoscopic cholecystectomy dissection toward the **Critical View of Safety (CVS)**.\n\nFor each clip, scrub the clip (the timeline is in **seconds**, matching the times in the model\u0027s answer), then rate the model\u0027s **answer** (when each criterion is first met and the final verdict) and its **reasoning**.",
+    "intro_md_zh":  "每个片段是腹腔镜胆囊切除术中朝向**安全关键视图（CVS）**分离过程的一组按时间排序的关键帧。\n\n对每个片段，拖动浏览该片段（时间轴以**秒**为单位，与模型回答中的时间一致），然后评价模型的**回答**（各标准首次满足的时间及最终判定）及其**推理**。",
     "context_md":  "The three CVS criteria, judged **independently**, each from its own evidence region:\n\n- **C1 - Two structures:** exactly two tubular structures (cystic duct and cystic artery) seen entering the gallbladder. Judged only from the structures at the **gallbladder neck**.\n- **C2 - Hepatocystic triangle cleared:** the Calot (hepatocystic) triangle is free of fat and fibrous tissue. Judged only from the **triangle window**.\n- **C3 - Cystic plate exposed:** the lower third of the gallbladder is dissected off the cystic plate. Judged only from the **gallbladder-liver-bed interface**.\n\nCVS is achieved only when **C1 and C2 and C3** are all met simultaneously.",
     "context_md_zh":  "三条 CVS 标准需**独立**判断，每条仅依据其自身的证据区域：\n\n- **C1 - 两条结构：** 恰好有两条管状结构（胆囊管与胆囊动脉）进入胆囊。仅依据**胆囊颈部**的结构判断。\n- **C2 - 肝胆三角已清理：** 肝胆三角（Calot 三角）内无脂肪和纤维组织。仅依据**三角窗口**判断。\n- **C3 - 胆囊板已暴露：** 胆囊下三分之一已从胆囊板分离。仅依据**胆囊-肝床界面**判断。\n\n只有当 **C1、C2、C3** 同时满足时，才达成 CVS。",
     "task_labels":  {
@@ -44,7 +44,7 @@
                                           "context":  "**Critical View of Safety (CVS).** Each clip is a short, time-ordered set of keyframes from a laparoscopic cholecystectomy dissection. The model was asked *how the CVS develops* across the clip - when each of the three criteria (C1, C2, C3) is first met (or never) and the final CVS verdict - and justified it with a three-level reasoning trace. You are validating the **per-criterion timing** and the **final verdict**, judging each criterion only from its own evidence region.\n\n**What you can edit:** the model\u0027s reasoning and the prompt Rules are editable here (the C1/C2/C3 verdict answer is read-only). Every edit you make is saved with your response.",
                                           "context_zh":  "**安全关键视图（CVS）。** 每个片段是腹腔镜胆囊切除术分离过程中一组按时间排序的关键帧。模型被要求判断 *CVS 在整个片段中如何变化*——三条标准（C1、C2、C3）各自何时首次满足（或始终未满足）以及最终的 CVS 判定——并用三层推理加以论证。您需要验证**各标准的时间判断**和**最终判定**，且每条标准仅依据其自身的证据区域来判断。\n\n**可编辑内容：** 此处可编辑模型的推理以及提示词规则（C1/C2/C3 判定答案为只读）。您的所有编辑都会随评审结果一并保存。",
                                           "steps":  [
-                                                        "Scrub the keyframes from t = 0.00 to 1.00 to follow the dissection over time.",
+                                                        "Scrub the clip (the timeline is in seconds) to follow the dissection over time.",
                                                         "Read the model\u0027s answer - when C1, C2 and C3 are each first met (or never) and the final CVS verdict.",
                                                         "Judge each criterion from its own region: C1 = two structures at the gallbladder neck; C2 = the Calot (hepatocystic) triangle window cleared; C3 = the cystic plate (liver bed) exposed.",
                                                         "Decide whether the final CVS verdict (achieved / not achieved) is correct.",
@@ -55,7 +55,7 @@
                                                         "If you cannot assess this clip, click \u0027Skip this item\u0027."
                                                     ],
                                           "steps_zh":  [
-                                                           "将关键帧从 t = 0.00 拖动到 1.00，跟踪分离过程随时间的变化。",
+                                                           "拖动浏览片段（时间轴以秒为单位），跟踪分离过程随时间的变化。",
                                                            "阅读模型的答案——C1、C2、C3 各自何时首次满足（或始终未满足）以及最终 CVS 判定。",
                                                            "依据各自的区域判断每条标准：C1 = 胆囊颈部的两条结构；C2 = 肝胆三角（Calot 三角）窗口已清理；C3 = 胆囊板（肝床）已暴露。",
                                                            "判断最终的 CVS 判定（已达成/未达成）是否正确。",
@@ -160,8 +160,8 @@
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video32",
                       "question":  "How does the Critical View of Safety (CVS) develop across this surgical clip, and what is its final status?",
-                      "answer":  "C1 first met never; C2 first met never; C3 first met 317.8s; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The dissection begins and ends with the Critical View of Safety unachieved, showing minimal progress due to dense tissue and obscured anatomy. L2 (per-criterion progression): Criterion C1 (two structures) is never met because the structures at the gallbladder neck are not isolated; Criterion C2 (triangle cleared) is never met as the Calot triangle remains obscured; Criterion C3 (cystic plate exposed) is first met at 320.0s when the lower gallbladder-liver-bed interface is sufficiently cleared. L3 (CVS synthesis): Since C1 and C2 are never satisfied, the overall Critical View of Safety is never achieved at any point in the sequence."
+                      "answer":  "C1 first met never; C2 first met never; C3 first met 15.0s; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The dissection begins and ends with the Critical View of Safety unachieved, showing minimal progress due to dense tissue and obscured anatomy. L2 (per-criterion progression): Criterion C1 (two structures) is never met because the structures at the gallbladder neck are not isolated; Criterion C2 (triangle cleared) is never met as the Calot triangle remains obscured; Criterion C3 (cystic plate exposed) is first met at 15.0s when the lower gallbladder-liver-bed interface is sufficiently cleared. L3 (CVS synthesis): Since C1 and C2 are never satisfied, the overall Critical View of Safety is never achieved at any point in the sequence."
                   },
                   {
                       "item_id":  "CVS-02",
@@ -178,8 +178,8 @@
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video6",
                       "question":  "Can you analyze how the three criteria of the Critical View of Safety (CVS) progress throughout this surgical clip, and determine the final CVS status?",
-                      "answer":  "C1 first met never; C2 first met 50.5s; C3 first met 50.5s; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The dissection transitions from initial visualization to active hepatocystic space clearance, showing progression but failing to reach full CVS. L2 (per-criterion progression): Criterion C1 is never met due to incomplete isolation of the structures at the gallbladder neck; Criterion C2 is met at 47.0s when the hepatocystic triangle is cleared; Criterion C3 is met at 47.0s when the cystic plate is sufficiently exposed. L3 (CVS synthesis): CVS is never fully achieved during the clip because C1 remains unmet, resulting in a final verdict of not achieved."
+                      "answer":  "C1 first met never; C2 first met 2.0s; C3 first met 2.0s; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The dissection transitions from initial visualization to active hepatocystic space clearance, showing progression but failing to reach full CVS. L2 (per-criterion progression): Criterion C1 is never met due to incomplete isolation of the structures at the gallbladder neck; Criterion C2 is met at 2.0s when the hepatocystic triangle is cleared; Criterion C3 is met at 2.0s when the cystic plate is sufficiently exposed. L3 (CVS synthesis): CVS is never fully achieved during the clip because C1 remains unmet, resulting in a final verdict of not achieved."
                   },
                   {
                       "item_id":  "CVS-04",
@@ -187,8 +187,8 @@
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video1",
                       "question":  "How does the Critical View of Safety (CVS) develop across this dissection clip, and what is the final CVS status at the end of the sequence?",
-                      "answer":  "C1 first met 88.2s; C2 first met 107.9s; C3 first met 147.4s; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The dissection progresses from an initial state where anatomical landmarks are fully obscured to a state of partial exposure. L2 (per-criterion progression): C1 is first met at 88.0s when the two tubular structures at the gallbladder neck are isolated; C2 is first met at 108.0s once the hepatocystic triangle is cleared of fatty tissue; C3 is first met at 147.0s as the lower third of the gallbladder is mobilized from the cystic plate. L3 (CVS synthesis): Because these conditions are never maintained simultaneously, CVS is never achieved during the clip, and the final status is not achieved."
+                      "answer":  "C1 first met 18.0s; C2 first met 22.0s; C3 first met 30.0s; CVS never achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The dissection progresses from an initial state where anatomical landmarks are fully obscured to a state of partial exposure. L2 (per-criterion progression): C1 is first met at 18.0s when the two tubular structures at the gallbladder neck are isolated; C2 is first met at 22.0s once the hepatocystic triangle is cleared of fatty tissue; C3 is first met at 30.0s as the lower third of the gallbladder is mobilized from the cystic plate. L3 (CVS synthesis): Because these conditions are never maintained simultaneously, CVS is never achieved during the clip, and the final status is not achieved."
                   },
                   {
                       "item_id":  "CVS-05",
@@ -196,8 +196,8 @@
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video22",
                       "question":  "Can you describe how the three criteria for the Critical View of Safety (CVS) progress during this dissection, and what the final CVS status is at the end of the clip?",
-                      "answer":  "C1 first met 221.2s; C2 first met 486.6s; C3 first met 568.8s; CVS achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The dissection begins with an obscured hepatocystic region and progresses to temporarily achieve the CVS, before tissue shifting and manipulation obscure the landmarks at the end of the clip. L2 (per-criterion progression): Criterion C1 is first met at 224.0s when two and only two tubular structures are isolated at the gallbladder neck; C2 is first met at 489.0s when the hepatocystic triangle is cleared of fatty tissue; C3 is first met at 571.0s when the lower third of the gallbladder is separated to expose the cystic plate. L3 (CVS synthesis): The CVS is first achieved at 571.0s when all three criteria are met simultaneously, but it is not achieved in the final frame due to subsequent landmark obscuration."
+                      "answer":  "C1 first met 11.0s; C2 first met 24.0s; C3 first met 28.0s; CVS achieved; final: not achieved",
+                      "think":  "L1 (trajectory survey): The dissection begins with an obscured hepatocystic region and progresses to temporarily achieve the CVS, before tissue shifting and manipulation obscure the landmarks at the end of the clip. L2 (per-criterion progression): Criterion C1 is first met at 11.0s when two and only two tubular structures are isolated at the gallbladder neck; C2 is first met at 24.0s when the hepatocystic triangle is cleared of fatty tissue; C3 is first met at 28.0s when the lower third of the gallbladder is separated to expose the cystic plate. L3 (CVS synthesis): The CVS is first achieved at 28.0s when all three criteria are met simultaneously, but it is not achieved in the final frame due to subsequent landmark obscuration."
                   }
               ]
 }
