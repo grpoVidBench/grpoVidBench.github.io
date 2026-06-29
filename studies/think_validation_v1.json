@@ -168,24 +168,16 @@
                                           "context_zh":  "**时间动作定位（TAL）。** 模型观看了该片段，并被要求判断*某个特定手术阶段在何时发生*。它需要给出一个时间区间（起止，以秒为单位），并用三层推理加以论证。您需要验证两点：**答案（时间区间）是否正确**，以及**推理是否真正依据视频中可见的内容支持该答案**。\n\n**可编辑内容：** 此处可编辑模型的推理以及提示词的应当/不应当规则（本任务的时间区间答案为只读）。您的所有编辑都会随评审结果一并保存。",
                                           "steps":  [
                                                         "Play the clip and scrub to the highlighted window and its start/end edges.",
-                                                        "Read the question (which phase is asked about) and the model\u0027s answer (the time span).",
-                                                        "Decide whether the answer\u0027s start and end match what you actually see.",
-                                                        "Read the model\u0027s reasoning and check each level against the pinned guide - L1 visible onset cue, L2 boundary contrast, L3 phase-order check.",
-                                                        "Open the collapsible \u0027Prompt rules\u0027 panel and check the reasoning obeys the DO / DON\u0027T.",
-                                                        "Rate every question below (faithfulness, logic, L1/L2/L3 correctness, overall, main error), and add a comment under any rating where it helps.",
-                                                        "Edit the model\u0027s reasoning directly in its box to fix anything wrong (use \u0027Reset to original\u0027 to undo). The time-span answer is read-only for this task - note any answer error in a comment.",
-                                                        "You can also edit the DO / DON\u0027T text in the \u0027Prompt rules\u0027 panel. Every edit is saved with your response.",
+                                                        "Read the question and the model\u0027s answer (the time span), and decide whether its start and end match what you actually see.",
+                                                        "Read the model\u0027s reasoning against the pinned guide (L1 visible onset cue, L2 boundary contrast, L3 phase-order check), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T.",
+                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes); the time-span answer is read-only, so note any answer error in a comment. Every edit is saved with your response.",
                                                         "If you cannot assess this clip, click \u0027Skip this item\u0027."
                                                     ],
                                           "steps_zh":  [
                                                            "播放片段，并拖动到高亮区间及其起止边界处。",
-                                                           "阅读问题（询问的是哪个阶段）和模型的答案（时间区间）。",
-                                                           "判断答案的起点和终点是否与您实际看到的相符。",
-                                                           "阅读模型的推理，并对照固定显示的层级说明逐层检查——L1 可见的起始线索，L2 边界对比，L3 阶段顺序确认。",
-                                                           "展开可折叠的「提示词规则」面板，检查推理是否遵守应当/不应当。",
-                                                           "对下方每个问题评分（忠实度、逻辑、L1/L2/L3 是否正确、总体、主要错误），并在需要时在任意评分下添加备注。",
-                                                           "直接在文本框中编辑模型的推理以更正任何错误（点击「恢复原文」可撤销）。本任务的时间区间答案为只读——如有答案错误请在备注中说明。",
-                                                           "您也可以在「提示词规则」面板中编辑应当/不应当文本。所有编辑都会随评审结果一并保存。",
+                                                           "阅读问题和模型的答案（时间区间），判断其起点和终点是否与您实际看到的相符。",
+                                                           "对照固定显示的层级说明阅读模型的推理（L1 可见的起始线索，L2 边界对比，L3 阶段顺序确认），然后展开「提示词规则」面板，检查其是否遵守应当/不应当。",
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及应当/不应当文本（点击「恢复原文」可撤销）；时间区间答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。",
                                                            "若您无法评估该片段，请点击「跳过该条目」。"
                                                        ]
                                       },
@@ -194,24 +186,16 @@
                                           "context_zh":  "**下一步动作预测（NAP）。** 模型观看了该片段，并被要求*预测片段结束后接下来的手术阶段*。它需要指出下一阶段，并用三层推理加以论证。您需要验证**预测的下一阶段是否正确**，以及**推理是否正确解读了片段的结尾**来得出该结论。\n\n**可编辑内容：** 此处可编辑模型的推理以及提示词的应当/不应当规则（本任务的预测阶段答案为只读）。您的所有编辑都会随评审结果一并保存。",
                                           "steps":  [
                                                         "Play the clip, paying close attention to the FINAL seconds (the phase in progress at the end).",
-                                                        "Read the question and the model\u0027s predicted next phase (the answer).",
-                                                        "Decide whether that is the correct next phase given the clip\u0027s ending state.",
-                                                        "Read the model\u0027s reasoning - L1 phase in progress at the clip\u0027s end, L2 evidence its objective is essentially complete, L3 procedural-order logic to the next phase.",
-                                                        "Open the collapsible \u0027Prompt rules\u0027 panel and check the reasoning obeys the DO / DON\u0027T (the current phase must be read from the END, not early-clip activity).",
-                                                        "Rate every question below, and add a comment under any rating where it helps.",
-                                                        "Edit the model\u0027s reasoning directly in its box to fix anything wrong (use \u0027Reset to original\u0027 to undo). The predicted-phase answer is read-only for this task - note any answer error in a comment.",
-                                                        "You can also edit the DO / DON\u0027T text in the \u0027Prompt rules\u0027 panel. Every edit is saved with your response.",
+                                                        "Read the question and the model\u0027s predicted next phase, and decide whether it is correct given the clip\u0027s ending state.",
+                                                        "Read the model\u0027s reasoning (L1 phase in progress at the end, L2 evidence its objective is essentially complete, L3 procedural-order logic), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T (read the current phase from the END, not early-clip activity).",
+                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes); the predicted-phase answer is read-only, so note any answer error in a comment. Every edit is saved with your response.",
                                                         "If you cannot assess this clip, click \u0027Skip this item\u0027."
                                                     ],
                                           "steps_zh":  [
                                                            "播放片段，特别留意最后几秒（结尾处正在进行的阶段）。",
-                                                           "阅读问题和模型预测的下一阶段（答案）。",
-                                                           "根据片段结尾的状态，判断这是否为正确的下一阶段。",
-                                                           "阅读模型的推理——L1 片段结尾正在进行的阶段，L2 该阶段目标基本完成的证据，L3 通向下一阶段的流程顺序逻辑。",
-                                                           "展开可折叠的「提示词规则」面板，检查推理是否遵守应当/不应当（当前阶段必须依据结尾判断，而非片段早期的操作）。",
-                                                           "对下方每个问题评分，并在需要时在任意评分下添加备注。",
-                                                           "直接在文本框中编辑模型的推理以更正任何错误（点击「恢复原文」可撤销）。本任务的预测阶段答案为只读——如有答案错误请在备注中说明。",
-                                                           "您也可以在「提示词规则」面板中编辑应当/不应当文本。所有编辑都会随评审结果一并保存。",
+                                                           "阅读问题和模型预测的下一阶段，根据片段结尾的状态判断其是否正确。",
+                                                           "阅读模型的推理（L1 片段结尾正在进行的阶段，L2 该阶段目标基本完成的证据，L3 通向下一阶段的流程顺序逻辑），然后展开「提示词规则」面板，检查其是否遵守应当/不应当（当前阶段必须依据结尾判断，而非片段早期的操作）。",
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及应当/不应当文本（点击「恢复原文」可撤销）；预测阶段答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。",
                                                            "若您无法评估该片段，请点击「跳过该条目」。"
                                                        ]
                                       },
@@ -220,24 +204,16 @@
                                           "context_zh":  "**密集视频描述（DVC）。** 模型观看了该片段，并被要求*将其划分为多个阶段时间段*——为每段给出 [起始, 结束] 时间和简短描述——并用三层推理论证该划分。您需要验证**各时间段、其边界及描述是否正确**，以及推理是否支持它们。\n\n**可编辑内容：** 此处可编辑模型的答案（时间段列表）、推理以及提示词的应当/不应当规则。您的所有编辑都会随评审结果一并保存。",
                                           "steps":  [
                                                         "Play the clip and note which phases appear and roughly when they change.",
-                                                        "Read the model\u0027s answer - the list of segments with their times and descriptions.",
-                                                        "Check the segments are correct, contiguous and non-overlapping, with none invented or missing.",
-                                                        "Read the model\u0027s reasoning - L1 enumerates the phases in order, L2 justifies each boundary by a visible transition cue, L3 gives a one-line headline per segment.",
-                                                        "Open the collapsible \u0027Prompt rules\u0027 panel and check the reasoning obeys the DO / DON\u0027T.",
-                                                        "Rate every question below, and add a comment under any rating where it helps.",
-                                                        "Edit the model\u0027s ANSWER (segment list, times, descriptions) AND its reasoning directly in their boxes to fix anything wrong (use \u0027Reset to original\u0027 to undo).",
-                                                        "You can also edit the DO / DON\u0027T text in the \u0027Prompt rules\u0027 panel. Every edit is saved with your response.",
+                                                        "Read the model\u0027s answer (the segment list with times and descriptions) and check the segments are correct, contiguous and non-overlapping, with none invented or missing.",
+                                                        "Read the model\u0027s reasoning (L1 enumerates the phases in order, L2 justifies each boundary by a visible transition cue, L3 a one-line headline per segment), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T.",
+                                                        "Rate every question below and add comments where they help. You can edit the ANSWER (segments, times, descriptions), the reasoning, and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes). Every edit is saved with your response.",
                                                         "If you cannot assess this clip, click \u0027Skip this item\u0027."
                                                     ],
                                           "steps_zh":  [
                                                            "播放片段，留意出现了哪些阶段以及它们大致何时切换。",
-                                                           "阅读模型的答案——包含各时间段及其时间和描述的列表。",
-                                                           "检查各时间段是否正确、连续且不重叠，没有臆造或遗漏。",
-                                                           "阅读模型的推理——L1 按顺序枚举各阶段，L2 通过可见的转换线索论证每个边界，L3 为每段给出一句标题。",
-                                                           "展开可折叠的「提示词规则」面板，检查推理是否遵守应当/不应当。",
-                                                           "对下方每个问题评分，并在需要时在任意评分下添加备注。",
-                                                           "直接在文本框中编辑模型的【答案】（时间段列表、时间、描述）以及其推理以更正任何错误（点击「恢复原文」可撤销）。",
-                                                           "您也可以在「提示词规则」面板中编辑应当/不应当文本。所有编辑都会随评审结果一并保存。",
+                                                           "阅读模型的答案（含各时间段及其时间和描述的列表），检查各时间段是否正确、连续且不重叠，没有臆造或遗漏。",
+                                                           "阅读模型的推理（L1 按顺序枚举各阶段，L2 通过可见的转换线索论证每个边界，L3 为每段给出一句标题），然后展开「提示词规则」面板，检查其是否遵守应当/不应当。",
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑【答案】（时间段列表、时间、描述）、推理以及应当/不应当文本（点击「恢复原文」可撤销）。所有编辑都会随评审结果一并保存。",
                                                            "若您无法评估该片段，请点击「跳过该条目」。"
                                                        ]
                                       },
@@ -246,24 +222,16 @@
                                          "context_zh":  "**视频总结（VS）。** 模型观看了该片段，并被要求用一段简短文字*总结整个手术过程*（不含逐段时间戳），并用三层推理加以论证。您需要验证**总结是否忠实、完整、表述恰当**，以及推理是否支持它。\n\n**可编辑内容：** 此处可编辑模型的答案（总结）、推理以及提示词的应当/不应当规则。您的所有编辑都会随评审结果一并保存。",
                                          "steps":  [
                                                        "Play the whole clip to get its overall arc.",
-                                                       "Read the model\u0027s summary (the answer).",
-                                                       "Check it is factually correct, covers the main surgical activities, omits nothing important, and invents nothing.",
-                                                       "Read the model\u0027s reasoning - L1 surveys the arc, L2 separates the salient actions from minor/repeated ones, L3 compresses to the final summary.",
-                                                       "Open the collapsible \u0027Prompt rules\u0027 panel and check the reasoning obeys the DO / DON\u0027T.",
-                                                       "Rate every question below, and add a comment under any rating where it helps.",
-                                                       "Edit the model\u0027s SUMMARY (the answer) AND its reasoning directly in their boxes - rewrite anything wrong (use \u0027Reset to original\u0027 to undo).",
-                                                       "You can also edit the DO / DON\u0027T text in the \u0027Prompt rules\u0027 panel. Every edit is saved with your response.",
+                                                       "Read the model\u0027s summary (the answer) and check it is factually correct, covers the main surgical activities, omits nothing important, and invents nothing.",
+                                                       "Read the model\u0027s reasoning (L1 surveys the arc, L2 separates the salient actions from minor/repeated ones, L3 compresses to the final summary), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T.",
+                                                       "Rate every question below and add comments where they help. You can edit the SUMMARY (the answer), the reasoning, and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes). Every edit is saved with your response.",
                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
                                                    ],
                                          "steps_zh":  [
                                                           "完整播放片段，了解其整体过程。",
-                                                          "阅读模型的总结（答案）。",
-                                                          "检查其是否事实正确、涵盖主要手术操作、无重要遗漏、且无臆造。",
-                                                          "阅读模型的推理——L1 梳理整体过程，L2 将显著操作与次要/重复操作区分开，L3 压缩为最终总结。",
-                                                          "展开可折叠的「提示词规则」面板，检查推理是否遵守应当/不应当。",
-                                                          "对下方每个问题评分，并在需要时在任意评分下添加备注。",
-                                                          "直接在文本框中编辑模型的【总结】（答案）以及其推理——重写任何有误之处（点击「恢复原文」可撤销）。",
-                                                          "您也可以在「提示词规则」面板中编辑应当/不应当文本。所有编辑都会随评审结果一并保存。",
+                                                          "阅读模型的总结（答案），检查其是否事实正确、涵盖主要手术操作、无重要遗漏、且无臆造。",
+                                                          "阅读模型的推理（L1 梳理整体过程，L2 将显著操作与次要/重复操作区分开，L3 压缩为最终总结），然后展开「提示词规则」面板，检查其是否遵守应当/不应当。",
+                                                          "对下方每个问题评分并在需要时添加备注。您可以直接编辑【总结】（答案）、推理以及应当/不应当文本（点击「恢复原文」可撤销）。所有编辑都会随评审结果一并保存。",
                                                           "若您无法评估该片段，请点击「跳过该条目」。"
                                                       ]
                                      }
