@@ -5,3 +5,6 @@
 *.jpg
 *.jpeg
 *.png
+
+# Large raw frame archive (~1.5GB) — not served; keep out of the repo.
+*.tar
