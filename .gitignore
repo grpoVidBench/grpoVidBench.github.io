@@ -1,0 +1,7 @@
+# Video frame images (JPG/PNG) extracted per clip. The clips are served via
+# media_url (native <video>), so these per-frame images are not needed in the
+# repo. They are regenerable from the source videos. Ignore repo-wide so they
+# are never re-committed; use `git add -f` if you ever need to track one.
+*.jpg
+*.jpeg
+*.png
