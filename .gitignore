@@ -8,3 +8,8 @@
 
 # Large raw frame archive (~1.5GB) — not served; keep out of the repo.
 *.tar
+
+# Raw extracted frame source (~1GB of per-clip JPG/PNG + the source CSVs). The
+# clips are encoded to mp4 under Videos/cholect50 and Videos/endoscapes; this
+# nested source tree is the input to the generators, not served at runtime.
+Videos/user_study_frames/
