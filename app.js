@@ -456,9 +456,13 @@
     const slider = el("input", { type: "range", min: "0", max: "0", value: "0", step: "1" });
     const scrubWrap = el("div", { class: "scrub-wrap" }, [markers, slider]);
     const speedBox = el("div", { class: "speed" });
-    const speeds = [0.5, 1, 2, 4];
-    const speedBtns = speeds.map((sp) => el("button", { text: sp + "×", onclick: () => setSpeed(sp) }));
-    speedBtns.forEach((b) => speedBox.appendChild(b));
+    let speeds = [0.5, 1, 2, 4];
+    let speedBtns = [];
+    function buildSpeeds(arr) {
+      speeds = arr; clear(speedBox); speedBtns = [];
+      speeds.forEach((sp) => { const b = el("button", { text: sp + "×", onclick: () => setSpeed(sp) }); speedBtns.push(b); speedBox.appendChild(b); });
+    }
+    buildSpeeds(speeds);
     const note = el("div", { class: "player-note" });
     const lengthLabel = el("span", { class: "clip-len" });
     const controls = el("div", { class: "controls" }, [
@@ -474,7 +478,8 @@
     const toVid = (s) => normalized ? s * duration : (s - mediaStart) / srcPerVid();
     const fmt = (s) => normalized ? s.toFixed(2) + " · t" : s.toFixed(1) + " s";
     function setBuffering(on) { overlay.classList.toggle("show", on); overlay.classList.remove("error"); overlay.textContent = tr("buffering…"); }
-    function setSpeed(sp) { video.playbackRate = sp; speedBtns.forEach((b, k) => b.classList.toggle("active", speeds[k] === sp)); }
+    let curSpeed = 1;
+    function setSpeed(sp) { curSpeed = sp; video.playbackRate = sp; try { video.defaultPlaybackRate = sp; } catch (e) {} speedBtns.forEach((b, k) => b.classList.toggle("active", speeds[k] === sp)); }
     function updateUI() {
       const s = Math.max(lo, Math.min(hi, toSrc(video.currentTime)));
       slider.value = String(normalized ? s : Math.round(s));
@@ -516,10 +521,18 @@
         mediaFps = m.media_fps || 5; mediaStart = m.media_start || 0; nativeFps = m.native_fps || 1;
         lo = (opts.clipStart != null) ? opts.clipStart : (normalized ? 0 : mediaStart);
         hi = (opts.clipEnd != null) ? opts.clipEnd : (normalized ? 1 : null);
-        setSpeed(1);
+        // Default playback speed ~ 1 / sampling_fps so the clip shows about one frame per second
+        // (fps 1 -> 1x, 0.5 -> 2x, 0.2 -> 5x, 0.1 -> 10x); the reviewer can still change it.
+        const sfps = (typeof m.sampling_fps === "number" && m.sampling_fps > 0) ? m.sampling_fps : null;
+        let defSpeed = sfps ? 1 / sfps : 1;
+        defSpeed = defSpeed >= 1 ? Math.round(defSpeed) : Math.round(defSpeed * 4) / 4;
+        defSpeed = Math.max(0.25, Math.min(16, defSpeed));
+        buildSpeeds(Array.from(new Set([0.5, 1, 2, 4, defSpeed])).filter((s) => s >= 0.25 && s <= 16).sort((a, b) => a - b));
+        setSpeed(defSpeed);
         video.addEventListener("loadedmetadata", () => {
           if (destroyed) return;
           duration = video.duration || 0;
+          try { video.playbackRate = curSpeed; } catch (e) {}   // re-apply default speed after metadata load
           if (hi == null) hi = toSrc(video.duration);
           if (normalized) { slider.min = String(lo); slider.max = String(hi); slider.step = "0.01"; }
           else { slider.min = String(Math.floor(lo)); slider.max = String(Math.ceil(hi)); }
