@@ -1,4 +1,4 @@
-/* grpoVidBench — lightweight i18n (English / Simplified Chinese).
+/* MedVidBench — lightweight i18n (English / Simplified Chinese).
  * No dependencies. Language is persisted per-browser and a toggle button
  * (EN / 中文) is mounted in the top bar. UI strings and reviewer-facing
  * instructions are translated via the MAP below; the model's outputs under

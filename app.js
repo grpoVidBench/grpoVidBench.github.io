@@ -1,4 +1,4 @@
-/* grpoVidBench — study runner
+/* MedVidBench — study runner
    Generic, JSON-driven renderer for the three reviewer studies.
    Vanilla JS, no build step. All paths relative. */
 (function () {
