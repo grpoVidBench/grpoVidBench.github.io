@@ -35,6 +35,10 @@
     "Enter your initials or email to begin, then pick a task. It is saved in this browser and reused for every task.":
       "请输入您的姓名缩写或邮箱后开始，然后选择一个任务。该信息会保存在本浏览器中，并在每个任务中复用。",
     "Save": "保存",
+    "You have answers saved as \"{id}\" for {n} task(s). They stay saved under that name — switching just shows a different reviewer. Switch now?":
+      "您以「{id}」保存了 {n} 个任务的答案。这些答案仍以该名称保存——切换只是显示另一位评审者。现在切换吗？",
+    "Your answers are saved under \"{id}\". They stay saved — switching just shows a different reviewer. Switch now?":
+      "您的答案以「{id}」保存。这些答案仍会保留——切换只是显示另一位评审者。现在切换吗？",
     "{n} clips": "{n} 个片段",
     "1 clip": "1 个片段",
 

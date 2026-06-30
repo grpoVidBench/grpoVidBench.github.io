@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>grpoVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=25" />
+  <link rel="stylesheet" href="./styles.css?v=26" />
 </head>
 <body>
   <header class="topbar">
@@ -28,7 +28,7 @@
     <div id="error" class="banner warn" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=25"></script>
+  <script src="./i18n.js?v=26"></script>
   <script>
     (function () {
       var I = window.I18N;
@@ -64,7 +64,13 @@
           change.className = 'linklike';
           change.style.marginLeft = '10px';
           change.textContent = I.tr('change');
-          change.addEventListener('click', function () { setReviewer(''); renderLogin(); renderTasks(); });
+          change.addEventListener('click', function () {
+            // If this name already has saved answers, make clear the work is kept
+            // (parked under this name), not lost — switching just shows a fresh set.
+            var saved = savedTaskCount(id);
+            if (saved > 0 && !confirm(I.tf('You have answers saved as "{id}" for {n} task(s). They stay saved under that name — switching just shows a different reviewer. Switch now?', { id: id, n: saved }))) return;
+            setReviewer(''); renderLogin(); renderTasks();
+          });
           line.appendChild(who); line.appendChild(change);
           loginBox.appendChild(line);
           return;
@@ -110,6 +116,7 @@
         if (!tasks.length) { list.innerHTML = '<p class="muted">—</p>'; return; }
         var loggedIn = !!getReviewer();
         list.classList.toggle('is-locked', !loggedIn);
+        var reviewer = getReviewer();
         tasks.forEach(function (t) {
           var a = document.createElement('a');
           a.className = 'study-link';
@@ -117,10 +124,25 @@
           a.innerHTML =
             '<span class="study-num task-num"></span>' +
             '<span><span class="t"></span> <span class="s"></span></span>' +
+            '<span class="status"></span>' +
             '<span class="arrow">→</span>';
           a.querySelector('.task-num').textContent = t.task;
           a.querySelector('.t').textContent = I.taskName(t.task);
           a.querySelector('.s').textContent = (t.count === 1) ? I.tr('1 clip') : I.tf('{n} clips', { n: t.count });
+
+          // completion badge for the logged-in reviewer: done = check, partial = (d/t)
+          var prog = taskProgress(t, reviewer);
+          var statusEl = a.querySelector('.status');
+          if (prog.done >= prog.total && prog.total > 0 && reviewer) {
+            a.classList.add('is-done');
+            statusEl.classList.add('badge', 'badge-done');
+            statusEl.textContent = '✓ ' + I.tr('Done');
+          } else if (prog.done > 0) {
+            a.classList.add('is-partial');
+            statusEl.classList.add('badge', 'badge-partial');
+            statusEl.textContent = prog.done + ' / ' + prog.total;
+          }
+
           // Until an ID is entered, steer the click to the login field instead of
           // navigating. (Deep links still work — app.js falls back to an inline field.)
           if (!loggedIn) {
@@ -135,11 +157,13 @@
       }
 
       // Build the task list by grouping every study's items by their "task" field.
+      // We keep the items and the study's dimensions so the front page can compute
+      // each task's completion straight from the saved state (see taskProgress).
       function buildTasks(studies) {
         return Promise.all(studies.map(function (s) {
           return fetch('./studies/' + s.study_id + '.json', { cache: 'no-store' })
             .then(function (r) { return r.ok ? r.json() : null; })
-            .then(function (cfg) { return cfg ? { study_id: s.study_id, items: cfg.items || [] } : null; })
+            .then(function (cfg) { return cfg ? { study_id: s.study_id, items: cfg.items || [], dimensions: cfg.dimensions || [] } : null; })
             .catch(function () { return null; });
         })).then(function (loaded) {
           var order = [];
@@ -147,12 +171,52 @@
           loaded.filter(Boolean).forEach(function (st) {
             st.items.forEach(function (it) {
               var tk = it.task || it.group || 'OTHER';
-              if (!byTask[tk]) { byTask[tk] = { task: tk, study_id: st.study_id, count: 0 }; order.push(byTask[tk]); }
+              if (!byTask[tk]) { byTask[tk] = { task: tk, study_id: st.study_id, count: 0, items: [], dimensions: st.dimensions }; order.push(byTask[tk]); }
               byTask[tk].count++;
+              byTask[tk].items.push(it);
             });
           });
           return order;
         });
+      }
+
+      // ---- per-task progress, read from the same saved state app.js writes ----
+      // Mirrors app.js itemComplete/dimVisible/dimRequired so the two never disagree.
+      function dimVisible(dim, item) {
+        if (!dim.requires_field) return true;
+        var v = item[dim.requires_field];
+        return !(v == null || (typeof v === 'string' && v.trim() === ''));
+      }
+      function dimRequired(dim) { return !dim.optional; }
+      function itemComplete(item, dimensions, answers, skipped) {
+        if (skipped && skipped[item.item_id]) return true;
+        var ans = answers[item.item_id] || {};
+        return dimensions.every(function (dim) {
+          if (!dimVisible(dim, item) || !dimRequired(dim)) return true;
+          var v = ans[dim.id];
+          return v != null && String(v).trim() !== '';
+        });
+      }
+      function taskProgress(t, reviewer) {
+        var total = t.count, done = 0;
+        if (reviewer) {
+          var key = 'grpovidbench:' + t.study_id + ':' + t.task + ':' + reviewer;
+          var st = null;
+          try { var raw = localStorage.getItem(key); st = raw ? JSON.parse(raw) : null; } catch (e) {}
+          if (st) {
+            var answers = st.answers || {}, skipped = st.skipped || {};
+            t.items.forEach(function (it) { if (itemComplete(it, t.dimensions, answers, skipped)) done++; });
+          }
+        }
+        return { done: done, total: total };
+      }
+      // How many of the loaded tasks have any saved progress under this name —
+      // used to confirm before "change" so a switch doesn't read as data loss.
+      function savedTaskCount(reviewer) {
+        if (!tasks || !reviewer) return 0;
+        var n = 0;
+        tasks.forEach(function (t) { if (taskProgress(t, reviewer).done > 0) n++; });
+        return n;
       }
 
       I.mountToggle(document.querySelector('.topbar-inner'));

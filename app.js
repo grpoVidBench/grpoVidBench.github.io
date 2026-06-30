@@ -666,7 +666,14 @@
         who.appendChild(el("span", { class: "muted", text: tr("Reviewing as") + " " }));
         who.appendChild(el("strong", { text: storedReviewer }));
         const change = el("button", { class: "linklike", text: tr("change"), style: "margin-left:10px" });
-        change.addEventListener("click", () => { setReviewerId(""); renderIntro(); });
+        change.addEventListener("click", () => {
+          // The work is kept under this name, not deleted — confirm so a switch
+          // mid-study doesn't look like data loss.
+          const prior = loadState(study.study_id, taskFilter, storedReviewer);
+          const hasProgress = !!(prior && prior.answers && Object.keys(prior.answers).length);
+          if (hasProgress && !confirm(tf('Your answers are saved under "{id}". They stay saved — switching just shows a different reviewer. Switch now?', { id: storedReviewer }))) return;
+          setReviewerId(""); renderIntro();
+        });
         who.appendChild(change);
         field.appendChild(who);
       } else {
