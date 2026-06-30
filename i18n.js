@@ -18,7 +18,7 @@
   var MAP = {
     // ---- top bar / picker ----
     "clinician review": "临床医生评审",
-    "CholecT50 · surgical video reasoning": "CholecT50 · 外科手术视频推理",
+    "Surgical video reasoning": "外科手术视频推理",
     "Reviewer studies": "评审研究",
     "Review tasks": "评审任务",
     "Choose a study to review": "选择要评审的研究",
