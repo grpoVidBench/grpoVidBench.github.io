@@ -636,8 +636,16 @@
     progressWrap.style.display = "none";
     const card = el("div", { class: "card narrow" });
     const ti = (taskFilter && study.task_instructions) ? study.task_instructions[taskFilter] : null;
-    card.appendChild(el("p", { class: "eyebrow", text: taskFilter ? taskLabel(taskFilter) : studyTypeLabel() }));
-    card.appendChild(el("h1", { text: L(study, "title") || study.study_id }));
+    // When reviewing a single task, make the TASK NAME the headline (it's what the
+    // reviewer needs to recognize); the study title becomes the small eyebrow above.
+    // Without a task filter, fall back to the study type + study title.
+    if (taskFilter) {
+      card.appendChild(el("p", { class: "eyebrow", text: L(study, "title") || study.study_id }));
+      card.appendChild(el("h1", { text: taskLabel(taskFilter) }));
+    } else {
+      card.appendChild(el("p", { class: "eyebrow", text: studyTypeLabel() }));
+      card.appendChild(el("h1", { text: L(study, "title") || study.study_id }));
+    }
     if (ti) {
       // elaborate, task-specific briefing: context + a "what to do" checklist
       card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(ti, "context")) }));
