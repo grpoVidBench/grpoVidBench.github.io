@@ -4,6 +4,7 @@
     "native_fps":  1,
     "timeline":  "seconds",
     "duration_seconds":  132,
+    "sampling_fps":  1,
     "media_url":  "./Videos/cholect50/TAL__VID04_1241_1373_1_0/clip.mp4",
     "media_fps":  0.9925,
     "media_start":  0,

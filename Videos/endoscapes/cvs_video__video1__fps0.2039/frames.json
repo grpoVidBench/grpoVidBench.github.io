@@ -1,0 +1,13 @@
+{
+    "video_id":  "cvs_video__video1__fps0.2039",
+    "dataset":  "endoscapes",
+    "native_fps":  1,
+    "timeline":  "seconds",
+    "duration_seconds":  160,
+    "sampling_fps":  0.2039,
+    "media_url":  "./Videos/endoscapes/cvs_video__video1__fps0.2039/clip.mp4",
+    "media_fps":  1,
+    "media_start":  0,
+    "default_playback_fps":  5,
+    "dir":  "./Videos/endoscapes/cvs_video__video1__fps0.2039/"
+}
