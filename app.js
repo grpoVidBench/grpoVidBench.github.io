@@ -96,6 +96,18 @@
   function storageKey(studyId, task, reviewer) {
     return "grpovidbench:" + studyId + (task ? ":" + task : "") + ":" + (reviewer || "_");
   }
+  // Reviewer identity is entered once (on the front page) and shared across all
+  // tasks via this single browser-wide key, so each task doesn't re-prompt.
+  var REVIEWER_KEY = "grpovidbench:reviewer";
+  function getReviewerId() {
+    try { return (localStorage.getItem(REVIEWER_KEY) || "").trim(); } catch (e) { return ""; }
+  }
+  function setReviewerId(v) {
+    try {
+      v = (v || "").trim();
+      if (v) localStorage.setItem(REVIEWER_KEY, v); else localStorage.removeItem(REVIEWER_KEY);
+    } catch (e) { /* ignore quota errors */ }
+  }
   function loadState(studyId, task, reviewer) {
     try { const r = localStorage.getItem(storageKey(studyId, task, reviewer)); return r ? JSON.parse(r) : null; }
     catch (e) { return null; }
@@ -642,25 +654,40 @@
       card.appendChild(el("div", { class: "prose", html: renderMarkdown(L(study, "context_md")) }));
     }
 
+    // Reviewer identity is normally entered once on the front page and stored
+    // browser-wide. Here we just confirm it; only if it's missing (e.g. someone
+    // deep-linked straight to this task) do we fall back to an inline field.
     let reviewerInput = null;
+    const storedReviewer = getReviewerId();
     if (study.require_reviewer_id) {
       const field = el("div", { style: "margin-top:18px" });
-      field.appendChild(el("label", { for: "reviewer", text: tr("Your initials or email (for de-duplication)") }));
-      reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: tr("e.g. SG or you@hospital.org"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
-      reviewerInput.value = introReviewerDraft;
-      reviewerInput.addEventListener("input", () => { introReviewerDraft = reviewerInput.value; });
-      field.appendChild(reviewerInput);
+      if (storedReviewer) {
+        const who = el("div", { class: "reviewer-id-line" });
+        who.appendChild(el("span", { class: "muted", text: tr("Reviewing as") + " " }));
+        who.appendChild(el("strong", { text: storedReviewer }));
+        const change = el("button", { class: "linklike", text: tr("change"), style: "margin-left:10px" });
+        change.addEventListener("click", () => { setReviewerId(""); renderIntro(); });
+        who.appendChild(change);
+        field.appendChild(who);
+      } else {
+        field.appendChild(el("label", { for: "reviewer", text: tr("Your initials or email (for de-duplication)") }));
+        reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: tr("e.g. SG or you@hospital.org"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
+        reviewerInput.value = introReviewerDraft;
+        reviewerInput.addEventListener("input", () => { introReviewerDraft = reviewerInput.value; });
+        field.appendChild(reviewerInput);
+      }
       card.appendChild(field);
     }
 
     const btn = el("button", { class: "btn btn-primary", text: tr("Begin review"), style: "margin-top:20px" });
     const errLine = el("div", { class: "banner warn", style: "display:none;margin-top:14px" });
     btn.addEventListener("click", () => {
-      const reviewer = reviewerInput ? reviewerInput.value.trim() : "anonymous";
+      const reviewer = storedReviewer || (reviewerInput ? reviewerInput.value.trim() : "anonymous");
       if (study.require_reviewer_id && !reviewer) {
         errLine.style.display = "block"; errLine.textContent = tr("Please enter your initials or email to begin.");
         return;
       }
+      if (study.require_reviewer_id && !storedReviewer) setReviewerId(reviewer);   // remember for the other tasks
       beginSession(reviewer);
     });
     card.appendChild(btn);

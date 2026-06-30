@@ -29,6 +29,12 @@
       "选择一个任务以逐条评审其片段。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
     "Loading studies…": "正在加载研究…",
     "Loading tasks…": "正在加载任务…",
+    "Reviewing as": "评审者",
+    "change": "更改",
+    "Signed in as": "已登录为",
+    "Enter your initials or email to begin, then pick a task. It is saved in this browser and reused for every task.":
+      "请输入您的姓名缩写或邮箱后开始，然后选择一个任务。该信息会保存在本浏览器中，并在每个任务中复用。",
+    "Save": "保存",
     "{n} clips": "{n} 个片段",
     "1 clip": "1 个片段",
 

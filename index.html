@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>grpoVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=24" />
+  <link rel="stylesheet" href="./styles.css?v=25" />
 </head>
 <body>
   <header class="topbar">
@@ -20,19 +20,78 @@
     <h1 id="pk-h1">Choose a task to review</h1>
     <p class="lead" id="pk-lead">Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.</p>
 
+    <div id="login" class="login-card"></div>
+
     <div id="task-list" class="study-grid">
       <div class="center-load"><div class="spinner"></div><span id="pk-loading">Loading tasks…</span></div>
     </div>
     <div id="error" class="banner warn" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=24"></script>
+  <script src="./i18n.js?v=25"></script>
   <script>
     (function () {
       var I = window.I18N;
       var list = document.getElementById('task-list');
       var err = document.getElementById('error');
+      var loginBox = document.getElementById('login');
       var tasks = null;   // [{ task, study_id, count }]
+
+      // Reviewer identity, entered once here and shared with every task via the
+      // same browser-wide key app.js reads. Mirrors i18n's storage convention.
+      var REVIEWER_KEY = 'grpovidbench:reviewer';
+      function getReviewer() {
+        try { return (localStorage.getItem(REVIEWER_KEY) || '').trim(); } catch (e) { return ''; }
+      }
+      function setReviewer(v) {
+        try {
+          v = (v || '').trim();
+          if (v) localStorage.setItem(REVIEWER_KEY, v); else localStorage.removeItem(REVIEWER_KEY);
+        } catch (e) {}
+      }
+
+      function renderLogin() {
+        loginBox.innerHTML = '';
+        var id = getReviewer();
+        if (id) {
+          var line = document.createElement('div');
+          line.className = 'login-signedin';
+          var who = document.createElement('span');
+          who.innerHTML = '<span class="muted"></span> <strong></strong>';
+          who.querySelector('.muted').textContent = I.tr('Signed in as');
+          who.querySelector('strong').textContent = id;
+          var change = document.createElement('button');
+          change.className = 'linklike';
+          change.style.marginLeft = '10px';
+          change.textContent = I.tr('change');
+          change.addEventListener('click', function () { setReviewer(''); renderLogin(); renderTasks(); });
+          line.appendChild(who); line.appendChild(change);
+          loginBox.appendChild(line);
+          return;
+        }
+        var lab = document.createElement('label');
+        lab.setAttribute('for', 'login-id');
+        lab.textContent = I.tr('Your initials or email (for de-duplication)');
+        var row = document.createElement('div');
+        row.className = 'login-row';
+        var input = document.createElement('input');
+        input.type = 'text'; input.id = 'login-id'; input.autocomplete = 'off';
+        input.placeholder = I.tr('e.g. SG or you@hospital.org');
+        var save = document.createElement('button');
+        save.className = 'btn btn-primary'; save.textContent = I.tr('Save');
+        function commit() {
+          var v = input.value.trim();
+          if (!v) { input.focus(); return; }
+          setReviewer(v); renderLogin(); renderTasks();
+        }
+        save.addEventListener('click', commit);
+        input.addEventListener('keydown', function (e) { if (e.key === 'Enter') commit(); });
+        var hint = document.createElement('p');
+        hint.className = 'muted login-hint';
+        hint.textContent = I.tr('Enter your initials or email to begin, then pick a task. It is saved in this browser and reused for every task.');
+        row.appendChild(input); row.appendChild(save);
+        loginBox.appendChild(lab); loginBox.appendChild(row); loginBox.appendChild(hint);
+      }
 
       function applyStatic() {
         document.getElementById('tb-sub').textContent = I.tr('clinician review');
@@ -49,6 +108,8 @@
         if (!tasks) return;
         list.innerHTML = '';
         if (!tasks.length) { list.innerHTML = '<p class="muted">—</p>'; return; }
+        var loggedIn = !!getReviewer();
+        list.classList.toggle('is-locked', !loggedIn);
         tasks.forEach(function (t) {
           var a = document.createElement('a');
           a.className = 'study-link';
@@ -60,6 +121,15 @@
           a.querySelector('.task-num').textContent = t.task;
           a.querySelector('.t').textContent = I.taskName(t.task);
           a.querySelector('.s').textContent = (t.count === 1) ? I.tr('1 clip') : I.tf('{n} clips', { n: t.count });
+          // Until an ID is entered, steer the click to the login field instead of
+          // navigating. (Deep links still work — app.js falls back to an inline field.)
+          if (!loggedIn) {
+            a.addEventListener('click', function (e) {
+              e.preventDefault();
+              var inp = document.getElementById('login-id');
+              if (inp) { inp.focus(); inp.scrollIntoView({ block: 'center' }); }
+            });
+          }
           list.appendChild(a);
         });
       }
@@ -86,8 +156,9 @@
       }
 
       I.mountToggle(document.querySelector('.topbar-inner'));
-      I.onChange(function () { applyStatic(); renderTasks(); });
+      I.onChange(function () { applyStatic(); renderLogin(); renderTasks(); });
       applyStatic();
+      renderLogin();
 
       fetch('./studies/index.json', { cache: 'no-store' })
         .then(function (res) { if (!res.ok) throw new Error('index.json HTTP ' + res.status); return res.json(); })
