@@ -57,7 +57,9 @@
     "Designation (title)": "职称（头衔）",
     "optional": "选填",
     "e.g. Dr Jane Smith": "例如：张伟医生",
+    "e.g. you@hospital.org": "例如：you@hospital.org",
     "Please enter your full name to begin.": "请输入您的全名以开始。",
+    "Please enter your email to begin.": "请输入您的邮箱以开始。",
     "Enter your details to begin, then pick a task. They are saved in this browser and reused for every task.":
       "请填写您的信息后开始，然后选择一个任务。这些信息会保存在本浏览器中，并在每个任务中复用。",
     "Finish the study in the same browser and on the same device.": "请在同一浏览器和同一设备上完成本研究。",

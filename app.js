@@ -707,8 +707,8 @@
         who.appendChild(change);
         field.appendChild(who);
       } else {
-        field.appendChild(el("label", { for: "reviewer", text: tr("Full name") }));
-        reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: tr("e.g. Dr Jane Smith"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
+        field.appendChild(el("label", { for: "reviewer", text: tr("Email") }));
+        reviewerInput = el("input", { type: "email", id: "reviewer", placeholder: tr("e.g. you@hospital.org"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
         reviewerInput.value = introReviewerDraft;
         reviewerInput.addEventListener("input", () => { introReviewerDraft = reviewerInput.value; });
         field.appendChild(reviewerInput);
@@ -721,7 +721,7 @@
     btn.addEventListener("click", () => {
       const reviewer = storedReviewer || (reviewerInput ? reviewerInput.value.trim() : "anonymous");
       if (study.require_reviewer_id && !reviewer) {
-        errLine.style.display = "block"; errLine.textContent = tr("Please enter your full name to begin.");
+        errLine.style.display = "block"; errLine.textContent = tr("Please enter your email to begin.");
         return;
       }
       if (study.require_reviewer_id && !storedReviewer) setReviewerId(reviewer);   // remember for the other tasks
