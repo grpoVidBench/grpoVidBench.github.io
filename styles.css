@@ -176,9 +176,12 @@ p { margin: 0 0 12px; }
 .login-hint { font-size: 13px; margin: 10px 0 0; }
 
 /* stacked reviewer detail fields (full name + optional email / hospital / designation) */
-.login-fields { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+.login-fields {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px 20px; margin-bottom: 14px;
+}
 .login-field { display: flex; flex-direction: column; gap: 6px; }
-.login-field input { max-width: 420px; }
+.login-field input { width: 100%; }
 .login-field .opt-tag { font-weight: 400; color: var(--ink-soft); font-size: 13px; }
 .field-error { border-color: var(--danger) !important; box-shadow: 0 0 0 3px var(--danger-soft) !important; }
 
@@ -562,6 +565,9 @@ textarea.ctx-guide-edit { min-height: 168px; }
   .lang-toggle { margin-left: auto; }
 
   h1 { font-size: 24px; }
+
+  /* reviewer-details form: single column on phones (two columns on laptop) */
+  .login-fields { grid-template-columns: 1fr; }
 
   /* video controls: keep the scrubber row and the time/speed row readable */
   .player .controls { padding: 8px 10px; }

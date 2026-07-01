@@ -54,7 +54,7 @@
     "Full name": "全名",
     "Email": "邮箱",
     "Hospital / institution": "医院／机构",
-    "Designation (title)": "职称（头衔）",
+    "Designation (title)": "职位",
     "optional": "选填",
     "e.g. Dr Jane Smith": "例如：张伟医生",
     "e.g. you@hospital.org": "例如：you@hospital.org",
