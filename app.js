@@ -108,6 +108,16 @@
       if (v) localStorage.setItem(REVIEWER_KEY, v); else localStorage.removeItem(REVIEWER_KEY);
     } catch (e) { /* ignore quota errors */ }
   }
+  // Friendly display: "Name (email)". Name comes from the details the reviewer
+  // entered on the front page; the id itself is the email (the true identifier).
+  function reviewerName() {
+    try { return (JSON.parse(localStorage.getItem("grpovidbench:userdetails") || "{}").full_name || "").trim(); }
+    catch (e) { return ""; }
+  }
+  function reviewerLabel(id) {
+    const nm = reviewerName();
+    return nm ? (nm + " (" + id + ")") : id;
+  }
   function loadState(studyId, task, reviewer) {
     try { const r = localStorage.getItem(storageKey(studyId, task, reviewer)); return r ? JSON.parse(r) : null; }
     catch (e) { return null; }
@@ -691,7 +701,7 @@
       if (storedReviewer) {
         const who = el("div", { class: "reviewer-id-line" });
         who.appendChild(el("span", { class: "muted", text: tr("Reviewing as") + " " }));
-        who.appendChild(el("strong", { text: storedReviewer }));
+        who.appendChild(el("strong", { text: reviewerLabel(storedReviewer) }));
         const change = el("button", { class: "linklike", text: tr("change"), style: "margin-left:10px" });
         change.addEventListener("click", () => {
           // The work is kept under this name, not deleted — confirm so a switch

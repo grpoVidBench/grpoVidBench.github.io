@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MedVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=46" />
+  <link rel="stylesheet" href="./styles.css?v=47" />
 </head>
 <body>
   <header class="topbar">
@@ -39,7 +39,7 @@
     <div id="export" class="export-card" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=46"></script>
+  <script src="./i18n.js?v=47"></script>
   <script>
     (function () {
       var I = window.I18N;
@@ -93,7 +93,8 @@
           var who = document.createElement('span');
           who.innerHTML = '<span class="muted"></span> <strong></strong>';
           who.querySelector('.muted').textContent = I.tr('Signed in as');
-          who.querySelector('strong').textContent = (getDetails().full_name || '').trim() || id;
+          var nm = (getDetails().full_name || '').trim();
+          who.querySelector('strong').textContent = nm ? (nm + ' (' + id + ')') : id;
           var change = document.createElement('button');
           change.className = 'linklike';
           change.style.marginLeft = '10px';
