@@ -146,15 +146,7 @@
                    }
                ],
     "items":  [
-                  {
-                      "item_id":  "CVS-01",
-                      "task":  "CVS",
-                      "dataset":  "endoscapes",
-                      "video_id":  "cvs_video__video120__fps0.1",
-                      "question":  "How does the Critical View of Safety develop over this laparoscopic cholecystectomy dissection clip, and is CVS achieved in the final frame?",
-                      "answer":  "C1 first met never; C2 first met never; C3 first met never; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The clip starts with non-assessable dark views and then progresses into intermittent dissection around an inflamed gallbladder neck/hepatocystic region. Despite retraction and dissection, the field remains bloody, fibrofatty, and anatomically obscured. By the end, the Calot/gallbladder-neck region is still not cleanly exposed, so the overall trajectory does not reach CVS.\nL2 (per-criterion progression): C1 — TWO STRUCTURES: never met; at the gallbladder neck, there is no durable view confirming two and only two tubular structures entering the gallbladder as the cystic duct and cystic artery. C2 — HEPATOCYSTIC TRIANGLE CLEARED: never met; the Calot-triangle window remains obscured by blood, inflammation, fat, and fibrous tissue rather than being cleared. C3 — CYSTIC PLATE EXPOSED: never met; the gallbladder-liver-bed interface does not show the lower third of the gallbladder dissected off the cystic plate.\nL3 (CVS synthesis): Because C1, C2, and C3 are never simultaneously met, CVS is never achieved. In the final frame, CVS remains not achieved, limited by failure of all three criteria: no confirmed two-structure view, no cleared hepatocystic triangle, and no exposed cystic plate."
-                  },
+                  
                   {
                       "item_id":  "CVS-02",
                       "task":  "CVS",
