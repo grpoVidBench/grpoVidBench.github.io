@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MedVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=44" />
+  <link rel="stylesheet" href="./styles.css?v=45" />
 </head>
 <body>
   <header class="topbar">
@@ -39,7 +39,7 @@
     <div id="export" class="export-card" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=44"></script>
+  <script src="./i18n.js?v=45"></script>
   <script>
     (function () {
       var I = window.I18N;
@@ -123,6 +123,12 @@
             opt.className = 'opt-tag';
             opt.textContent = ' (' + I.tr('optional') + ')';
             lab.appendChild(opt);
+          } else {
+            var req = document.createElement('span');
+            req.className = 'req-mark';
+            req.setAttribute('aria-hidden', 'true');
+            req.textContent = ' *';
+            lab.appendChild(req);
           }
           var input = document.createElement('input');
           input.type = type || 'text'; input.autocomplete = 'off';

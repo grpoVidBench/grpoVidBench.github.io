@@ -183,6 +183,7 @@ p { margin: 0 0 12px; }
 .login-field { display: flex; flex-direction: column; gap: 6px; }
 .login-field input { width: 100%; }
 .login-field .opt-tag { font-weight: 400; color: var(--ink-soft); font-size: 13px; }
+.login-field .req-mark { color: var(--danger); font-weight: 700; }
 .field-error { border-color: var(--danger) !important; box-shadow: 0 0 0 3px var(--danger-soft) !important; }
 
 /* bold "same browser / same device" reminder on the landing page */
