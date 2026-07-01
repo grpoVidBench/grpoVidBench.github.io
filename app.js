@@ -1368,7 +1368,11 @@
   function setTitleBar() {
     if (!study) return;
     const base = L(study, "title") || study.study_id;
-    titleBar.textContent = taskFilter ? (I.taskName(taskFilter) + " · " + base) : base;
+    // On a task page show the task name plus a generic "clinician review" suffix;
+    // the dataset-specific study title (e.g. "CholecT50 reasoning —") is dropped as
+    // redundant since it already appears as the eyebrow on the intro card. Fall
+    // back to the full study title for the whole-study view (no task filter).
+    titleBar.textContent = taskFilter ? (I.taskName(taskFilter) + " · " + tr("clinician review")) : base;
   }
 
   // ---------- lifecycle ----------
