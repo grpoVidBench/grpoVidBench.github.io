@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MedVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=45" />
+  <link rel="stylesheet" href="./styles.css?v=46" />
 </head>
 <body>
   <header class="topbar">
@@ -39,7 +39,7 @@
     <div id="export" class="export-card" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=45"></script>
+  <script src="./i18n.js?v=46"></script>
   <script>
     (function () {
       var I = window.I18N;
@@ -139,7 +139,7 @@
           fields.appendChild(f);
           inputs[key] = input;
         }
-        addField('full_name', I.tr('Full name'), true, 'text');
+        addField('full_name', I.tr('Name / initial'), false, 'text');
         addField('email', I.tr('Email'), false, 'email');
         addField('hospital', I.tr('Hospital / institution'), false, 'text');
         addField('designation', I.tr('Designation (title)'), false, 'text');
@@ -154,8 +154,8 @@
             hospital: inputs.hospital.value.trim(),
             designation: inputs.designation.value.trim()
           };
-          // email, hospital and designation are required; full name is optional
-          var missing = ['email', 'hospital', 'designation'].filter(function (k) { return !vals[k]; });
+          // all four fields are required
+          var missing = ['full_name', 'email', 'hospital', 'designation'].filter(function (k) { return !vals[k]; });
           missing.forEach(function (k) { inputs[k].classList.add('field-error'); });
           if (missing.length) { inputs[missing[0]].focus(); return; }
           setDetails(vals);
