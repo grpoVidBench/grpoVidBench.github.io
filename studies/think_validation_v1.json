@@ -345,19 +345,7 @@
                       "answer":  "0.0-60.0 seconds.",
                       "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is first visible at 0.0 seconds, marked by graspers positioning and opening a specimen_bag on the liver surface, guiding the gallbladder into it, then grasping the bag rim/drawstring to close it around the specimen.\n\nL2 (boundary contrast): There is no preceding operative activity visible before this packaging behavior; the phase ends when bag manipulation stops and the field changes to liver retraction with irrigator suction of reddish fluid and bipolar coagulation of the blood-stained liver bed/fossa beginning after 60.0 seconds.\n\nL3 (phase-order bound \u0026 conclusion): In the fixed order preparation -\u003e calot-triangle-dissection -\u003e clipping-and-cutting -\u003e gallbladder-dissection -\u003e gallbladder-packaging -\u003e cleaning-and-coagulation -\u003e gallbladder-extraction, the observed bagging of the freed gallbladder immediately before irrigation/coagulation confirms gallbladder-packaging spans 0.0-60.0 seconds."
                   },
-                  {
-                      "item_id":  "ITEM-03",
-                      "task":  "TAL",
-                      "dataset":  "cholect50",
-                      "video_id":  "TAL__VID04_1241_1373_1_0",
-                      "start":  0,
-                      "end":  37,
-                      "clip_start":  0,
-                      "clip_end":  132,
-                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. The procedure may involve: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. Find the segment(s) where gallbladder-packaging happens.",
-                      "answer":  "0.0-37.0 seconds.",
-                      "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is first visible at 0.0 s, marked by a grasper retracting the liver while another grasper positions a specimen_bag over the liver and guides the detached gallbladder into it.\n\nL2 (boundary contrast): No earlier phase activity is visible before this packaging onset; the phase ends when bagging/placement stops and the view changes to cleaning-and-coagulation, with graspers retracting the liver bed/fossa and tissue around the cystic duct region rather than manipulating the specimen_bag.\n\nL3 (phase-order bound \u0026 conclusion): In the fixed order, gallbladder-packaging follows gallbladder-dissection and precedes cleaning-and-coagulation, matching the observed transition from bagging the detached gallbladder to cleaning the cauterized liver bed. Therefore, gallbladder-packaging occurs from 0.0-37.0 seconds."
-                  },
+                  
                   {
                       "item_id":  "ITEM-04",
                       "task":  "TAL",
@@ -406,17 +394,7 @@
                       "answer":  "gallbladder-extraction",
                       "think":  "L1 (current step at the clip\u0027s END): The clip ends in cleaning-and-coagulation, with the liver held up by a grasper while bipolar forceps coagulate the blood-stained gallbladder fossa and a cannulated irrigator/aspirator clears fluid and smoke from the liver bed.\n\nL2 (completion cue): The reddish pooled fluid has been aspirated, the charred liver bed is systematically cauterized and more visible, and the gallbladder is already secured in the translucent retrieval bag, indicating the fossa-clearing objective is essentially achieved.\n\nL3 (procedural logic \u0026 conclusion): In the standard laparoscopic cholecystectomy phase order, cleaning-and-coagulation is followed by removal of the bagged specimen; therefore the next step is gallbladder-extraction."
                   },
-                  {
-                      "item_id":  "ITEM-08",
-                      "task":  "NAP",
-                      "dataset":  "cholect50",
-                      "video_id":  "NAP__VID04_1241_1373_1_0",
-                      "clip_start":  0,
-                      "clip_end":  132,
-                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. What is the next surgical phase after the current video, given the phase list: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027]?",
-                      "answer":  "gallbladder-extraction",
-                      "think":  "L1: At the clip’s end, the grasper is retracting the liver and manipulating tissue around the cauterized gallbladder fossa/liver bed, with irrigation/smoke clearing and no further Calot triangle dissection or gallbladder detachment, indicating cleaning-and-coagulation is in progress.\n\nL2: The liver bed appears exposed and cauterized, the fossa has been cleared enough to reveal adjacent fatty tissue, and the white retrieval bag is visible, consistent with the gallbladder already freed and packed.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once cleaning-and-coagulation after packaging is essentially complete, the next phase is removal of the bagged specimen; therefore the next step is gallbladder-extraction."
-                  },
+                  
                   {
                       "item_id":  "ITEM-09",
                       "task":  "NAP",
