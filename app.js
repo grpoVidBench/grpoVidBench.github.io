@@ -596,10 +596,7 @@
     progressText.textContent = tf("{a} / {b} done", { a: answered, b: total });
   }
 
-  function isSkipped(item) { return !!(state.skipped && state.skipped[item.item_id]); }
-
   function itemComplete(item) {
-    if (isSkipped(item)) return true;   // a skipped item is "resolved", not blocking
     const ans = state.answers[item.item_id] || {};
     return study.dimensions.every((dim) => {
       if (!dimVisible(dim, item) || !dimRequired(dim)) return true;
@@ -753,10 +750,9 @@
         study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
         started_at: new Date().toISOString(),
         user_agent: navigator.userAgent,
-        order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, ruleEdits: {}, contextEdits: {}, wrapup: {}, current: 0,
+        order: ord, answers: {}, times: {}, edits: {}, answerEdits: {}, ruleEdits: {}, contextEdits: {}, wrapup: {}, current: 0,
       };
     }
-    if (!state.skipped) state.skipped = {};   // back-compat for resumed sessions
     if (!state.edits) state.edits = {};
     if (!state.answerEdits) state.answerEdits = {};
     if (!state.ruleEdits) state.ruleEdits = {};
@@ -781,11 +777,9 @@
     window.scrollTo({ top: 0 });
 
     const total = order.length;
-    let answered = 0, skippedN = 0, remaining = 0;
+    let answered = 0, remaining = 0;
     order.forEach((idx) => {
-      const it = study.items[idx];
-      if (isSkipped(it)) skippedN++;
-      else if (itemComplete(it)) answered++;
+      if (itemComplete(study.items[idx])) answered++;
       else remaining++;
     });
 
@@ -795,21 +789,21 @@
     card.appendChild(el("p", { class: "lead", text: tr("Your progress was saved. Pick up where you left off — the items you've already done are marked below.") }));
 
     const track = el("div", { class: "progress-track", style: "margin:6px 0 4px" });
-    track.appendChild(el("div", { class: "progress-fill", style: "width:" + (total ? (answered + skippedN) / total * 100 : 0) + "%" }));
+    track.appendChild(el("div", { class: "progress-fill", style: "width:" + (total ? answered / total * 100 : 0) + "%" }));
     card.appendChild(track);
     card.appendChild(el("p", { class: "muted", style: "margin-top:6px",
-      text: tf("{a} answered · {s} skipped · {r} remaining (of {t})", { a: answered, s: skippedN, r: remaining, t: total }) }));
+      text: tf("{a} answered · {r} remaining (of {t})", { a: answered, r: remaining, t: total }) }));
 
     const listWrap = el("div", { class: "resume-list" });
     order.forEach((idx, k) => {
       const it = study.items[idx];
-      const sk = isSkipped(it), done = !sk && itemComplete(it);
-      const row = el("button", { class: "resume-row" + (done ? " done" : sk ? " skipped" : " todo"),
+      const done = itemComplete(it);
+      const row = el("button", { class: "resume-row" + (done ? " done" : " todo"),
         onclick: () => { showResume = false; goTo(k); } });
       row.appendChild(el("span", { class: "resume-label",
         text: it.task ? tf("Item {n} ({task})", { n: k + 1, task: taskLabel(it.task) }) : tf("Item {n}", { n: k + 1 }) }));
       row.appendChild(el("span", { class: "resume-status",
-        text: done ? tr("Done") : sk ? tr("Skipped") : tr("Not started") }));
+        text: done ? tr("Done") : tr("Not started") }));
       listWrap.appendChild(row);
     });
     card.appendChild(listWrap);
@@ -841,7 +835,7 @@
     state = {
       study_id: study.study_id, task_group: taskFilter, reviewer_id: reviewer,
       started_at: new Date().toISOString(), user_agent: navigator.userAgent,
-      order: ord, answers: {}, times: {}, skipped: {}, edits: {}, answerEdits: {}, ruleEdits: {}, contextEdits: {}, wrapup: {}, current: 0,
+      order: ord, answers: {}, times: {}, edits: {}, answerEdits: {}, ruleEdits: {}, contextEdits: {}, wrapup: {}, current: 0,
     };
     order = state.order; pos = 0; showResume = false; showWrapup = false;
     saveState(state);
@@ -864,14 +858,8 @@
     else if (item.group) head.appendChild(el("span", { class: "tag task", text: item.group }));
     card.appendChild(head);
 
-    if (isSkipped(item)) head.appendChild(el("span", { class: "tag skipped", text: tr("Skipped") }));
-
     // dimsHost holds the per-item rating questions
     const dimsHost = el("div", { class: "dims" });
-    if (isSkipped(item)) {
-      dimsHost.appendChild(el("div", { class: "banner info",
-        text: tr("You marked this item as skipped — answers below are optional. Answer any question to include it again.") }));
-    }
     study.dimensions.forEach((dim) => {
       if (!dimVisible(dim, item)) return;
       dimsHost.appendChild(renderDimension(dim, item));
@@ -1016,7 +1004,7 @@
         const input = el("input", {
           type: "radio", name, id, value: String(v),
           checked: String(ans[dim.id]) === String(v) ? "checked" : null,
-          onchange: () => { ans[dim.id] = v; clearInvalid(wrap); clearSkip(item); commit(); },
+          onchange: () => { ans[dim.id] = v; clearInvalid(wrap); commit(); },
         });
         const lab = el("label", { for: id }, [
           el("span", { class: "n", text: String(v) }),
@@ -1028,7 +1016,7 @@
       addCommentBox(wrap, dim, ans);
     } else if (type === "select") {
       const sel = el("select", {
-        onchange: (e) => { ans[dim.id] = e.target.value; clearInvalid(wrap); clearSkip(item); commit(); },
+        onchange: (e) => { ans[dim.id] = e.target.value; clearInvalid(wrap); commit(); },
       });
       sel.appendChild(el("option", { value: "", text: tr("— select —") }));
       (dim.options || []).forEach((opt) => {
@@ -1061,15 +1049,6 @@
 
   function clearInvalid(node) { node.classList.remove("invalid"); }
 
-  // Answering a rating un-skips the item; drop the skipped tag/banner without re-rendering.
-  function clearSkip(item) {
-    if (state.skipped && state.skipped[item.item_id]) {
-      delete state.skipped[item.item_id];
-      const b = root.querySelector(".dims > .banner"); if (b) b.remove();
-      const t = root.querySelector(".tag.skipped"); if (t) t.remove();
-    }
-  }
-
   let commitTimer = null;
   function commit() { persistTime(); state.current = pos; saveState(state); setProgress(); }
   function commitDebounced() { clearTimeout(commitTimer); commitTimer = setTimeout(commit, 500); }
@@ -1080,26 +1059,15 @@
     const prev = el("button", { class: "btn", text: tr("← Previous"), disabled: pos === 0 ? "disabled" : null,
       onclick: () => goTo(pos - 1) });
     const count = el("span", { class: "count", text: tf("Item {n} of {total}", { n: pos + 1, total: order.length }) });
-    const skip = el("button", { class: "btn btn-ghost skip-btn", text: tr("Skip this item"),
-      title: tr("Skip this item"), onclick: skipItem });
     const next = pos < order.length - 1
       ? el("button", { class: "btn btn-primary", text: tr("Next →"), onclick: () => goTo(pos + 1) })
       : el("button", { class: "btn btn-primary", text: tr("Review & submit →"), onclick: goWrapup });
     inner.appendChild(prev);
     inner.appendChild(count);
     inner.appendChild(el("span", { class: "spacer" }));
-    inner.appendChild(skip);
     inner.appendChild(next);
     foot.appendChild(inner);
     return foot;
-  }
-
-  function skipItem() {
-    const item = study.items[order[pos]];
-    state.skipped[item.item_id] = true;
-    persistTime(); commit();
-    if (pos < order.length - 1) goTo(pos + 1);
-    else goWrapup();
   }
 
   function goTo(p) {
@@ -1152,12 +1120,6 @@
       card.appendChild(el("div", { class: "banner info", text: tr("All items have their required answers. Add any final notes below, then submit.") }));
     }
 
-    const nSkipped = order.filter((idx) => isSkipped(study.items[idx])).length;
-    if (nSkipped) {
-      card.appendChild(el("p", { class: "muted", style: "margin-top:-4px",
-        text: tf("{n} item(s) were skipped (recorded as skipped). You can go back to answer any of them.", { n: nSkipped }) }));
-    }
-
     // wrapup free-text (optional)
     if (Array.isArray(study.wrapup) && study.wrapup.length) {
       card.appendChild(el("h2", { text: tr("Final notes") }));
@@ -1194,7 +1156,6 @@
         task: item.task || item.group || null,
         seen_order: seenOrder[item.item_id],
         ms_on_item: state.times[item.item_id] || 0,
-        skipped: isSkipped(item),
         ratings: state.answers[item.item_id] || {},
       };
       // reasoning edits (only for items that have a <think> trace)

@@ -84,16 +84,6 @@
                       "item_id":  "VS-02",
                       "task":  "VS",
                       "dataset":  "cholect50",
-                      "video_id":  "VS__VID02_2538_2779_0_5",
-                      "clip_start":  0,
-                      "clip_end":  241,
-                      "question":  "You are an expert surgical video reviewer. This endoscopic footage captures the steps of a laparoscopic cholecystectomy, a minimally invasive gallbladder removal surgery. Summarize the video content in a short paragraph, focusing on the main surgical activities.",
-                      "caption":  "Multiple graspers open a specimen bag on the liver surface, guide the gallbladder into it, and tighten the rim/drawstring to secure the specimen. The view then shifts to the gallbladder fossa, where a grasper retracts the liver upward while the irrigator washes and aspirates reddish pooled fluid from the subhepatic field. bipolar forceps coagulate the blood-stained liver bed from the left-central area toward the right margin, with intermittent tissue retraction. A cannulated instrument clears fluid and smoke, leaving the cauterized liver bed more exposed."
-                  },
-                  {
-                      "item_id":  "VS-03",
-                      "task":  "VS",
-                      "dataset":  "cholect50",
                       "video_id":  "VS__VID04_1241_1373_1_0",
                       "clip_start":  0,
                       "clip_end":  132,
@@ -101,7 +91,7 @@
                       "caption":  "A grasper retracts the liver to expose the gallbladder bed while the specimen bag is opened and positioned over the liver. The detached gallbladder is lifted, guided, and placed into the bag. The view then shifts to cleaning and coagulation of the blood-stained gallbladder fossa, with grasper traction widening exposure from the central superior bed toward the inferior-right edge. Additional graspers hold the cystic duct region and nearby dissected tissue as brief irrigation or smoke clearing reveals adjacent fatty tissue and the retrieval bag before the image cuts to black."
                   },
                   {
-                      "item_id":  "VS-04",
+                      "item_id":  "VS-03",
                       "task":  "VS",
                       "dataset":  "cholect50",
                       "video_id":  "VS__VID05_1305_1663_0_5",
@@ -109,16 +99,6 @@
                       "clip_end":  358,
                       "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Give a concise overview of what the surgical video is about, without going into detailed steps.",
                       "caption":  "The grasper retracts and rotates the gallbladder superiorly and laterally to expose the gallbladder–liver interface. The hook coagulates and dissects along this plane, peeling the gallbladder off the liver bed and clearing remaining fibrous attachments. After detachment, graspers open the specimen_bag, place the gallbladder inside, and pull the drawstring to close the bag around the specimen. The partially closed specimen_bag is then repositioned along the liver surface while the liver is retracted."
-                  },
-                  {
-                      "item_id":  "VS-05",
-                      "task":  "VS",
-                      "dataset":  "cholect50",
-                      "video_id":  "VS__VID06_1768_2065_0_5",
-                      "clip_start":  0,
-                      "clip_end":  297,
-                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Summarize the video content in a short paragraph, focusing on the main surgical activities.",
-                      "caption":  "graspers open the specimen bag against the abdominal wall, guide the freed gallbladder into it, fold the rim around the specimen, and tighten the drawstring while moving the partially closed bag across the peritoneal surface. graspers then retract the liver and adjacent bowel to expose the blood-stained gallbladder fossa and clipped stump. a bipolar coagulating instrument treats the raw liver bed with repeated contact, producing smoke and a paler charred surface as the field shifts toward the inferior liver edge, followed by suction and irrigation of small fluid pools. the specimen bag is reintroduced and repositioned along the liver surface while graspers stabilize it near the abdominal wall amid intermittent smoke and condensation."
                   }
               ]
 }

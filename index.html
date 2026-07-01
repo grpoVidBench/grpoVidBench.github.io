@@ -269,8 +269,7 @@
         return !(v == null || (typeof v === 'string' && v.trim() === ''));
       }
       function dimRequired(dim) { return !dim.optional; }
-      function itemComplete(item, dimensions, answers, skipped) {
-        if (skipped && skipped[item.item_id]) return true;
+      function itemComplete(item, dimensions, answers) {
         var ans = answers[item.item_id] || {};
         return dimensions.every(function (dim) {
           if (!dimVisible(dim, item) || !dimRequired(dim)) return true;
@@ -285,8 +284,8 @@
           var st = null;
           try { var raw = localStorage.getItem(key); st = raw ? JSON.parse(raw) : null; } catch (e) {}
           if (st) {
-            var answers = st.answers || {}, skipped = st.skipped || {};
-            t.items.forEach(function (it) { if (itemComplete(it, t.dimensions, answers, skipped)) done++; });
+            var answers = st.answers || {};
+            t.items.forEach(function (it) { if (itemComplete(it, t.dimensions, answers)) done++; });
           }
         }
         return { done: done, total: total };

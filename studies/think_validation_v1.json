@@ -170,15 +170,13 @@
                                                         "Play the clip and scrub to the highlighted window and its start/end edges.",
                                                         "Read the question and the model\u0027s answer (the time span), and decide whether its start and end match what you actually see.",
                                                         "Read the model\u0027s reasoning against the pinned guide (L1 visible onset cue, L2 boundary contrast, L3 phase-order check), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T.",
-                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes); the time-span answer is read-only, so note any answer error in a comment. Every edit is saved with your response.",
-                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes); the time-span answer is read-only, so note any answer error in a comment. Every edit is saved with your response."
                                                     ],
                                           "steps_zh":  [
                                                            "播放片段，并拖动到高亮区间及其起止边界处。",
                                                            "阅读问题和模型的答案（时间区间），判断其起点和终点是否与您实际看到的相符。",
                                                            "对照固定显示的层级说明阅读模型的推理（L1 可见的起始线索，L2 边界对比，L3 阶段顺序确认），然后展开「提示词规则」面板，检查其是否遵守应当/不应当。",
-                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及应当/不应当文本（点击「恢复原文」可撤销）；时间区间答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。",
-                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及应当/不应当文本（点击「恢复原文」可撤销）；时间区间答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。"
                                                        ]
                                       },
                               "NAP":  {
@@ -188,15 +186,13 @@
                                                         "Play the clip, paying close attention to the FINAL seconds (the phase in progress at the end).",
                                                         "Read the question and the model\u0027s predicted next phase, and decide whether it is correct given the clip\u0027s ending state.",
                                                         "Read the model\u0027s reasoning (L1 phase in progress at the end, L2 evidence its objective is essentially complete, L3 procedural-order logic), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T (read the current phase from the END, not early-clip activity).",
-                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes); the predicted-phase answer is read-only, so note any answer error in a comment. Every edit is saved with your response.",
-                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes); the predicted-phase answer is read-only, so note any answer error in a comment. Every edit is saved with your response."
                                                     ],
                                           "steps_zh":  [
                                                            "播放片段，特别留意最后几秒（结尾处正在进行的阶段）。",
                                                            "阅读问题和模型预测的下一阶段，根据片段结尾的状态判断其是否正确。",
                                                            "阅读模型的推理（L1 片段结尾正在进行的阶段，L2 该阶段目标基本完成的证据，L3 通向下一阶段的流程顺序逻辑），然后展开「提示词规则」面板，检查其是否遵守应当/不应当（当前阶段必须依据结尾判断，而非片段早期的操作）。",
-                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及应当/不应当文本（点击「恢复原文」可撤销）；预测阶段答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。",
-                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及应当/不应当文本（点击「恢复原文」可撤销）；预测阶段答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。"
                                                        ]
                                       },
                               "DVC":  {
@@ -206,15 +202,13 @@
                                                         "Play the clip and note which phases appear and roughly when they change.",
                                                         "Read the model\u0027s answer (the segment list with times and descriptions) and check the segments are correct, contiguous and non-overlapping, with none invented or missing.",
                                                         "Read the model\u0027s reasoning (L1 enumerates the phases in order, L2 justifies each boundary by a visible transition cue, L3 a one-line headline per segment), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T.",
-                                                        "Rate every question below and add comments where they help. You can edit the ANSWER (segments, times, descriptions), the reasoning, and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes). Every edit is saved with your response.",
-                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                        "Rate every question below and add comments where they help. You can edit the ANSWER (segments, times, descriptions), the reasoning, and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes). Every edit is saved with your response."
                                                     ],
                                           "steps_zh":  [
                                                            "播放片段，留意出现了哪些阶段以及它们大致何时切换。",
                                                            "阅读模型的答案（含各时间段及其时间和描述的列表），检查各时间段是否正确、连续且不重叠，没有臆造或遗漏。",
                                                            "阅读模型的推理（L1 按顺序枚举各阶段，L2 通过可见的转换线索论证每个边界，L3 为每段给出一句标题），然后展开「提示词规则」面板，检查其是否遵守应当/不应当。",
-                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑【答案】（时间段列表、时间、描述）、推理以及应当/不应当文本（点击「恢复原文」可撤销）。所有编辑都会随评审结果一并保存。",
-                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑【答案】（时间段列表、时间、描述）、推理以及应当/不应当文本（点击「恢复原文」可撤销）。所有编辑都会随评审结果一并保存。"
                                                        ]
                                       },
                               "VS":  {
@@ -224,15 +218,13 @@
                                                        "Play the whole clip to get its overall arc.",
                                                        "Read the model\u0027s summary (the answer) and check it is factually correct, covers the main surgical activities, omits nothing important, and invents nothing.",
                                                        "Read the model\u0027s reasoning (L1 surveys the arc, L2 separates the salient actions from minor/repeated ones, L3 compresses to the final summary), then open the \u0027Prompt rules\u0027 panel and check it obeys the DO / DON\u0027T.",
-                                                       "Rate every question below and add comments where they help. You can edit the SUMMARY (the answer), the reasoning, and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes). Every edit is saved with your response.",
-                                                       "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                       "Rate every question below and add comments where they help. You can edit the SUMMARY (the answer), the reasoning, and the DO / DON\u0027T text directly (\u0027Reset to original\u0027 undoes). Every edit is saved with your response."
                                                    ],
                                          "steps_zh":  [
                                                           "完整播放片段，了解其整体过程。",
                                                           "阅读模型的总结（答案），检查其是否事实正确、涵盖主要手术操作、无重要遗漏、且无臆造。",
                                                           "阅读模型的推理（L1 梳理整体过程，L2 将显著操作与次要/重复操作区分开，L3 压缩为最终总结），然后展开「提示词规则」面板，检查其是否遵守应当/不应当。",
-                                                          "对下方每个问题评分并在需要时添加备注。您可以直接编辑【总结】（答案）、推理以及应当/不应当文本（点击「恢复原文」可撤销）。所有编辑都会随评审结果一并保存。",
-                                                          "若您无法评估该片段，请点击「跳过该条目」。"
+                                                          "对下方每个问题评分并在需要时添加备注。您可以直接编辑【总结】（答案）、推理以及应当/不应当文本（点击「恢复原文」可撤销）。所有编辑都会随评审结果一并保存。"
                                                       ]
                                      }
                           },
@@ -332,9 +324,8 @@
                       "answer":  "0.0-97.0 seconds.",
                       "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is identified by graspers unfolding an endoscopic specimen_bag on the liver surface, opening the translucent pouch, placing the detached gallbladder inside, and cinching the drawstring; this becomes visible at the start of the clip around 0.0 seconds.\n\nL2 (boundary contrast): No preceding operative phase is visible before this packaging activity, while the endpoint is fixed by the shift after the bag is closed and drawn toward the trocar: at about 98.0 seconds the graspers instead retract the liver and work on the cauterized gallbladder fossa with cleaning/coagulation contact.\n\nL3 (phase-order bound \u0026 conclusion): In the sequence preparation -\u003e Calot-triangle-dissection -\u003e clipping-and-cutting -\u003e gallbladder-dissection -\u003e gallbladder-packaging -\u003e cleaning-and-coagulation -\u003e gallbladder-extraction, the bagging of the detached gallbladder immediately before liver-bed cleaning confirms gallbladder-packaging spans 0.0-97.0 seconds."
                   },
-                  
                   {
-                      "item_id":  "ITEM-03",
+                      "item_id":  "ITEM-02",
                       "task":  "TAL",
                       "dataset":  "cholect50",
                       "video_id":  "TAL__VID04_1241_1373_1_0",
@@ -347,7 +338,7 @@
                       "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is first visible at 0.0 s, marked by a grasper retracting the liver while another grasper positions a specimen_bag over the liver and guides the detached gallbladder into it.\n\nL2 (boundary contrast): No earlier phase activity is visible before this packaging onset; the phase ends when bagging/placement stops and the view changes to cleaning-and-coagulation, with graspers retracting the liver bed/fossa and tissue around the cystic duct region rather than manipulating the specimen_bag.\n\nL3 (phase-order bound \u0026 conclusion): In the fixed order, gallbladder-packaging follows gallbladder-dissection and precedes cleaning-and-coagulation, matching the observed transition from bagging the detached gallbladder to cleaning the cauterized liver bed. Therefore, gallbladder-packaging occurs from 0.0-37.0 seconds."
                   },
                   {
-                      "item_id":  "ITEM-04",
+                      "item_id":  "ITEM-03",
                       "task":  "TAL",
                       "dataset":  "cholect50",
                       "video_id":  "TAL__VID05_1305_1663_0_5",
@@ -360,20 +351,7 @@
                       "think":  "L1 (phase signature \u0026 onset): Gallbladder-dissection is visible from 0.0 s, with a grasper retracting and rotating the gallbladder while a hook coagulates and peels fibrous/peritoneal attachments along the gallbladder–liver bed interface.\n\nL2 (boundary contrast): There is no preceding observed phase before this dissection activity, and the phase ends when hook-based liver-bed separation stops and the instruments switch to graspers manipulating a specimen_bag, cinching its cord, and placing the detached gallbladder into the bag at 241.0 s.\n\nL3 (phase-order bound \u0026 conclusion): In the operative order after clipping-and-cutting and before gallbladder-packaging, the observed liver-bed peeling corresponds to gallbladder-dissection, followed by packaging with the specimen_bag. Therefore, gallbladder-dissection spans 0.0–239.0 seconds."
                   },
                   {
-                      "item_id":  "ITEM-05",
-                      "task":  "TAL",
-                      "dataset":  "cholect50",
-                      "video_id":  "TAL__VID06_1768_2065_0_5",
-                      "start":  0,
-                      "end":  68,
-                      "clip_start":  0,
-                      "clip_end":  297,
-                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. Possible phases in this video include: preparation, carlot-triangle-dissection, clipping-and-cutting, gallbladder-dissection, gallbladder-packaging, cleaning-and-coagulation, gallbladder-extraction. What is the time span of gallbladder-packaging?",
-                      "answer":  "0.0-68.0 seconds.",
-                      "think":  "L1 (phase signature \u0026 onset): Gallbladder-packaging is visible from 0.0 s, marked by graspers spreading a specimen_bag against the abdominal wall and guiding the freed gallbladder into the bag mouth. The bag rim is folded and repositioned around the specimen, then the drawstring is pulled taut to begin closure.\n\nL2 (boundary contrast): There is no earlier visible activity before this packaging sequence, and the actions are centered on the specimen_bag and gallbladder rather than Calot triangle dissection, clipping, or liver-bed work. It ends when the view changes to cleaning-and-coagulation: liver and gut retraction exposes the gallbladder fossa and clipped stump while a bipolar coagulating instrument and suction/irrigation treat the raw liver bed.\n\nL3 (phase-order bound \u0026 conclusion): In the operative order, gallbladder-packaging follows gallbladder-dissection and precedes cleaning-and-coagulation, matching the observed transition from bagging the freed gallbladder to coagulating/irrigating the liver bed. Therefore, gallbladder-packaging spans 0.0–68.0 seconds."
-                  },
-                  {
-                      "item_id":  "ITEM-06",
+                      "item_id":  "ITEM-04",
                       "task":  "NAP",
                       "dataset":  "cholect50",
                       "video_id":  "NAP__VID01_1471_1641_1_0",
@@ -383,9 +361,8 @@
                       "answer":  "gallbladder-extraction",
                       "think":  "L1: At the clip’s end, the current phase is cleaning-and-coagulation: graspers retract/elevate the liver while the instrument tip works along the cauterized gallbladder fossa and adjacent clipped tissue to clear/coagulate the liver bed.\n\nL2: The gallbladder is already detached and packed/cinched inside the specimen_bag, and the exposed liver bed has been repeatedly inspected and treated, with the instruments shifting from the fossa back toward the bag.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once cleaning-and-coagulation has essentially cleared the fossa after the gallbladder is bagged, the next procedural action is removal of the bagged specimen; therefore the next step is gallbladder-extraction."
                   },
-                  
                   {
-                      "item_id":  "ITEM-08",
+                      "item_id":  "ITEM-05",
                       "task":  "NAP",
                       "dataset":  "cholect50",
                       "video_id":  "NAP__VID04_1241_1373_1_0",
@@ -396,7 +373,7 @@
                       "think":  "L1: At the clip’s end, the grasper is retracting the liver and manipulating tissue around the cauterized gallbladder fossa/liver bed, with irrigation/smoke clearing and no further Calot triangle dissection or gallbladder detachment, indicating cleaning-and-coagulation is in progress.\n\nL2: The liver bed appears exposed and cauterized, the fossa has been cleared enough to reveal adjacent fatty tissue, and the white retrieval bag is visible, consistent with the gallbladder already freed and packed.\n\nL3: In the fixed laparoscopic cholecystectomy sequence, once cleaning-and-coagulation after packaging is essentially complete, the next phase is removal of the bagged specimen; therefore the next step is gallbladder-extraction."
                   },
                   {
-                      "item_id":  "ITEM-09",
+                      "item_id":  "ITEM-06",
                       "task":  "NAP",
                       "dataset":  "cholect50",
                       "video_id":  "NAP__VID05_1305_1663_0_5",
@@ -407,18 +384,7 @@
                       "think":  "L1: At the clip’s end, the phase in progress is gallbladder-packaging: graspers manipulate the specimen_bag, guide the detached gallbladder into it, and draw the white cord to cinch the bag mouth while the liver is retracted.\n\nL2: The packaging objective is essentially achieved because the gallbladder is already freed from the liver bed/fossa and enclosed within a partially closed specimen_bag, with the bag being shifted along the liver surface rather than further dissected.\n\nL3: In the laparoscopic cholecystectomy sequence, after gallbladder-packaging the operative field is typically inspected, cleared, and hemostasis is addressed; therefore the next step is cleaning-and-coagulation."
                   },
                   {
-                      "item_id":  "ITEM-10",
-                      "task":  "NAP",
-                      "dataset":  "cholect50",
-                      "video_id":  "NAP__VID06_1768_2065_0_5",
-                      "clip_start":  0,
-                      "clip_end":  297,
-                      "question":  "You are a specialist in analyzing minimally invasive surgery videos. This recording shows a laparoscopic cholecystectomy, a procedure to remove the gallbladder through small abdominal incisions. From the list of possible phases: [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027], which one should follow the current segment?",
-                      "answer":  "gallbladder-extraction",
-                      "think":  "L1: At the clip’s end, the case is in cleaning-and-coagulation: a bipolar/blue-tipped coagulator treats the raw gallbladder fossa on the liver bed while graspers retract the liver and adjacent gut, with suction/irrigation clearing fluid.\n\nL2: The fossa appears progressively pale and charred with only small residual fluid being cleared, and there is no ongoing Calot triangle dissection, cystic duct/artery clipping, or gallbladder separation from the liver bed. The hemostasis/cleaning objective is therefore essentially achieved and a transition is due.\n\nL3: In the fixed laparoscopic cholecystectomy phase order, after cleaning-and-coagulation the next step is removal of the freed specimen. Therefore, the next step is gallbladder-extraction."
-                  },
-                  {
-                      "item_id":  "ITEM-11",
+                      "item_id":  "ITEM-07",
                       "task":  "DVC",
                       "dataset":  "cholect50",
                       "video_id":  "DVC__VID01_1471_1641_1_0",
@@ -438,9 +404,8 @@
                       "answer":  "0.0-97.0 seconds: After brief dark/occluded views, graspers manipulate the folded specimen_bag on the liver surface by repositioning, unfolding, and spreading it into an open translucent pouch, then lift the detached gallbladder into the bag and pack it down, grasp the rim and drawstring to fold and cinch the specimen_bag closed around the gallbladder against the liver surface, and finally draw the partially collapsed bag toward the trocar opening while a grasper retracts the liver to expose the adjacent dissected gallbladder bed.\n98.0-170.0 seconds: Graspers retract and elevate the liver to maintain and widen exposure of the moist, bloody, cauterized gallbladder fossa, repeatedly repositioning along the raw liver bed margins while the instrument tip contacts the liver edge and adjacent clipped tissue for cleaning/coagulation, before moving over the liver surface and grasping the specimen_bag.",
                       "think":  "L1 (scan \u0026 enumerate): The clip shows Gallbladder Packaging first: graspers unfold a specimen_bag on the liver, load the detached gallbladder, and cinch the bag. It then moves into Cleaning/Coagulation: graspers retract the liver and instruments contact the bloody cauterized gallbladder fossa/liver bed for cleaning or hemostasis.\n\nL2 (boundaries): The boundary at 97.0–98.0s is fixed when the action changes from closing and drawing the specimen_bag toward the trocar to deliberate liver elevation and exposure of the raw gallbladder fossa. This makes the packaging segment end before fossa-focused cleaning/coagulation begins, keeping the two segments contiguous and non-overlapping.\n\nL3 (per-segment content \u0026 conclusion): [0.0, 97.0] Gallbladder Packaging — graspers open/cinch specimen_bag around detached gallbladder; [98.0, 170.0] Cleaning/Coagulation — graspers retract liver while instrument cleans/coagulates gallbladder fossa."
                   },
-                  
                   {
-                      "item_id":  "ITEM-13",
+                      "item_id":  "ITEM-08",
                       "task":  "DVC",
                       "dataset":  "cholect50",
                       "video_id":  "DVC__VID04_1241_1373_1_0",
@@ -461,7 +426,7 @@
                       "think":  "L1 (scan \u0026 enumerate): From 0.0–37.0s, gallbladder packaging appears: graspers retract the liver, open/position a specimen bag, and guide the detached gallbladder into it. From 38.0–132.0s, cleaning and coagulation appears: graspers retract the liver and apply traction around the cystic duct region while the cauterized gallbladder fossa/liver bed is exposed and cleared.\n\nL2 (boundaries): The boundary at 37.0/38.0s is fixed by the action changing from specimen-bag placement and gallbladder insertion to repeated liver-bed exposure and cleaning/traction, making the phases non-overlapping. The second segment then continues contiguously through the liver-bed inspection/clearing until the view turns black at 132.0s.\n\nL3 (per-segment content \u0026 conclusion): [0.0, 37.0] Gallbladder packaging — graspers place detached gallbladder into specimen bag over liver. [38.0, 132.0] Cleaning and coagulation — grasper retraction exposes cauterized gallbladder fossa and cystic duct region."
                   },
                   {
-                      "item_id":  "ITEM-14",
+                      "item_id":  "ITEM-09",
                       "task":  "DVC",
                       "dataset":  "cholect50",
                       "video_id":  "DVC__VID05_1305_1663_0_5",
@@ -482,28 +447,7 @@
                       "think":  "L1 (scan \u0026 enumerate): From 0.0–239.0s, gallbladder-dissection appears: the grasper retracts and lifts the gallbladder while the hook coagulates/dissects the gallbladder–liver bed plane. From 241.0–358.0s, gallbladder-packaging appears: graspers manipulate the specimen_bag, place the detached gallbladder inside, and cinch the bag.\n\nL2 (boundaries): The transition is fixed between 239.0s and 241.0s by the change from hook cautery/dissection along the liver fossa to specimen_bag handling and drawstring closure, making the two intervals ordered, non-overlapping, and consecutive in the clip.\n\nL3 (per-segment content \u0026 conclusion):  \n[0.0, 239.0] — Gallbladder-dissection: hook separates gallbladder from liver bed under grasper traction.  \n[241.0, 358.0] — Gallbladder-packaging: graspers bag and cinch the detached gallbladder."
                   },
                   {
-                      "item_id":  "ITEM-15",
-                      "task":  "DVC",
-                      "dataset":  "cholect50",
-                      "video_id":  "DVC__VID06_1768_2065_0_5",
-                      "segments":  [
-                                       [
-                                           0,
-                                           68
-                                       ],
-                                       [
-                                           70,
-                                           297
-                                       ]
-                                   ],
-                      "clip_start":  0,
-                      "clip_end":  297,
-                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Find all occurrences of [\u0027preparation\u0027, \u0027carlot-triangle-dissection\u0027, \u0027clipping-and-cutting\u0027, \u0027gallbladder-dissection\u0027, \u0027gallbladder-packaging\u0027, \u0027cleaning-and-coagulation\u0027, \u0027gallbladder-extraction\u0027] and list them with time bounds and clear captions. Any content not demonstrating these actions must be omitted.",
-                      "answer":  "0.0-68.0 seconds: Graspers spread the specimen_bag open against the abdominal wall, guide and pack the freed gallbladder into its mouth, fold and reposition the bag rim around the specimen as it settles inside, then grasp the specimen_bag and drawstring to pull the cord taut while shifting the crumpling bag across the peritoneal surface to partially close it.\n70.0-297.0 seconds: During the cleaning-and-coagulation phase, graspers retract the liver and adjacent gut to expose the blood-stained, cauterized gallbladder fossa and clipped stump, a bipolar/blue-tipped coagulating instrument repeatedly contacts the raw liver bed producing smoke and a progressively pale charred surface as exposure shifts toward the inferior liver edge, then suction/irrigation clears small fluid pools with bubbling while a specimen_bag is introduced, grasped, stabilized near the abdominal wall, and repositioned along the liver surface amid intermittent smoke/condensation obscuring the field.",
-                      "think":  "L1 (scan \u0026 enumerate): The clip shows Gallbladder packaging first, with graspers opening a specimen_bag, packing the freed gallbladder, and tightening the drawstring. It then shows Cleaning and coagulation, with liver/gut retraction, bipolar coagulation on the gallbladder fossa/liver bed, smoke, and suction/irrigation.\n\nL2 (boundaries): The boundary is fixed at the shift from bag-focused specimen enclosure and drawstring closure to liver-bed exposure with bipolar coagulation and suction/irrigation. Thus 0.0–68.0s is packaging, and the next observed segment, 70.0–297.0s, is cleaning/coagulation without overlap.\n\nL3 (per-segment content \u0026 conclusion): [0.0, 68.0] Gallbladder packaging — specimen_bag opened, gallbladder packed, drawstring tightened. [70.0, 297.0] Cleaning and coagulation — liver bed/fossa coagulated and irrigated under retraction."
-                  },
-                  {
-                      "item_id":  "ITEM-16",
+                      "item_id":  "ITEM-10",
                       "task":  "VS",
                       "dataset":  "cholect50",
                       "video_id":  "VS__VID01_1471_1641_1_0",
@@ -513,9 +457,8 @@
                       "answer":  "graspers unfold a translucent specimen_bag on the liver surface, open it into a pouch, and place the detached gallbladder inside. The bag is folded and cinched closed by manipulating the rim and drawstring, then drawn toward the trocar while the liver is retracted. After bag retrieval begins, graspers elevate and reposition the liver to expose the moist, cauterized gallbladder fossa, with instrument contact along the raw bed and clipped tissue for cleaning/coagulation before returning to the specimen_bag.",
                       "think":  "L1: The clip moves from gallbladder packaging to early extraction, with graspers unfolding a translucent specimen_bag on the liver, placing the detached gallbladder inside, cinching the rim and drawstring, and drawing the bag toward the trocar. It then transitions into cleaning/coagulation as graspers elevate the liver and expose the cauterized gallbladder fossa.\n\nL2: The salient flow is bag opening, gallbladder insertion, bag closure, and traction toward removal; repeated grasping, rim adjustments, and liver retraction are minor supporting maneuvers. Once the bag is partly controlled, attention shifts back to the liver bed and adjacent clipped hepatocystic/Calot triangle tissue for exposure and contact cleaning/coagulation.\n\nL3: Overall, the surgeon completes gallbladder packaging and begins specimen retrieval, then rechecks the operative field. The final progression is from secured specimen_bag handling to inspection and cleaning/coagulation of the moist, raw liver bed/fossa around the clipped cystic duct and cystic artery region before returning to the bag."
                   },
-                  
                   {
-                      "item_id":  "ITEM-18",
+                      "item_id":  "ITEM-11",
                       "task":  "VS",
                       "dataset":  "cholect50",
                       "video_id":  "VS__VID04_1241_1373_1_0",
@@ -526,7 +469,7 @@
                       "think":  "L1 (survey the arc): The clip begins in the gallbladder packaging phase, with a grasper retracting the liver while the specimen bag is opened over the liver and the detached gallbladder is guided into it. It then transitions into cleaning and coagulation of the gallbladder fossa/liver bed.\n\nL2 (salience \u0026 transitions): The defining transition is from specimen containment to post-dissection fossa management, shifting attention from the bagged gallbladder to the blood-stained, cauterized liver bed. Repeated grasper retraction of the liver and traction on the cystic duct-region tissue widen exposure, while brief irrigation or smoke clearing and glimpses of fatty tissue and the retrieval bag are secondary details.\n\nL3 (compress \u0026 conclusion): Overall, the video progresses from specimen retrieval preparation to inspection and cleaning of the gallbladder bed. A grasper retracts the liver as the specimen bag is positioned and the gallbladder is placed inside, then graspers expose the fossa from the central superior bed toward the inferior-right edge while holding nearby dissected tissue before the view cuts to black."
                   },
                   {
-                      "item_id":  "ITEM-19",
+                      "item_id":  "ITEM-12",
                       "task":  "VS",
                       "dataset":  "cholect50",
                       "video_id":  "VS__VID05_1305_1663_0_5",
@@ -535,17 +478,6 @@
                       "question":  "You are an expert in surgical video interpretation. The following clip depicts a laparoscopic cholecystectomy, a minimally invasive operation for gallbladder removal, captured via an endoscopic camera. Give a concise overview of what the surgical video is about, without going into detailed steps.",
                       "answer":  "The grasper retracts and rotates the gallbladder superiorly and laterally to expose the gallbladder–liver interface. The hook coagulates and dissects along this plane, peeling the gallbladder off the liver bed and clearing remaining fibrous attachments. After detachment, graspers open the specimen_bag, place the gallbladder inside, and pull the drawstring to close the bag around the specimen. The partially closed specimen_bag is then repositioned along the liver surface while the liver is retracted.",
                       "think":  "L1 (survey the arc): The clip moves from gallbladder-dissection, with the grasper retracting the gallbladder and the hook working along the gallbladder–liver interface, into gallbladder packaging after the gallbladder has been freed. The later phase shows graspers managing a specimen_bag, enclosing the gallbladder, and repositioning the partially closed bag near the liver.\n\nL2 (salience \u0026 transitions): The key transition is from hook-based coagulation and dissection of fibrous attachments in the liver bed/fossa to specimen_bag handling once separation is complete. Repeated lifting, rotation, smoke, and small cautery marks are compressed as continued exposure and peeling of the gallbladder from the liver bed, while bag opening, rim grasping, and drawstring pulling define packaging.\n\nL3 (compress \u0026 conclusion): The grasper retracts and rotates the gallbladder superiorly and laterally to expose the gallbladder–liver plane while the hook coagulates and dissects the remaining attachments from the liver bed. After detachment, the graspers open the specimen_bag, place the gallbladder inside, cinch the drawstring, and move the partially closed bag along the liver surface while the liver is retracted."
-                  },
-                  {
-                      "item_id":  "ITEM-20",
-                      "task":  "VS",
-                      "dataset":  "cholect50",
-                      "video_id":  "VS__VID06_1768_2065_0_5",
-                      "clip_start":  0,
-                      "clip_end":  297,
-                      "question":  "You are an expert surgical analyst specializing in minimally invasive procedures. This video shows an endoscopic view of a laparoscopic cholecystectomy, a keyhole surgery to remove the gallbladder. Summarize the video content in a short paragraph, focusing on the main surgical activities.",
-                      "answer":  "graspers open the specimen bag against the abdominal wall, guide the freed gallbladder into it, fold the rim around the specimen, and tighten the drawstring while moving the partially closed bag across the peritoneal surface. graspers then retract the liver and adjacent bowel to expose the blood-stained gallbladder fossa and clipped stump. a bipolar coagulating instrument treats the raw liver bed with repeated contact, producing smoke and a paler charred surface as the field shifts toward the inferior liver edge, followed by suction and irrigation of small fluid pools. the specimen bag is reintroduced and repositioned along the liver surface while graspers stabilize it near the abdominal wall amid intermittent smoke and condensation.",
-                      "think":  "L1: The clip moves from specimen retrieval work, with graspers opening and tightening a specimen_bag around the freed gallbladder, into cleaning-and-coagulation of the liver bed/fossa with exposure of the clipped stump and surrounding liver surface.\n\nL2: The salient transition is from bag handling and drawstring closure to liver and bowel retraction, after which a bipolar instrument repeatedly coagulates the raw gallbladder fossa while smoke, blanching, and charring appear. Suction/irrigation clears small fluid pools, and the specimen_bag is then stabilized and repositioned along the liver surface, while repetitive contacts and brief obscuration are compressed out.\n\nL3: Overall, the sequence shows the gallbladder being packed into a specimen_bag and partially closed, followed by hemostasis and cleanup of the gallbladder fossa/liver bed. The final progression is specimen containment, liver-bed coagulation, suction/irrigation, and renewed bag positioning near the abdominal wall and liver surface."
                   }
               ]
 }
