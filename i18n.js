@@ -27,6 +27,8 @@
       "每个研究都是独立的：先阅读简短说明，然后逐条评价。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
     "Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.":
       "选择一个任务以逐条评审其片段。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
+    "The full study takes about 45 minutes to 1 hour. You can stop and resume anytime — your progress is saved.":
+      "完成全部研究约需 45 分钟至 1 小时。您可以随时中断并继续——您的进度会被保存。",
     "Loading studies…": "正在加载研究…",
     "Loading tasks…": "正在加载任务…",
     "Reviewing as": "评审者",

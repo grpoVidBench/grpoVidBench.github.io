@@ -175,6 +175,13 @@ p { margin: 0 0 12px; }
 .login-row .btn { flex: none; white-space: nowrap; }
 .login-hint { font-size: 13px; margin: 10px 0 0; }
 
+/* front-page study-duration note */
+.time-note {
+  margin: -6px 0 4px; font-size: 14px; color: var(--ink-soft);
+  display: flex; align-items: baseline; gap: 7px;
+}
+.time-note::before { content: "⏱"; font-size: 15px; }
+
 /* ---------- front-page "export all results" ---------- */
 .export-card {
   margin-top: 22px; padding: 18px 20px;
