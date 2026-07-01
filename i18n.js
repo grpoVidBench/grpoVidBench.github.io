@@ -19,16 +19,16 @@
     // ---- top bar / picker ----
     "clinician review": "临床医生评审",
     "Surgical video reasoning": "外科手术视频推理",
-    "Reviewer studies": "评审研究",
+    "Reviewer studies": "研究项目",
     "Review tasks": "评审任务",
-    "Choose a study to review": "选择要评审的研究",
+    "Choose a study to review": "选择一项研究",
     "Choose a task to review": "选择要评审的任务",
     "Each study is self-contained: read the short intro, then rate items one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.":
       "每个研究都是独立的：先阅读简短说明，然后逐条评价。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
     "Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.":
       "选择一个任务以逐条评审其片段。您的进度会自动保存在本浏览器中，最后导出您的评审结果。",
     "The full study takes about 45 minutes to 1 hour. You can stop and resume anytime — your progress is saved.":
-      "完成全部研究约需 45 分钟至 1 小时。您可以随时中断并继续——您的进度会被保存。",
+      "完成全部评测约需 45 分钟至 1 小时。您可以随时中断并继续——您的进度会被保存。",
     "About this study": "关于本研究",
     "This study is about surgical video understanding. We are improving the prompts that guide a video large language model (LLM) so its step-by-step reasoning (chain of thought) is clinically correct. For each clip you rate the model's answer and its reasoning, and may edit the reasoning or the prompt rules — your expert judgment is what tells us whether the model is thinking about the surgery correctly.":
       "本研究关注外科手术视频的理解。我们正在改进用于引导视频大语言模型（LLM）的提示词，使其逐步推理（思维链）在临床上正确。对每个片段，您需评价模型的回答及其推理，并可编辑推理或提示词规则——您的专业判断能告诉我们模型是否正确地理解手术过程。",
