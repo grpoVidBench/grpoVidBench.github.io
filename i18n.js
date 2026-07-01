@@ -81,7 +81,7 @@
     "What you need to do": "您需要做的事",
     "Welcome back": "欢迎回来",
     "Your progress was saved. Pick up where you left off — the items you've already done are marked below.": "您的进度已保存。从上次中断处继续——您已完成的条目在下方已标注。",
-    "{a} answered · {s} skipped · {r} remaining (of {t})": "已回答 {a} · 已跳过 {s} · 剩余 {r}（共 {t}）",
+    "{a} answered · {r} remaining (of {t})": "已回答 {a} · 剩余 {r}（共 {t}）",
     "Done": "已完成",
     "Not started": "未开始",
     "Continue where you left off": "从上次中断处继续",
