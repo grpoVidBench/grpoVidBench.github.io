@@ -504,3 +504,33 @@ textarea.ctx-guide-edit { min-height: 168px; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .center-load { display: grid; place-items: center; gap: 12px; padding: 60px 0; color: var(--ink-soft); }
+
+/* ---------- phones ---------- */
+@media (max-width: 640px) {
+  /* tighter gutters so content isn't cramped against the edges */
+  .wrap { padding: 18px 12px 88px; }
+  .card { padding: 16px; }
+  .topbar-inner { padding: 10px 12px; gap: 8px; }
+  .brand { font-size: 14px; }
+  /* the long "· CholecT50 reasoning — clinician review" tag eats the row on a
+     phone; hide it — the task name is shown again as the item heading below */
+  .topbar .meta { display: none; }
+  .lang-toggle { margin-left: auto; }
+
+  h1 { font-size: 24px; }
+
+  /* video controls: keep the scrubber row and the time/speed row readable */
+  .player .controls { padding: 8px 10px; }
+  .speed button { padding: 4px 9px; }        /* easier tap targets */
+  /* let the time / clip-length / speed row wrap instead of overflowing on a
+     narrow phone; the speed buttons drop to their own line if needed */
+  .player .row { flex-wrap: wrap; row-gap: 8px; }
+  .player .time { min-width: 0; }
+
+  /* sticky footer nav: one tidy row, no wrapping "Skip this item" */
+  .runner-foot { margin: 20px -12px -88px; padding: 10px 12px; }
+  .runner-foot-inner { gap: 8px; }
+  .runner-foot .count { display: none; }      /* redundant: "Item n of N" shows at top */
+  .runner-foot .btn { padding: 9px 12px; }
+  .skip-btn { white-space: nowrap; padding: 9px 6px; font-size: 13px; }
+}
