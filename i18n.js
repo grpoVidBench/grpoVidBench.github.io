@@ -35,6 +35,9 @@
     "Enter your initials or email to begin, then pick a task. It is saved in this browser and reused for every task.":
       "请输入您的姓名缩写或邮箱后开始，然后选择一个任务。该信息会保存在本浏览器中，并在每个任务中复用。",
     "Save": "保存",
+    "Export all my results ({n} task(s))": "导出我的全部结果（{n} 个任务）",
+    "One ZIP with a JSON and CSV for every task you have submitted in this browser.": "一个 ZIP 文件，包含您在本浏览器中已提交的每个任务的 JSON 和 CSV。",
+    "Download results (ZIP)": "下载结果（ZIP）",
     "You have answers saved as \"{id}\" for {n} task(s). They stay saved under that name — switching just shows a different reviewer. Switch now?":
       "您以「{id}」保存了 {n} 个任务的答案。这些答案仍以该名称保存——切换只是显示另一位评审者。现在切换吗？",
     "Your answers are saved under \"{id}\". They stay saved — switching just shows a different reviewer. Switch now?":
@@ -161,6 +164,12 @@
       "（自动提交未能发送——请将下载的文件通过邮件发送给我们。）",
     "Download JSON again": "再次下载 JSON",
     "Download CSV again": "再次下载 CSV",
+    "Download this task's JSON": "下载本任务的 JSON",
+    "Download this task's CSV": "下载本任务的 CSV",
+    "Your responses for this task were submitted automatically and saved in this browser. When you finish all your tasks, use “Export all my results” on the home page to download one ZIP with everything.":
+      "本任务的评审结果已自动提交并保存在本浏览器中。完成全部任务后，请在首页使用「导出我的全部结果」，下载包含全部内容的单个 ZIP 文件。",
+    "Your responses for this task are saved in this browser. When you finish all your tasks, use “Export all my results” on the home page to download one ZIP with everything.":
+      "本任务的评审结果已保存在本浏览器中。完成全部任务后，请在首页使用「导出我的全部结果」，下载包含全部内容的单个 ZIP 文件。",
     "← Back to all studies": "← 返回全部研究",
     "← Back to studies": "← 返回研究列表",
     "Saved": "已保存",

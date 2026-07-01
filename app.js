@@ -118,6 +118,19 @@
       flashSaved();
     } catch (e) { /* ignore quota errors */ }
   }
+  // Submitted-results records, read by the front page to build a single ZIP.
+  // Prefix is browser-wide; one record per (study, task, reviewer).
+  var EXPORT_PREFIX = "grpovidbench:export:";
+  function saveExportRecord(base, data, csvText) {
+    try {
+      const key = EXPORT_PREFIX + data.study_id + ":" + (data.task_group || "_") + ":" + (data.reviewer_id || "_");
+      localStorage.setItem(key, JSON.stringify({
+        base: base, reviewer_id: data.reviewer_id, study_id: data.study_id,
+        task: data.task_group || null, submitted_at: data.submitted_at,
+        json: JSON.stringify(data, null, 2), csv: csvText,
+      }));
+    } catch (e) { /* ignore quota errors */ }
+  }
   let savedTimer = null;
   function flashSaved() {
     saveStatus.innerHTML = '<span class="saved-pill"></span>';
@@ -1315,9 +1328,10 @@
     const csvText = buildCsv();
     const stamp = data.submitted_at.replace(/[:]/g, "-");
     const base = "responses_" + safeName(study.study_id) + (taskFilter ? "_" + safeName(taskFilter) : "") + "_" + safeName(state.reviewer_id) + "_" + stamp;
-    // always download a local backup
-    download(base + ".json", JSON.stringify(data, null, 2), "application/json");
-    download(base + ".csv", csvText, "text/csv");
+    // Stash the finished JSON+CSV text so the front page can bundle every task's
+    // results into a single ZIP (instead of a download per task). Keyed per
+    // (study, task, reviewer) so a re-submit overwrites the same task's record.
+    saveExportRecord(base, data, csvText);
 
     let postMsg = "";
     const endpoint = collectEndpoint();
@@ -1348,15 +1362,15 @@
     card.appendChild(el("div", { class: "done-icon", text: "✓" }));
     card.appendChild(el("h1", { text: tr("Thank you — review complete") }));
     card.appendChild(el("p", { class: "lead", text: tr(autoSent
-      ? "Your responses were submitted automatically. A JSON and CSV copy was also downloaded to your computer as a backup — no need to email anything unless asked."
-      : "Your responses have been downloaded as a JSON and a CSV file. Please send us the file (whichever your coordinator requested).") }));
+      ? "Your responses for this task were submitted automatically and saved in this browser. When you finish all your tasks, use “Export all my results” on the home page to download one ZIP with everything."
+      : "Your responses for this task are saved in this browser. When you finish all your tasks, use “Export all my results” on the home page to download one ZIP with everything.") }));
     if (postMsg) card.appendChild(el("div", { class: "banner info", text: tr(postMsg) }));
-    card.appendChild(el("p", { class: "muted", text: tf("Files: {json} · {csv}", { json: base + ".json", csv: base + ".csv" }) }));
 
+    // On-demand: this task's files individually, if the reviewer wants them now.
     const dl = el("div", { class: "dl-row" }, [
-      el("button", { class: "btn", text: tr("Download JSON again"),
+      el("button", { class: "btn", text: tr("Download this task's JSON"),
         onclick: () => download(base + ".json", JSON.stringify(buildResponse(), null, 2), "application/json") }),
-      el("button", { class: "btn", text: tr("Download CSV again"),
+      el("button", { class: "btn", text: tr("Download this task's CSV"),
         onclick: () => download(base + ".csv", buildCsv(), "text/csv") }),
     ]);
     card.appendChild(dl);
