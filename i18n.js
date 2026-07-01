@@ -31,7 +31,7 @@
       "完成全部研究约需 45 分钟至 1 小时。您可以随时中断并继续——您的进度会被保存。",
     "About this study": "关于本研究",
     "This study is about surgical video understanding. We are improving the prompts that guide a video large language model (LLM) so its step-by-step reasoning (chain of thought) is clinically correct. For each clip you rate the model's answer and its reasoning, and may edit the reasoning or the prompt rules — your expert judgment is what tells us whether the model is thinking about the surgery correctly.":
-      "本研究关注外科手术视频的理解。我们正在改进用于引导视频大语言模型（LLM）的提示词，使其逐步推理（思维链）在临床上正确。对每个片段，您需评价模型的回答及其推理，并可编辑推理或提示词规则——您的专业判断能告诉我们模型是否在正确地思考这台手术。",
+      "本研究关注外科手术视频的理解。我们正在改进用于引导视频大语言模型（LLM）的提示词，使其逐步推理（思维链）在临床上正确。对每个片段，您需评价模型的回答及其推理，并可编辑推理或提示词规则——您的专业判断能告诉我们模型是否正确地理解手术过程。",
     "Loading studies…": "正在加载研究…",
     "Loading tasks…": "正在加载任务…",
     "Reviewing as": "评审者",
