@@ -50,6 +50,22 @@
     "{n} clips": "{n} 个片段",
     "1 clip": "1 个片段",
 
+    // ---- reviewer details form (front page) ----
+    "Full name": "全名",
+    "Email": "邮箱",
+    "Hospital / institution": "医院／机构",
+    "Designation (title)": "职称（头衔）",
+    "optional": "选填",
+    "e.g. Dr Jane Smith": "例如：张伟医生",
+    "Please enter your full name to begin.": "请输入您的全名以开始。",
+    "Enter your details to begin, then pick a task. They are saved in this browser and reused for every task.":
+      "请填写您的信息后开始，然后选择一个任务。这些信息会保存在本浏览器中，并在每个任务中复用。",
+    "Finish the study in the same browser and on the same device.": "请在同一浏览器和同一设备上完成本研究。",
+    "Your progress and answers are stored only in this browser — they will not be there on another device or browser.":
+      "您的进度和答案仅保存在本浏览器中——在其他设备或浏览器上将无法找到。",
+    "One ZIP with a JSON for every task you have submitted in this browser, plus your details.":
+      "一个 ZIP 文件，包含您在本浏览器中提交的每个任务的 JSON，以及您的信息。",
+
     // ---- study type eyebrow ----
     "Study · criteria validation": "研究 · 标准验证",
     "Study · reasoning validation": "研究 · 推理验证",

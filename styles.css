@@ -175,6 +175,22 @@ p { margin: 0 0 12px; }
 .login-row .btn { flex: none; white-space: nowrap; }
 .login-hint { font-size: 13px; margin: 10px 0 0; }
 
+/* stacked reviewer detail fields (full name + optional email / hospital / designation) */
+.login-fields { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+.login-field { display: flex; flex-direction: column; gap: 6px; }
+.login-field input { max-width: 420px; }
+.login-field .opt-tag { font-weight: 400; color: var(--ink-soft); font-size: 13px; }
+.field-error { border-color: var(--danger) !important; box-shadow: 0 0 0 3px var(--danger-soft) !important; }
+
+/* bold "same browser / same device" reminder on the landing page */
+.device-note {
+  margin: 10px 0 0; padding: 10px 14px;
+  background: var(--accent-soft); border: 1px solid var(--line);
+  border-left: 3px solid var(--accent); border-radius: var(--radius-sm);
+  font-size: 14px; line-height: 1.5;
+}
+.device-note strong { color: var(--accent-ink); }
+
 /* front-page "about this study" panel */
 .about-card {
   margin: 8px 0 14px; padding: 16px 18px;

@@ -121,13 +121,13 @@
   // Submitted-results records, read by the front page to build a single ZIP.
   // Prefix is browser-wide; one record per (study, task, reviewer).
   var EXPORT_PREFIX = "grpovidbench:export:";
-  function saveExportRecord(base, data, csvText) {
+  function saveExportRecord(base, data) {
     try {
       const key = EXPORT_PREFIX + data.study_id + ":" + (data.task_group || "_") + ":" + (data.reviewer_id || "_");
       localStorage.setItem(key, JSON.stringify({
         base: base, reviewer_id: data.reviewer_id, study_id: data.study_id,
         task: data.task_group || null, submitted_at: data.submitted_at,
-        json: JSON.stringify(data, null, 2), csv: csvText,
+        json: JSON.stringify(data, null, 2),
       }));
     } catch (e) { /* ignore quota errors */ }
   }
@@ -707,8 +707,8 @@
         who.appendChild(change);
         field.appendChild(who);
       } else {
-        field.appendChild(el("label", { for: "reviewer", text: tr("Your initials or email (for de-duplication)") }));
-        reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: tr("e.g. SG or you@hospital.org"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
+        field.appendChild(el("label", { for: "reviewer", text: tr("Full name") }));
+        reviewerInput = el("input", { type: "text", id: "reviewer", placeholder: tr("e.g. Dr Jane Smith"), autocomplete: "off", style: "margin-top:6px;max-width:360px" });
         reviewerInput.value = introReviewerDraft;
         reviewerInput.addEventListener("input", () => { introReviewerDraft = reviewerInput.value; });
         field.appendChild(reviewerInput);
@@ -721,7 +721,7 @@
     btn.addEventListener("click", () => {
       const reviewer = storedReviewer || (reviewerInput ? reviewerInput.value.trim() : "anonymous");
       if (study.require_reviewer_id && !reviewer) {
-        errLine.style.display = "block"; errLine.textContent = tr("Please enter your initials or email to begin.");
+        errLine.style.display = "block"; errLine.textContent = tr("Please enter your full name to begin.");
         return;
       }
       if (study.require_reviewer_id && !storedReviewer) setReviewerId(reviewer);   // remember for the other tasks
@@ -1049,7 +1049,7 @@
   }
 
   // Optional free-text note attached to a multiple-choice question (likert / select).
-  // Stored alongside the rating as "<dim>__comment" so it flows into JSON + CSV export.
+  // Stored alongside the rating as "<dim>__comment" so it flows into the JSON export.
   function addCommentBox(wrap, dim, ans) {
     const key = dim.id + "__comment";
     const ci = el("input", { type: "text", class: "dim-comment",
@@ -1276,37 +1276,6 @@
     return result;
   }
 
-  function csvEscape(v) {
-    if (v == null) v = "";
-    v = String(v);
-    if (/[",\n\r]/.test(v)) return '"' + v.replace(/"/g, '""') + '"';
-    return v;
-  }
-  function buildCsv() {
-    // one value column per dimension; multiple-choice dims also get a "<id>_comment" column
-    const cols = [];
-    study.dimensions.forEach((d) => {
-      cols.push({ key: d.id, header: d.id });
-      const t = dimType(d);
-      if (t === "likert" || t === "select") cols.push({ key: d.id + "__comment", header: d.id + "_comment" });
-    });
-    const header = ["reviewer_id", "item_id", "task", "seen_order", "ms_on_item", "skipped"]
-      .concat(cols.map((c) => c.header))
-      .concat(["reasoning_changed", "reasoning_edited", "answer_changed", "answer_edited"]);
-    const lines = [header.map(csvEscape).join(",")];
-    const data = buildResponse();
-    data.responses.forEach((r) => {
-      const row = [state.reviewer_id, r.item_id, r.task || "", r.seen_order, r.ms_on_item, r.skipped ? "yes" : ""]
-        .concat(cols.map((c) => (r.ratings[c.key] != null ? r.ratings[c.key] : "")))
-        .concat([
-          r.reasoning_changed ? "yes" : "", r.reasoning_edited != null ? r.reasoning_edited : "",
-          r.answer_changed ? "yes" : "", r.answer_edited != null ? r.answer_edited : "",
-        ]);
-      lines.push(row.map(csvEscape).join(","));
-    });
-    return lines.join("\r\n");
-  }
-
   function download(filename, text, mime) {
     const blob = new Blob([text], { type: mime });
     const url = URL.createObjectURL(blob);
@@ -1325,13 +1294,12 @@
   async function doSubmit() {
     persistTime(); commit();
     const data = buildResponse();
-    const csvText = buildCsv();
     const stamp = data.submitted_at.replace(/[:]/g, "-");
     const base = "responses_" + safeName(study.study_id) + (taskFilter ? "_" + safeName(taskFilter) : "") + "_" + safeName(state.reviewer_id) + "_" + stamp;
-    // Stash the finished JSON+CSV text so the front page can bundle every task's
-    // results into a single ZIP (instead of a download per task). Keyed per
+    // Stash the finished JSON so the front page can bundle every task's results
+    // into a single ZIP (instead of a download per task). Keyed per
     // (study, task, reviewer) so a re-submit overwrites the same task's record.
-    saveExportRecord(base, data, csvText);
+    saveExportRecord(base, data);
 
     let postMsg = "";
     const endpoint = collectEndpoint();
@@ -1344,7 +1312,7 @@
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ filename: base, json: data, csv: csvText }),
+          body: JSON.stringify({ filename: base, json: data }),
         });
         postMsg = "Your responses were submitted to the study automatically. The downloaded files are just a backup.";
       } catch (e) {
@@ -1370,8 +1338,6 @@
     const dl = el("div", { class: "dl-row" }, [
       el("button", { class: "btn", text: tr("Download this task's JSON"),
         onclick: () => download(base + ".json", JSON.stringify(buildResponse(), null, 2), "application/json") }),
-      el("button", { class: "btn", text: tr("Download this task's CSV"),
-        onclick: () => download(base + ".csv", buildCsv(), "text/csv") }),
     ]);
     card.appendChild(dl);
     card.appendChild(el("p", null, el("a", { href: "./index.html", text: tr("← Back to all studies") })));
