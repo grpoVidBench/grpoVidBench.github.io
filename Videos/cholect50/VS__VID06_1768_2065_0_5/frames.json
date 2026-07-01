@@ -1,13 +1,13 @@
 {
-    "video_id":  "VS__VID06_1768_2065_0_5",
-    "dataset":  "cholect50",
-    "native_fps":  1,
-    "timeline":  "seconds",
-    "duration_seconds":  297,
-    "sampling_fps":  0.5,
-    "media_url":  "./Videos/cholect50/VS__VID06_1768_2065_0_5/clip.mp4",
-    "media_fps":  0.9966,
-    "media_start":  0,
-    "default_playback_fps":  5,
-    "dir":  "./Videos/cholect50/VS__VID06_1768_2065_0_5/"
+    "video_id": "VS__VID06_1768_2065_0_5",
+    "dataset": "cholect50",
+    "native_fps": 1,
+    "timeline": "seconds",
+    "duration_seconds": 297,
+    "sampling_fps": 1,
+    "media_url": "./Videos/cholect50/VS__VID06_1768_2065_0_5/clip2x.mp4",
+    "media_fps": 1.9932,
+    "media_start": 0,
+    "default_playback_fps": 5,
+    "dir": "./Videos/cholect50/VS__VID06_1768_2065_0_5/"
 }
