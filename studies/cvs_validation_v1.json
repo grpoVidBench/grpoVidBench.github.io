@@ -47,15 +47,13 @@
                                                         "Scrub the clip (the timeline is in seconds) and read the model\u0027s answer - when C1, C2 and C3 are each first met (or never) and the final CVS verdict.",
                                                         "Judge each criterion from its own region (C1 = two structures at the gallbladder neck; C2 = the Calot (hepatocystic) triangle window cleared; C3 = the cystic plate / liver bed exposed), and decide whether the final verdict (achieved / not achieved) is correct.",
                                                         "Read the model\u0027s reasoning (L1 trajectory, L2 per-criterion progression, L3 synthesis), then open the \u0027Prompt rules\u0027 panel and check it obeys the Rules.",
-                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the Rules directly (\u0027Reset to original\u0027 undoes); the C1/C2/C3 verdict answer is read-only, so note any answer error in a comment. Every edit is saved with your response.",
-                                                        "If you cannot assess this clip, click \u0027Skip this item\u0027."
+                                                        "Rate every question below and add comments where they help. You can edit the reasoning and the Rules directly (\u0027Reset to original\u0027 undoes); the C1/C2/C3 verdict answer is read-only, so note any answer error in a comment. Every edit is saved with your response."
                                                     ],
                                           "steps_zh":  [
                                                            "拖动浏览片段（时间轴以秒为单位），阅读模型的答案——C1、C2、C3 各自何时首次满足（或始终未满足）以及最终 CVS 判定。",
                                                            "依据各自的区域判断每条标准（C1 = 胆囊颈部的两条结构；C2 = 肝胆三角（Calot 三角）窗口已清理；C3 = 胆囊板（肝床）已暴露），并判断最终判定（已达成/未达成）是否正确。",
                                                            "阅读模型的推理（L1 轨迹，L2 各标准的演进，L3 综合判定），然后展开「提示词规则」面板，检查其是否遵守规则。",
-                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及规则（点击「恢复原文」可撤销）；C1/C2/C3 判定答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。",
-                                                           "若您无法评估该片段，请点击「跳过该条目」。"
+                                                           "对下方每个问题评分并在需要时添加备注。您可以直接编辑推理以及规则（点击「恢复原文」可撤销）；C1/C2/C3 判定答案为只读，如有答案错误请在备注中说明。所有编辑都会随评审结果一并保存。"
                                                        ]
                                       }
                           },
@@ -146,9 +144,8 @@
                    }
                ],
     "items":  [
-                  
                   {
-                      "item_id":  "CVS-02",
+                      "item_id":  "CVS-01",
                       "task":  "CVS",
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video201__fps0.2",
@@ -157,7 +154,7 @@
                       "think":  "L1 (trajectory survey): The clip starts with inflamed fibrofatty tissue obscuring the gallbladder neck, hepatocystic triangle, and cystic plate region. Dissection progresses with intermittent improvement in the gallbladder-neck view and later clearing of the Calot-triangle window, but the final frame does not show a complete Critical View of Safety and the hepatocystic anatomy is again obscured.\nL2 (per-criterion progression): C1 — TWO STRUCTURES: first met at 50.0s, when two and only two tubular structures are seen entering the gallbladder neck; this judgment is based only on the structure count and identity at the gallbladder neck. C2 — HEPATOCYSTIC TRIANGLE CLEARED: first met at 200.0s, when the hepatocystic/Calot triangle window is cleared of fat and fibrous tissue; this judgment is based only on the triangle window. C3 — CYSTIC PLATE EXPOSED: never met, because the lower third of the gallbladder is never adequately dissected off the cystic plate/liver bed; this judgment is based only on the gallbladder-liver-bed interface.\nL3 (CVS synthesis): All three criteria are never simultaneously met, because C3 is never achieved. The final frame does not demonstrate CVS; the persistent limiting criterion is C3, with final-frame hepatocystic anatomy also not clearly maintained."
                   },
                   {
-                      "item_id":  "CVS-03",
+                      "item_id":  "CVS-02",
                       "task":  "CVS",
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video1__fps1",
@@ -166,22 +163,13 @@
                       "think":  "L1 (trajectory survey): At the start, the gallbladder neck/hepatocystic region is obscured by inflamed fibrofatty tissue, so no CVS criteria are satisfied. Over time, the dissection progressively improves visualization of the gallbladder neck, the hepatocystic triangle, and later the gallbladder-liver-bed interface. By the end, the clip shows progression toward CVS but not a completed Critical View of Safety.\nL2 (per-criterion progression): C1 — TWO STRUCTURES first becomes met at 87.0s, when two and only two tubular structures are visible entering the gallbladder neck; later this criterion is no longer maintained. C2 — HEPATOCYSTIC TRIANGLE CLEARED first becomes met at 107.0s, based only on the cleared appearance of the hepatocystic/Calot triangle window. C3 — CYSTIC PLATE EXPOSED first becomes met at 147.0s, based only on exposure of the lower gallbladder off the cystic plate at the gallbladder-liver-bed interface.\nL3 (CVS synthesis): All three criteria are never met simultaneously. Although C1 is first seen at 87.0s, C2 at 107.0s, and C3 at 147.0s, C1 is no longer satisfied when C3 becomes available. Therefore, CVS is never achieved, and the final frame remains CVS-negative, limited by failure to maintain C1 together with C2 and C3."
                   },
                   {
-                      "item_id":  "CVS-04",
+                      "item_id":  "CVS-03",
                       "task":  "CVS",
                       "dataset":  "endoscapes",
                       "video_id":  "cvs_video__video25__fps1",
                       "question":  "How does the Critical View of Safety develop over this laparoscopic cholecystectomy clip, and is CVS achieved by the final frame?",
                       "answer":  "C1 first met never; C2 first met never; C3 first met never; CVS never achieved; final: not achieved",
                       "think":  "L1 (trajectory survey): The clip begins without a Critical View of Safety. Dissection progresses around the gallbladder neck/infundibulum with traction and instrument manipulation, but the field remains obscured by inflamed, bloody, fibrofatty tissue and the anatomy does not resolve into a safe final view. By the end, CVS is still not achieved.\nL2 (per-criterion progression): C1 — TWO STRUCTURES: never met; at the gallbladder neck, intermittent duct-like or vascular structures are seen, but two and only two definitive structures entering the gallbladder are never established. C2 — HEPATOCYSTIC TRIANGLE CLEARED: never met; the hepatocystic triangle window remains bloody, inflamed, and fibrofatty rather than cleared of fat and fibrous tissue. C3 — CYSTIC PLATE EXPOSED: never met; the lower gallbladder–liver-bed interface is not adequately opened to expose the cystic plate.\nL3 (CVS synthesis): Because C1, C2, and C3 are never simultaneously met, CVS is never achieved. The limiting criteria are all three: unresolved two-structure anatomy, uncleared hepatocystic triangle, and inadequate cystic plate exposure."
-                  },
-                  {
-                      "item_id":  "CVS-05",
-                      "task":  "CVS",
-                      "dataset":  "endoscapes",
-                      "video_id":  "cvs_video__video72__fps1",
-                      "question":  "How does the Critical View of Safety develop over the course of this laparoscopic cholecystectomy dissection clip, and is CVS achieved by the final frame?",
-                      "answer":  "C1 first met never; C2 first met never; C3 first met never; CVS never achieved; final: not achieved",
-                      "think":  "L1 (trajectory survey): The clip starts without a Critical View of Safety. Dissection progresses around the gallbladder neck and infundibular region with manipulation of fibrofatty tissue, but the final frame still does not show CVS. Overall, the dissection advances partially but remains incomplete.\nL2 (per-criterion progression): C1 — TWO STRUCTURES: never met; at the gallbladder neck, there is no definitive view of two and only two tubular structures, the cystic duct and cystic artery, entering the gallbladder. C2 — HEPATOCYSTIC TRIANGLE CLEARED: never met; the Calot/hepatocystic triangle window remains inadequately cleared of fat and fibrous tissue. C3 — CYSTIC PLATE EXPOSED: never met; the gallbladder-liver-bed interface does not demonstrate lower-third cystic plate exposure.\nL3 (CVS synthesis): Since C1, C2, and C3 are never simultaneously met, CVS is never achieved. The final frame remains limited by absence of a clean two-structure view, incomplete hepatocystic triangle clearance, and lack of lower-third cystic plate exposure."
                   }
               ]
 }

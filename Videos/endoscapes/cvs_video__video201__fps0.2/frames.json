@@ -4,9 +4,9 @@
     "native_fps":  1,
     "timeline":  "seconds",
     "duration_seconds":  485,
-    "sampling_fps":  1,
-    "media_url":  "./Videos/endoscapes/cvs_video__video201__fps0.2/clip5x.mp4",
-    "media_fps":  5,
+    "sampling_fps":  0.2,
+    "media_url":  "./Videos/endoscapes/cvs_video__video201__fps0.2/clip.mp4",
+    "media_fps":  1,
     "media_start":  0,
     "default_playback_fps":  5,
     "dir":  "./Videos/endoscapes/cvs_video__video201__fps0.2/"
