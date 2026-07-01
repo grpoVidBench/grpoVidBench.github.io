@@ -521,14 +521,10 @@
         mediaFps = m.media_fps || 5; mediaStart = m.media_start || 0; nativeFps = m.native_fps || 1;
         lo = (opts.clipStart != null) ? opts.clipStart : (normalized ? 0 : mediaStart);
         hi = (opts.clipEnd != null) ? opts.clipEnd : (normalized ? 1 : null);
-        // Default playback speed ~ 1 / sampling_fps so the clip shows about one frame per second
-        // (fps 1 -> 1x, 0.5 -> 2x, 0.2 -> 5x, 0.1 -> 10x); the reviewer can still change it.
-        const sfps = (typeof m.sampling_fps === "number" && m.sampling_fps > 0) ? m.sampling_fps : null;
-        let defSpeed = sfps ? 1 / sfps : 1;
-        defSpeed = defSpeed >= 1 ? Math.round(defSpeed) : Math.round(defSpeed * 4) / 4;
-        defSpeed = Math.max(0.25, Math.min(16, defSpeed));
-        buildSpeeds(Array.from(new Set([0.5, 1, 2, 4, defSpeed])).filter((s) => s >= 0.25 && s <= 16).sort((a, b) => a - b));
-        setSpeed(defSpeed);
+        // Clips are pre-encoded to ~1 fps of real time, so playback speed no longer
+        // needs to adapt per clip: fixed options 0.5/1/2/4×, default 1×.
+        buildSpeeds([0.5, 1, 2, 4]);
+        setSpeed(1);
         video.addEventListener("loadedmetadata", () => {
           if (destroyed) return;
           duration = video.duration || 0;
