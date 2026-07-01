@@ -175,6 +175,18 @@ p { margin: 0 0 12px; }
 .login-row .btn { flex: none; white-space: nowrap; }
 .login-hint { font-size: 13px; margin: 10px 0 0; }
 
+/* front-page "about this study" panel */
+.about-card {
+  margin: 8px 0 14px; padding: 16px 18px;
+  background: var(--accent-soft); border: 1px solid #bfe0dd;
+  border-radius: var(--radius);
+}
+.about-title {
+  margin: 0 0 6px; font-weight: 700; font-size: 13px;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--accent-ink);
+}
+.about-body { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+
 /* front-page study-duration note */
 .time-note {
   margin: -6px 0 4px; font-size: 14px; color: var(--ink-soft);

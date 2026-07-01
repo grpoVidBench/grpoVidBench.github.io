@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MedVidBench · Clinician Studies</title>
-  <link rel="stylesheet" href="./styles.css?v=37" />
+  <link rel="stylesheet" href="./styles.css?v=38" />
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +18,12 @@
   <main class="wrap narrow">
     <p class="eyebrow" id="pk-eyebrow">Review tasks</p>
     <h1 id="pk-h1">Choose a task to review</h1>
+
+    <div class="about-card" id="pk-about">
+      <p class="about-title" id="pk-about-title">About this study</p>
+      <p class="about-body" id="pk-about-body">This study is about surgical video understanding. We are improving the prompts that guide a video large language model (LLM) so its step-by-step reasoning (chain of thought) is clinically correct. For each clip you rate the model's answer and its reasoning, and may edit the reasoning or the prompt rules — your expert judgment is what tells us whether the model is thinking about the surgery correctly.</p>
+    </div>
+
     <p class="lead" id="pk-lead">Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.</p>
     <p class="time-note" id="pk-time">The full study takes about 45 minutes to 1 hour. You can stop and resume anytime — your progress is saved.</p>
 
@@ -31,7 +37,7 @@
     <div id="export" class="export-card" style="display:none"></div>
   </main>
 
-  <script src="./i18n.js?v=37"></script>
+  <script src="./i18n.js?v=38"></script>
   <script>
     (function () {
       var I = window.I18N;
@@ -107,6 +113,8 @@
         document.getElementById('tb-tag').textContent = I.tr('Surgical video reasoning');
         document.getElementById('pk-eyebrow').textContent = I.tr('Review tasks');
         document.getElementById('pk-h1').textContent = I.tr('Choose a task to review');
+        document.getElementById('pk-about-title').textContent = I.tr('About this study');
+        document.getElementById('pk-about-body').textContent = I.tr('This study is about surgical video understanding. We are improving the prompts that guide a video large language model (LLM) so its step-by-step reasoning (chain of thought) is clinically correct. For each clip you rate the model\'s answer and its reasoning, and may edit the reasoning or the prompt rules — your expert judgment is what tells us whether the model is thinking about the surgery correctly.');
         document.getElementById('pk-lead').textContent = I.tr('Pick a task to review its clips one at a time. Your progress is saved in this browser automatically, and you export your responses at the end.');
         document.getElementById('pk-time').textContent = I.tr('The full study takes about 45 minutes to 1 hour. You can stop and resume anytime — your progress is saved.');
         var ld = document.getElementById('pk-loading');
